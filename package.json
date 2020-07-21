@@ -1,0 +1,12 @@
+{
+	"name": "00.unity.module.common.func",
+	"version": "1.0.0",
+	"displayName": "00.Unity.Module.Common.Func",
+	"author": {
+		"name": "dante",
+		"email": "are2341@nate.com"
+	},
+	"dependencies": {
+
+	}
+}
