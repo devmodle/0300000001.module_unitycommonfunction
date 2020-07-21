@@ -1,0 +1,160 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Rendering;
+
+#if UNIVERSAL_RENDER_PIPELINE_ENABLE
+using UnityEngine.Rendering.Universal;
+#endif			// #if UNIVERSAL_RENDER_PIPELINE_ENABLE
+
+//! 설정 함수
+public static partial class CFunc {
+	#region 클래스 함수
+	//! 퀄리티를 설정한다
+	public static void SetupQuality(int a_nTargetFrameRate, 
+		bool a_bIsEnableMultiTouch, EQualityLevel a_eQualityLevel = EQualityLevel.AUTO, bool a_bIsApplyExpensiveChange = false) {
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+		Input.multiTouchEnabled = a_bIsEnableMultiTouch;
+		Application.targetFrameRate = Mathf.Min(a_nTargetFrameRate, Screen.currentResolution.refreshRate);
+
+		// 퀄리티 레벨을 설정한다 {
+		var eQualityLevel = a_eQualityLevel;
+
+		if(a_eQualityLevel == EQualityLevel.AUTO) {
+#if ULTRA_QUALITY_LEVEL_ENABLE
+			eQualityLevel = EQualityLevel.ULTRA;
+#else
+			eQualityLevel = EQualityLevel.VERY_LOW;
+#endif			// #if ULTRA_QUALITY_LEVEL_ENABLE
+		}
+
+#if UNITY_EDITOR
+		QualitySettings.antiAliasing = KCDefine.QUALITY_ANTI_ALIASING;
+		QualitySettings.maximumLODLevel = KCDefine.QUALITY_MAX_LOD_LEVEL;
+		QualitySettings.asyncUploadTimeSlice = KCDefine.QUALITY_ASYNC_UPLOAD_TIME_SLICE;
+		QualitySettings.asyncUploadBufferSize = KCDefine.QUALITY_ASYNC_UPLOAD_BUFFER_SIZE;
+		QualitySettings.asyncUploadPersistentBuffer = KCDefine.QUALITY_ASYNC_UPLOAD_PERSISTENT_BUFFER;
+		QualitySettings.resolutionScalingFixedDPIFactor = KCDefine.QUALITY_RESOLUTION_SCALE_FIXED_DPI_FACTOR;
+
+		QualitySettings.vSyncCount = (eQualityLevel >= EQualityLevel.HIGH) ? (int)EVSyncType.EVERY : (int)EVSyncType.NEVER;
+		QualitySettings.anisotropicFiltering = (eQualityLevel >= EQualityLevel.HIGH) ? AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
+#endif			// #if UNITY_EDITOR
+
+		QualitySettings.SetQualityLevel((int)eQualityLevel, a_bIsApplyExpensiveChange);
+		// 퀄리티 레벨을 설정한다 }
+
+#if UNITY_EDITOR
+		// 렌더링 파이프라인을 설정한다 {			
+#if UNIVERSAL_RENDER_PIPELINE_ENABLE
+		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.PIPELINE_PATH_UNIVERSAL_RENDER_PIPELINE);
+
+		if(oRenderPipeline != null) {
+			oRenderPipeline.supportsHDR = false;
+
+			oRenderPipeline.shaderVariantLogLevel = ShaderVariantLogLevel.Disabled;
+			oRenderPipeline.colorGradingMode = ColorGradingMode.LowDynamicRange;
+			oRenderPipeline.shadowCascadeOption = ShadowCascadesOption.NoCascades;
+
+			oRenderPipeline.renderScale = KCDefine.SCALE_UNIVERSAL_RP_RENDERING;
+			oRenderPipeline.colorGradingLutSize = KCDefine.SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_ANTI_ALIASING, 
+				MsaaQuality.Disabled);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_DEBUG_LEVEL, 
+				PipelineDebugLevel.Disabled);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ_LIMIT, 
+				KCDefine.MAX_NUM_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_MAIN_LIGHT_SHADOW_MAP_RESOLUTION, 
+				UnityEngine.Rendering.Universal.ShadowResolution._2048);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_ADDITIONAL_LIGHT_SHADOW_MAP_RESOLUTION, 
+				UnityEngine.Rendering.Universal.ShadowResolution._512);
+
+#if DYNAMIC_BATCHING_ENABLE
+			oRenderPipeline.useSRPBatcher = true;
+			oRenderPipeline.supportsDynamicBatching = true;
+#else
+			oRenderPipeline.useSRPBatcher = false;
+			oRenderPipeline.supportsDynamicBatching = false;
+#endif			// #if DYNAMIC_BATCHING_ENABLE
+
+#if LIGHT_ENABLE
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_SUPPORT_MIXED_LIGHTING, 
+				true);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE, 
+				LightRenderingMode.PerPixel);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_ADDITIONAL_LIGHT_RENDERING_MODE, 
+				LightRenderingMode.PerPixel);
+#else
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_SUPPORT_MIXED_LIGHTING, 
+				false);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE, 
+				LightRenderingMode.Disabled);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_ADDITIONAL_LIGHT_RENDERING_MODE, 
+				LightRenderingMode.Disabled);
+#endif			// #if LIGHT_ENABLE
+
+#if LIGHT_ENABLE && SHADOW_ENABLE
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_MAIN_LIGHT_SUPPORT_SHADOW, 
+				true);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORT_SHADOW, 
+				true);
+
+#if SOFT_SHADOW_ENABLE
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, 
+				true);
+#else
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, 
+				false);
+#endif			// #if SOFT_SHADOW_ENABLE
+#else
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_MAIN_LIGHT_SUPPORT_SHADOW, 
+				false);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORT_SHADOW, 
+				false);
+
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.FIELD_NAME_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, 
+				false);
+#endif			// #if LIGHT_ENABLE && SHADOW_ENABLE
+		}
+
+		QualitySettings.renderPipeline = oRenderPipeline;
+		GraphicsSettings.renderPipelineAsset = oRenderPipeline;
+#else
+		QualitySettings.renderPipeline = null;
+		GraphicsSettings.renderPipelineAsset = null;
+#endif			// #if UNIVERSAL_RENDER_PIPELINE_ENABLE
+		// 렌더링 파이프라인을 설정한다 }
+#endif			// #if UNITY_EDITOR
+	}
+	
+	//! 스크린 UI 를 설정한다
+	public static void SetupScreenUI(GameObject a_oScreenUI, int a_nSortingOrder) {
+		var oCanvas = a_oScreenUI.GetComponentInChildren<Canvas>();
+		oCanvas.sortingOrder = a_nSortingOrder;
+		oCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+
+		var oCanvasScaler = a_oScreenUI.GetComponentInChildren<CanvasScaler>();
+		oCanvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+		oCanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+		oCanvasScaler.referenceResolution = new Vector2(KCDefine.SCREEN_WIDTH, KCDefine.SCREEN_HEIGHT);
+		oCanvasScaler.referencePixelsPerUnit = KCDefine.REF_PIXELS_UNIT;
+
+#if PIXEL_PERFECT_ENABLE
+		oCanvas.pixelPerfect = true;
+#else
+		oCanvas.pixelPerfect = false;
+#endif			// #if PIXEL_PERFECT_ENABLE
+	}
+	#endregion			// 클래스 함수
+}

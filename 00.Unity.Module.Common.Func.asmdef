@@ -1,0 +1,19 @@
+{
+    "name": "00.Unity.Module.Common.Func",
+    "references": [
+        "00.Unity.Module.Common.Define",
+        "00.Unity.Module.Common.Access",
+        "00.Unity.Module.Common.Factory",
+        "00.Unity.Module.Common.Extension",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
