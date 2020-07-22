@@ -132,7 +132,7 @@ public static partial class CFunc {
 
 	//! 바이트를 기록한다
 	public static void WriteBytes(string a_oFilepath,
-		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.EMPTY_STRING) {
+		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteBytes(oWriteStream, a_oBytes);
 		}
@@ -148,7 +148,7 @@ public static partial class CFunc {
 
 	//! 보안 바이트를 기록한다
 	public static void WriteSecurityBytes(string a_oFilepath,
-		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.EMPTY_STRING) {
+		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteSecurityBytes(oWriteStream, a_oBytes);
 		}
@@ -164,7 +164,7 @@ public static partial class CFunc {
 
 	//! 문자열을 기록한다
 	public static void WriteString(string a_oFilepath,
-		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.EMPTY_STRING) {
+		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteString(oWriteStream, a_oString, a_oEncoding);
 		}
@@ -178,7 +178,7 @@ public static partial class CFunc {
 
 	//! 보안 문자열을 기록한다
 	public static void WriteSecurityString(string a_oFilepath,
-		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.EMPTY_STRING) {
+		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteSecurityString(oWriteStream, a_oString, a_oEncoding);
 		}
@@ -200,7 +200,7 @@ public static partial class CFunc {
 	public static void SendMail(string a_oRecipient, string a_oTitle, string a_oMsg) {
 		CAccess.Assert(a_oTitle != null && a_oMsg != null && a_oRecipient.ExIsValid());
 
-		string oURL = string.Format(KCDefine.MAIL_URL_FORMAT,
+		string oURL = string.Format(KCDefine.B_MAIL_URL_FORMAT,
 			a_oRecipient, System.Uri.EscapeUriString(a_oTitle), System.Uri.EscapeUriString(a_oMsg));
 
 		CFunc.OpenURL(oURL);
@@ -209,7 +209,7 @@ public static partial class CFunc {
 	//! 로그를 출력한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, params object[] a_oParams) {
-		CFunc.ShowLog(a_oFormat, KCDefine.LOG_COLOR_INFO, a_oParams);
+		CFunc.ShowLog(a_oFormat, KCDefine.B_LOG_COLOR_INFO, a_oParams);
 	}
 
 	//! 로그를 출력한다
@@ -221,7 +221,7 @@ public static partial class CFunc {
 
 	//! 경고 로그를 출력한다
 	public static void ShowLogWarning(string a_oFormat, params object[] a_oParams) {
-		CFunc.ShowLogWarning(a_oFormat, KCDefine.LOG_COLOR_WARNING, a_oParams);
+		CFunc.ShowLogWarning(a_oFormat, KCDefine.B_LOG_COLOR_WARNING, a_oParams);
 	}
 
 	//! 경고 로그를 출력한다
@@ -232,7 +232,7 @@ public static partial class CFunc {
 
 	//! 에러 로그를 출력한다
 	public static void ShowLogError(string a_oFormat, params object[] a_oParams) {
-		CFunc.ShowLogError(a_oFormat, KCDefine.LOG_COLOR_ERROR, a_oParams);
+		CFunc.ShowLogError(a_oFormat, KCDefine.B_LOG_COLOR_ERROR, a_oParams);
 	}
 
 	//! 에러 로그를 출력한다
@@ -274,11 +274,11 @@ public static partial class CFunc {
 		CAccess.Assert(a_oAsyncOperation != null);
 
 		do {
-			yield return CFactory.CreateWaitForSeconds(KCDefine.DELTA_TIME_ASYNC_OPERATION, a_bIsRealtime);
+			yield return CFactory.CreateWaitForSeconds(KCDefine.B_DELTA_TIME_ASYNC_OPERATION, a_bIsRealtime);
 			a_oCallback?.Invoke(a_oAsyncOperation, false);
 		} while(!a_oAsyncOperation.isDone);
 
-		yield return CFactory.CreateWaitForSeconds(KCDefine.DELTA_TIME_ASYNC_OPERATION, a_bIsRealtime);
+		yield return CFactory.CreateWaitForSeconds(KCDefine.B_DELTA_TIME_ASYNC_OPERATION, a_bIsRealtime);
 		a_oCallback?.Invoke(a_oAsyncOperation, true);
 	}
 
