@@ -1,15 +1,15 @@
 {
-  "name": "00.unitymodule.common.func",
+  "name": "unitymodule.common.func",
   "version": "1.0.0",
-  "displayName": "00.UnityModule.Common.Func",
+  "displayName": "UnityModule.Common.Func",
   "author": {
     "name": "dante",
     "email": "are2341@nate.com"
   },
   "dependencies": {
-    "00.unitymodule.common.define": "https://gitlab.com/9tap.repository/unitymodule_common_define_client.git#1.0.0",
-    "00.unitymodule.common.access": "https://gitlab.com/9tap.repository/unitymodule_common_access_client.git#1.0.0",
-    "00.unitymodule.common.factory": "https://gitlab.com/9tap.repository/unitymodule_common_factory_client.git#1.0.0",
-    "00.unitymodule.common.extension": "https://gitlab.com/9tap.repository/unitymodule_common_extension_client.git#1.0.0"
+    "unitymodule.common.define": "https://gitlab.com/9tap.repository/unitymodule_common_define_client.git#v1.0.0",
+    "unitymodule.common.access": "https://gitlab.com/9tap.repository/unitymodule_common_access_client.git#v1.0.0",
+    "unitymodule.common.factory": "https://gitlab.com/9tap.repository/unitymodule_common_factory_client.git#v1.0.0",
+    "unitymodule.common.extension": "https://gitlab.com/9tap.repository/unitymodule_common_extension_client.git#v1.0.0"
   }
 }
