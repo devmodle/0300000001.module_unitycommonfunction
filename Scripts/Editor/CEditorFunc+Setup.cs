@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.IO;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
 //! 에디터 설정 함수
 public static partial class CEditorFunc {
@@ -27,3 +25,4 @@ public static partial class CEditorFunc {
 	}
 	#endregion			// 클래스 함수
 }
+#endif			// #if UNITY_EDITOR

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
 
 //! 에디터 기본 함수
@@ -83,3 +85,4 @@ public static partial class CEditorFunc {
 	}
 	#endregion			// 제네릭 클래스 함수
 }
+#endif			// #if UNITY_EDITOR
