@@ -87,7 +87,7 @@ public static partial class CFunc {
 	}
 #endif			// #if UNITY_EDITOR
 
-#if MESSAGE_PACK_ENABLE
+#if MSG_PACK_ENABLE
 	//! 버전 정보를 생성한다
 	public static STVersionInfo MakeDefVersionInfo(string a_oVersion) {
 		return new STVersionInfo() {
@@ -95,6 +95,6 @@ public static partial class CFunc {
 			m_oExtraInfoList = new Dictionary<string, string>()
 		};
 	}
-#endif			// #if MESSAGE_PACK_ENABLE
+#endif			// #if MSG_PACK_ENABLE
 	#endregion			// 조건부 클래스 함수
 }

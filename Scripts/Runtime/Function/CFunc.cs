@@ -69,7 +69,7 @@ public static partial class CFunc {
 	}
 
 	//! 디렉토리를 복사한다
-	public static void CopyDirectory(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true) {
+	public static void CopyDir(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 
 		// 디렉토리 복사가 가능 할 경우
@@ -92,7 +92,7 @@ public static partial class CFunc {
 
 			for(int i = 0; i < oDirectories.Length; ++i) {
 				string oDirectoryName = Path.GetFileNameWithoutExtension(oDirectories[i]);
-				CFunc.CopyDirectory(oDirectories[i], Path.Combine(a_oDestPath, oDirectoryName), a_bIsOverwrite);
+				CFunc.CopyDir(oDirectories[i], Path.Combine(a_oDestPath, oDirectoryName), a_bIsOverwrite);
 			}
 			// 하위 디렉토리를 복사한다 }
 		}
