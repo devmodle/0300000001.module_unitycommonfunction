@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
 
 //! 기본 함수
 public static partial class CFunc {
@@ -260,28 +258,6 @@ public static partial class CFunc {
 		a_oComponent?.StartCoroutine(CFunc.DoRepeatCallFunc(a_oComponent, a_fDeltaTime, a_fMaxDeltaTime, a_oCallback, a_bIsRealtime, a_oParams));
 	}
 
-	//! 비동기 작업을 대기한다
-	public static void WaitAsyncTask(Task a_oTask, System.Action<Task> a_oCallback) {
-		CAccess.Assert(a_oTask != null);
-
-		a_oTask.ContinueWith((a_oContinueTask) => {
-			a_oCallback?.Invoke(a_oContinueTask);
-		});
-	}
-
-	//! 비동기 작업을 대기한다
-	public static IEnumerator WaitAsyncOperation(AsyncOperation a_oAsyncOperation, System.Action<AsyncOperation, bool> a_oCallback, bool a_bIsRealtime = false) {
-		CAccess.Assert(a_oAsyncOperation != null);
-
-		do {
-			yield return CFactory.CreateWaitForSeconds(KCDefine.B_DELTA_TIME_ASYNC_OPERATION, a_bIsRealtime);
-			a_oCallback?.Invoke(a_oAsyncOperation, false);
-		} while(!a_oAsyncOperation.isDone);
-
-		yield return CFactory.CreateWaitForSeconds(KCDefine.B_DELTA_TIME_ASYNC_OPERATION, a_bIsRealtime);
-		a_oCallback?.Invoke(a_oAsyncOperation, true);
-	}
-
 	//! 정수 랜덤 값을 생성한다
 	public static int[] MakeIntRandomValues(int a_nMin, int a_nMax, int a_nNumValues) {
 		CAccess.Assert(a_nMin <= a_nMax);
@@ -371,16 +347,7 @@ public static partial class CFunc {
 		a_tLhs = a_tRhs;
 		a_tRhs = tTemp;
 	}
-
-	//! 비동기 작업을 대기한다
-	public static void WaitAsyncTask<T>(Task<T> a_oTask, System.Action<Task<T>> a_oCallback) {
-		CAccess.Assert(a_oTask != null);
-
-		a_oTask.ContinueWith((a_oContinueTask) => {
-			a_oCallback?.Invoke(a_oContinueTask);
-		});
-	}
-
+	
 	//! 값을 생성한다
 	public static T[] MakeValues<T>(int a_nNumValues, System.Func<int, T> a_oCallback) {
 		CAccess.Assert(a_oCallback != null && a_nNumValues >= 1);

@@ -40,10 +40,10 @@ public static partial class CEditorFunc {
 
 		if(CAccess.IsMacPlatform()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_SHELL,
-				string.Format(KCEditorDefine.B_CMDLINE_PARAMETER_FORMAT_SHELL, a_oParams));
+				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_SHELL, a_oParams));
 		} else if(CAccess.IsWindowsPlatform()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_CMD_PROMPT,
-				string.Format(KCEditorDefine.B_CMDLINE_PARAMETER_FORMAT_CMD_PROMPT, a_oParams));
+				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_CMD_PROMPT, a_oParams));
 		}
 	}
 
