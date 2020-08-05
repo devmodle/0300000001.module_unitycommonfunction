@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -83,6 +84,16 @@ public static partial class CFunc {
 
 		if(a_bIsEnablePing) {
 			EditorGUIUtility.PingObject(a_oObj);
+		}
+	}
+
+	//! 객체를 선택한다
+	public static void SelectObjs(GameObject[] a_oObjs, bool a_bIsEnablePing = false) {
+		CAccess.Assert(a_oObjs.ExIsValid());
+		Selection.objects = a_oObjs;
+
+		if(a_bIsEnablePing) {
+			EditorGUIUtility.PingObject(a_oObjs.Last());
 		}
 	}
 #endif			// #if UNITY_EDITOR
