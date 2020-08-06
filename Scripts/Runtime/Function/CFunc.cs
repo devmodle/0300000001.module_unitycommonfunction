@@ -131,61 +131,61 @@ public static partial class CFunc {
 	//! 바이트를 기록한다
 	public static void WriteBytes(string a_oFilepath,
 		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
-		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
-			CFunc.WriteBytes(oWriteStream, a_oBytes);
+		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
+			CFunc.WriteBytes(oWStream, a_oBytes);
 		}
 	}
 
 	//! 바이트를 기록한다
-	public static void WriteBytes(FileStream a_oWriteStream, byte[] a_oBytes) {
+	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes) {
 		CAccess.Assert(a_oBytes.ExIsValid());
 
-		a_oWriteStream?.Write(a_oBytes, 0, a_oBytes.Length);
-		a_oWriteStream?.Flush(true);
+		a_oWStream?.Write(a_oBytes, 0, a_oBytes.Length);
+		a_oWStream?.Flush(true);
 	}
 
 	//! 보안 바이트를 기록한다
 	public static void WriteSecurityBytes(string a_oFilepath,
 		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
-		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
-			CFunc.WriteSecurityBytes(oWriteStream, a_oBytes);
+		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
+			CFunc.WriteSecurityBytes(oWStream, a_oBytes);
 		}
 	}
 
 	//! 보안 바이트를 기록한다
-	public static void WriteSecurityBytes(FileStream a_oWriteStream, byte[] a_oBytes) {
+	public static void WriteSecurityBytes(FileStream a_oWStream, byte[] a_oBytes) {
 		CAccess.Assert(a_oBytes.ExIsValid());
 		var oString = System.Convert.ToBase64String(a_oBytes, 0, a_oBytes.Length);
 
-		CFunc.WriteBytes(a_oWriteStream, System.Text.Encoding.Default.GetBytes(oString));
+		CFunc.WriteBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(oString));
 	}
 
 	//! 문자열을 기록한다
 	public static void WriteString(string a_oFilepath,
 		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
-		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
-			CFunc.WriteString(oWriteStream, a_oString, a_oEncoding);
+		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
+			CFunc.WriteString(oWStream, a_oString, a_oEncoding);
 		}
 	}
 
 	//! 문자열을 기록한다
-	public static void WriteString(FileStream a_oWriteStream, string a_oString, System.Text.Encoding a_oEncoding) {
+	public static void WriteString(FileStream a_oWStream, string a_oString, System.Text.Encoding a_oEncoding) {
 		CAccess.Assert(a_oEncoding != null && a_oString.ExIsValid());
-		CFunc.WriteBytes(a_oWriteStream, a_oEncoding.GetBytes(a_oString));
+		CFunc.WriteBytes(a_oWStream, a_oEncoding.GetBytes(a_oString));
 	}
 
 	//! 보안 문자열을 기록한다
 	public static void WriteSecurityString(string a_oFilepath,
 		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
-		using(var oWriteStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
-			CFunc.WriteSecurityString(oWriteStream, a_oString, a_oEncoding);
+		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
+			CFunc.WriteSecurityString(oWStream, a_oString, a_oEncoding);
 		}
 	}
 
 	//! 보안 문자열을 기록한다
-	public static void WriteSecurityString(FileStream a_oWriteStream, string a_oString, System.Text.Encoding a_oEncoding) {
+	public static void WriteSecurityString(FileStream a_oWStream, string a_oString, System.Text.Encoding a_oEncoding) {
 		CAccess.Assert(a_oEncoding != null && a_oString.ExIsValid());
-		CFunc.WriteSecurityBytes(a_oWriteStream, a_oEncoding.GetBytes(a_oString));
+		CFunc.WriteSecurityBytes(a_oWStream, a_oEncoding.GetBytes(a_oString));
 	}
 
 	//! URL 을 개방한다
