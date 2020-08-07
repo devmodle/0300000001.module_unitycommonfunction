@@ -59,6 +59,53 @@ public static partial class CFunc {
 			a_oCallback?.Invoke(SceneManager.GetSceneAt(i));
 		}
 	}
+
+	//! 함수를 지연 호출한다
+	public static void LateCallFunc(MonoBehaviour a_oComponent,
+		System.Action<MonoBehaviour, object[]> a_oCallback, object[] a_oParams = null) {
+		a_oComponent?.StartCoroutine(CFunc.DoLateCallFunc(a_oComponent, a_oCallback, a_oParams));
+	}
+
+	//! 함수를 지연 호출한다
+	public static void LateCallFunc(MonoBehaviour a_oComponent,
+		float a_fDelay, System.Action<MonoBehaviour, object[]> a_oCallback, bool a_bIsRealtime = false, object[] a_oParams = null) {
+		a_oComponent?.StartCoroutine(CFunc.DoLateCallFunc(a_oComponent, a_fDelay, a_oCallback, a_bIsRealtime, a_oParams));
+	}
+
+	//! 함수를 반복 호출한다
+	public static void RepeatCallFunc(MonoBehaviour a_oComponent,
+		float a_fDeltaTime, float a_fMaxDeltaTime, System.Func<MonoBehaviour, object[], bool, bool> a_oCallback, bool a_bIsRealtime = false, object[] a_oParams = null) {
+		CAccess.Assert(a_oCallback != null);
+		a_oComponent?.StartCoroutine(CFunc.DoRepeatCallFunc(a_oComponent, a_fDeltaTime, a_fMaxDeltaTime, a_oCallback, a_bIsRealtime, a_oParams));
+	}
+
+	//! 함수를 지연 호출한다
+	private static IEnumerator DoLateCallFunc(MonoBehaviour a_oComponent,
+		System.Action<MonoBehaviour, object[]> a_oCallback, object[] a_oParams) {
+		yield return new WaitForEndOfFrame();
+		a_oCallback?.Invoke(a_oComponent, a_oParams);
+	}
+
+	//! 함수를 지연 호출한다
+	private static IEnumerator DoLateCallFunc(MonoBehaviour a_oComponent,
+		float a_fDelay, System.Action<MonoBehaviour, object[]> a_oCallback, bool a_bIsRealtime, object[] a_oParams) {
+		yield return CFactory.CreateWaitForSeconds(a_fDelay, a_bIsRealtime);
+		a_oCallback?.Invoke(a_oComponent, a_oParams);
+	}
+
+	//! 함수를 반복 호출한다
+	private static IEnumerator DoRepeatCallFunc(MonoBehaviour a_oComponent,
+		float a_fDeltaTime, double a_dblMaxDeltaTime, System.Func<MonoBehaviour, object[], bool, bool> a_oCallback, bool a_bIsRealtime, object[] a_oParams) {
+		var stStartTime = System.DateTime.Now;
+		System.TimeSpan stDeltaTime;
+		
+		do {
+			yield return CFactory.CreateWaitForSeconds(a_fDeltaTime, a_bIsRealtime);
+			stDeltaTime = System.DateTime.Now - stStartTime;
+		} while(a_oCallback(a_oComponent, a_oParams, false) && stDeltaTime.TotalSeconds.ExIsLess(a_dblMaxDeltaTime));
+
+		a_oCallback(a_oComponent, a_oParams, true);
+	}
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
