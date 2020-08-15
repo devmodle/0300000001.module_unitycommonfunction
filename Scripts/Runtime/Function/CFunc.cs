@@ -12,7 +12,6 @@ public static partial class CFunc {
 	public static void CopyFile(string a_oSrcFilepath, string a_oDestFilepath, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcFilepath.ExIsValid() && a_oDestFilepath.ExIsValid());
 
-		// 파일 복사가 가능 할 경우
 		if(File.Exists(a_oSrcFilepath) && (a_bIsOverwrite || !File.Exists(a_oDestFilepath))) {
 			var oBytes = CFunc.ReadBytes(a_oSrcFilepath);
 			CFunc.WriteBytes(a_oDestFilepath, oBytes);
@@ -24,7 +23,6 @@ public static partial class CFunc {
 		string a_oDestFilepath, string a_oIgnore, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcFilepath.ExIsValid() && a_oDestFilepath.ExIsValid() && a_oIgnore.ExIsValid());
 
-		// 파일 복사가 가능 할 경우
 		if(File.Exists(a_oSrcFilepath) && (a_bIsOverwrite || !File.Exists(a_oDestFilepath))) {
 			var oStringLines = CFunc.ReadStringLines(a_oSrcFilepath, a_oEncoding);
 
@@ -47,7 +45,6 @@ public static partial class CFunc {
 		string a_oDestFilepath, string a_oSearch, string a_oReplace, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcFilepath.ExIsValid() && a_oDestFilepath.ExIsValid() && a_oSearch.ExIsValid() && a_oReplace.ExIsValid());
 
-		// 파일 복사가 가능 할 경우
 		if(File.Exists(a_oSrcFilepath) && (a_bIsOverwrite || !File.Exists(a_oDestFilepath))) {
 			var oStringLines = CFunc.ReadStringLines(a_oSrcFilepath, a_oEncoding);
 
@@ -70,9 +67,7 @@ public static partial class CFunc {
 	public static void CopyDir(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 
-		// 디렉토리 복사가 가능 할 경우
 		if(Directory.Exists(a_oSrcPath)) {
-			// 파일을 복사한다
 			if(a_bIsOverwrite || !Directory.Exists(a_oDestPath)) {
 				CAccess.RemoveDirectory(a_oDestPath);
 				Directory.CreateDirectory(a_oDestPath);

@@ -37,7 +37,7 @@ public static partial class CFunc {
 	public static List<GameObject> FindObjs(string a_oName) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObjList = new List<GameObject>();
-
+		
 		CFunc.EnumerateScenes((a_stScene) => {
 			var oChildObjList = a_stScene.ExFindChildren(a_oName);
 
