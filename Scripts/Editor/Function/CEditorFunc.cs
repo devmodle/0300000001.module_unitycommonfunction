@@ -21,11 +21,12 @@ public static partial class CEditorFunc {
 	//! 알림 팝업을 출력한다
 	public static bool ShowAlertPopup(string a_oTitle,
 		string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText) {
-		if(!a_oCancelBtnText.ExIsValid()) {
-			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText);
+		// 취소 버튼 텍스트가 유효 할 경우
+		if(a_oCancelBtnText.ExIsValid()) {
+			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText, a_oCancelBtnText);
 		}
 
-		return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText, a_oCancelBtnText);
+		return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText);
 	}
 
 	//! 에셋 데이터 베이스를 갱신한다
@@ -38,10 +39,13 @@ public static partial class CEditorFunc {
 	public static void ExecuteCmdline(string a_oParams) {
 		CAccess.Assert(a_oParams.ExIsValid());
 
+		// 맥 플랫폼 일 경우
 		if(CAccess.IsMacPlatform()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_SHELL,
 				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_SHELL, a_oParams));
-		} else if(CAccess.IsWindowsPlatform()) {
+		}
+		// 윈도우즈 플랫폼 일 경우
+		else if(CAccess.IsWindowsPlatform()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_CMD_PROMPT,
 				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_CMD_PROMPT, a_oParams));
 		}
@@ -55,6 +59,11 @@ public static partial class CEditorFunc {
 		oStartInfo.UseShellExecute = true;
 
 		Process.Start(oStartInfo);
+	}
+
+	//! 플랫폼을 변경한다
+	public static void ChangePlatform(BuildTargetGroup a_eTargetGroup, BuildTarget a_eTarget) {
+		EditorUserBuildSettings.SwitchActiveBuildTarget(a_eTargetGroup, a_eTarget);
 	}
 	#endregion			// 클래스 함수
 
@@ -76,6 +85,7 @@ public static partial class CEditorFunc {
 			string oPath = AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]);
 			var oAsset = AssetDatabase.LoadAssetAtPath<T>(oPath);
 
+			// 에셋이 존재 할 경우
 			if(oAsset != null) {
 				oAssetList.Add(oAsset);
 			}

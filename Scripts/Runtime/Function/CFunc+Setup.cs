@@ -21,6 +21,7 @@ public static partial class CFunc {
 		// 퀄리티 레벨을 설정한다 {
 		var eQualityLevel = a_eQualityLevel;
 
+		// 자동 퀄리티 레벨 일 경우
 		if(a_eQualityLevel == EQualityLevel.AUTO) {
 #if ULTRA_QUALITY_LEVEL_ENABLE
 			eQualityLevel = EQualityLevel.ULTRA;
@@ -49,6 +50,7 @@ public static partial class CFunc {
 #if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
 		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.U_PIPELINE_PATH_UNIVERSAL_RENDER_PIPELINE);
 
+		// 렌더 파이프라인이 존재 할 경우
 		if(oRenderPipeline != null) {
 			oRenderPipeline.supportsHDR = false;
 

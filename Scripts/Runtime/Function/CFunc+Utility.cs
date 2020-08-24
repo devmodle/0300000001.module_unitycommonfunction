@@ -12,7 +12,7 @@ using UnityEditor;
 //! 유틸리티 함수
 public static partial class CFunc {
 	#region 클래스 함수
-	//! 어플리케이션을 종료한다
+	//! 앱을 종료한다
 	public static void QuitApplication(int a_nExitCode = 0) {
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.ExitPlaymode();
@@ -41,6 +41,7 @@ public static partial class CFunc {
 		CFunc.EnumerateScenes((a_stScene) => {
 			var oChildObjList = a_stScene.ExFindChildren(a_oName);
 
+			// 자식 객체가 존재 할 경우
 			if(oChildObjList != null) {
 				oObjList.AddRange(oChildObjList);
 			}
@@ -134,21 +135,23 @@ public static partial class CFunc {
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	//! 객체를 선택한다
-	public static void SelectObj(GameObject a_oObj, bool a_bIsEnablePing = false) {
+	public static void SelectObj(GameObject a_oObj, bool a_bIsPing = false) {
 		CAccess.Assert(a_oObj != null);
 		Selection.activeGameObject = a_oObj;
 
-		if(a_bIsEnablePing) {
+		// 핑 모드 일 경우
+		if(a_bIsPing) {
 			EditorGUIUtility.PingObject(a_oObj);
 		}
 	}
 
 	//! 객체를 선택한다
-	public static void SelectObjs(GameObject[] a_oObjs, bool a_bIsEnablePing = false) {
+	public static void SelectObjs(GameObject[] a_oObjs, bool a_bIsPing = false) {
 		CAccess.Assert(a_oObjs.ExIsValid());
 		Selection.objects = a_oObjs;
 
-		if(a_bIsEnablePing) {
+		// 핑 모드 일 경우
+		if(a_bIsPing) {
 			EditorGUIUtility.PingObject(a_oObjs.Last());
 		}
 	}
