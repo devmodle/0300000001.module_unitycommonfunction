@@ -12,15 +12,10 @@ using UnityEngine.Rendering.Universal;
 public static partial class CFunc {
 	#region 클래스 함수
 	//! 퀄리티를 설정한다
-	public static void SetupQuality(int a_nTargetFrameRate, 
-		bool a_bIsEnableMultiTouch, EQualityLevel a_eQualityLevel = EQualityLevel.AUTO, bool a_bIsApplyExpensiveChange = false) {
-		Screen.sleepTimeout = SleepTimeout.NeverSleep;
-		Input.multiTouchEnabled = a_bIsEnableMultiTouch;
-		Application.targetFrameRate = Mathf.Min(a_nTargetFrameRate, Screen.currentResolution.refreshRate);
-
+	public static void SetupQuality(EQualityLevel a_eQualityLevel, bool a_bIsApplyExpensiveChange = false) {
 		// 퀄리티 레벨을 설정한다 {
 		var eQualityLevel = a_eQualityLevel;
-
+		
 		// 자동 퀄리티 레벨 일 경우
 		if(a_eQualityLevel == EQualityLevel.AUTO) {
 #if ULTRA_QUALITY_LEVEL_ENABLE
