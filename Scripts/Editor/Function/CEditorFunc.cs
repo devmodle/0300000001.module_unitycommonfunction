@@ -69,6 +69,12 @@ public static partial class CEditorFunc {
 
 	#region 제네릭 클래스 함수
 	//! 에셋을 탐색한다
+	public static T FindAsset<T>(string a_oFilepath) where T : Object {
+		CAccess.Assert(a_oFilepath.ExIsValid());
+		return AssetDatabase.LoadAssetAtPath<T>(a_oFilepath);
+	}
+
+	//! 에셋을 탐색한다
 	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
 		return oAssets.ExIsValid() ? oAssets.First() : null;

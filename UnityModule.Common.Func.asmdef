@@ -5,6 +5,7 @@
         "UnityModule.Common.Access",
         "UnityModule.Common.Factory",
         "UnityModule.Common.Extension",
+        "MessagePack",
         "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],

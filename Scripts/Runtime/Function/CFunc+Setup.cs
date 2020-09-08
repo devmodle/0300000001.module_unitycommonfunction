@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 
-#if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
+#if UNIVERSAL_PIPELINE_MODULE_ENABLE
 using UnityEngine.Rendering.Universal;
-#endif			// #if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
+#endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE
 
 //! 설정 함수
 public static partial class CFunc {
@@ -39,10 +39,10 @@ public static partial class CFunc {
 
 		QualitySettings.SetQualityLevel((int)eQualityLevel, a_bIsApplyExpensiveChange);
 		// 퀄리티 레벨을 설정한다 }
-
+		
 #if UNITY_EDITOR
 		// 렌더링 파이프라인을 설정한다 {			
-#if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
+#if UNIVERSAL_PIPELINE_MODULE_ENABLE
 		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.U_PIPELINE_PATH_UNIVERSAL_RENDER_PIPELINE);
 
 		// 렌더 파이프라인이 존재 할 경우
@@ -130,7 +130,7 @@ public static partial class CFunc {
 #else
 		QualitySettings.renderPipeline = null;
 		GraphicsSettings.renderPipelineAsset = null;
-#endif			// #if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
+#endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE
 		// 렌더링 파이프라인을 설정한다 }
 #endif			// #if UNITY_EDITOR
 	}

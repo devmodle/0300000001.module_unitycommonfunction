@@ -5,6 +5,10 @@ using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 
+#if MSG_PACK_ENABLE
+using MessagePack;
+#endif			// #if MSG_PACK_ENABLE
+
 //! 기본 함수
 public static partial class CFunc {
 	#region 클래스 함수
@@ -210,7 +214,7 @@ public static partial class CFunc {
 	//! 로그를 출력한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, params object[] a_oParams) {
-		CFunc.ShowLog(a_oFormat, KCDefine.B_LOG_COLOR_INFO, a_oParams);
+		CFunc.DoShowLog(string.Format(a_oFormat, a_oParams), LogType.Log);
 	}
 
 	//! 로그를 출력한다
@@ -222,7 +226,7 @@ public static partial class CFunc {
 
 	//! 경고 로그를 출력한다
 	public static void ShowLogWarning(string a_oFormat, params object[] a_oParams) {
-		CFunc.ShowLogWarning(a_oFormat, KCDefine.B_LOG_COLOR_WARNING, a_oParams);
+		CFunc.DoShowLog(string.Format(a_oFormat, a_oParams), LogType.Warning);
 	}
 
 	//! 경고 로그를 출력한다
@@ -233,7 +237,7 @@ public static partial class CFunc {
 
 	//! 에러 로그를 출력한다
 	public static void ShowLogError(string a_oFormat, params object[] a_oParams) {
-		CFunc.ShowLogError(a_oFormat, KCDefine.B_LOG_COLOR_ERROR, a_oParams);
+		CFunc.DoShowLog(string.Format(a_oFormat, a_oParams), LogType.Error);
 	}
 
 	//! 에러 로그를 출력한다
@@ -326,6 +330,83 @@ public static partial class CFunc {
 		oValues.ExShuffle();
 
 		return oValues;
-	}	
+	}
+
+	//! JSON 객체를 읽어들인다
+	public static T ReadJSONObj<T>(string a_oFilepath, System.Text.Encoding a_oEncoding) {
+#if SECURITY_ENABLE
+		var oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
+#else
+		var oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
+#endif			// #if SECURITY_ENABLE
+
+		CAccess.Assert(oString.ExIsValid());
+		return oString.ExJSONStringToObj<T>();
+	}
+
+	//! JSON 객체를 기록한다
+	public static void WriteJSONObj<T>(string a_oFilepath, 
+		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false) {
+		var oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
+		CAccess.Assert(oString.ExIsValid());
+
+#if SECURITY_ENABLE
+		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
+#else
+		CFunc.WriteString(a_oFilepath, oString, a_oEncoding);
+#endif			// #if SECURITY_ENABLE
+	}
 	#endregion			// 제네릭 클래스 함수
+
+	#region 조건부 제네릭 클래스 함수
+#if MSG_PACK_ENABLE
+	//! 메세지 팩 객체를 읽어들인다
+	public static T ReadMsgPackObj<T>(string a_oFilepath) {
+#if SECURITY_ENABLE
+		var oBytes = CFunc.ReadSecurityBytes(a_oFilepath);
+#else
+		var oBytes = CFunc.ReadBytes(a_oFilepath);
+#endif			// #if SECURITY_ENABLE
+
+		CAccess.Assert(oBytes.ExIsValid());
+		return MessagePackSerializer.Deserialize<T>(oBytes);
+	}
+
+	//! 메세지 팩 JSON 객체를 읽어들인다
+	public static T ReadMsgPackJSONObj<T>(string a_oFilepath, System.Text.Encoding a_oEncoding) {
+#if SECURITY_ENABLE
+		var oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
+#else
+		var oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
+#endif			// #if SECURITY_ENABLE
+
+		CAccess.Assert(oString.ExIsValid());
+		return oString.ExMsgPackJSONStringToObj<T>();
+	}
+
+	//! 메세지 팩 객체를 기록한다
+	public static void WriteMsgPackObj<T>(string a_oFilepath, T a_oObj) {
+		var oBytes = MessagePackSerializer.Serialize<T>(a_oObj);
+		CAccess.Assert(oBytes.ExIsValid());
+
+#if SECURITY_ENABLE
+		CFunc.WriteSecurityBytes(a_oFilepath, oBytes);
+#else
+		CFunc.WriteBytes(a_oFilepath, oBytes);
+#endif			// #if SECURITY_ENABLE
+	}
+
+	//! 메세지 팩 JSON 객체를 기록한다
+	public static void WriteMsgPackJSONObj<T>(string a_oFilepath, T a_oObj, System.Text.Encoding a_oEncoding) {
+		var oString = a_oObj.ExToMsgPackJSONString();
+		CAccess.Assert(oString.ExIsValid());
+
+#if SECURITY_ENABLE
+		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
+#else
+		CFunc.WriteString(a_oFilepath, oString, a_oEncoding);
+#endif			// #if SECURITY_ENABLE		
+	}
+#endif			// #if MSG_PACK_ENABLE
+	#endregion			// 조건부 제네릭 클래스 함수
 }

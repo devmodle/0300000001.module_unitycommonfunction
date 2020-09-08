@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -89,6 +90,16 @@ public static partial class CFunc {
 		a_oComponent?.StartCoroutine(CFunc.DoRepeatCallFunc(a_oComponent, a_fDeltaTime, a_fMaxDeltaTime, a_oCallback, a_bIsRealtime, a_oParams));
 	}
 
+	//! 지역화 파일 경로를 생성한다
+	public static string MakeLocalizeFilepath(string a_oBaseFilepath, string a_oLanguage) {
+		CAccess.Assert(a_oBaseFilepath.ExIsValid() && a_oLanguage.ExIsValid());
+
+		var oFilename = Path.GetFileNameWithoutExtension(a_oBaseFilepath);
+		var oLocalizeFilename = string.Format(KCDefine.B_FILENAME_FORMAT_LOCALIZE, oFilename, a_oLanguage);
+
+		return a_oBaseFilepath.ExGetReplaceFilenamePath(oLocalizeFilename);
+	}
+
 	//! 함수를 지연 호출한다
 	private static IEnumerator DoLateCallFunc(MonoBehaviour a_oComponent,
 		System.Action<MonoBehaviour, object[]> a_oCallback, object[] a_oParams) {
@@ -152,7 +163,7 @@ public static partial class CFunc {
 
 		// 핑 모드 일 경우
 		if(a_bIsPing) {
-			EditorGUIUtility.PingObject(a_oObjs.Last());
+			EditorGUIUtility.PingObject(a_oObjs.First());
 		}
 	}
 #endif			// #if UNITY_EDITOR
