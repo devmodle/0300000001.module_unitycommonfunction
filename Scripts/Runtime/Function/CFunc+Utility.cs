@@ -24,7 +24,6 @@ public static partial class CFunc {
 
 	//! 객체를 탐색한다
 	public static GameObject FindObj(string a_oName) {
-		CAccess.Assert(a_oName.ExIsValid());
 		GameObject oObj = null;
 
 		CFunc.EnumerateScenes((a_stScene) => {
@@ -36,7 +35,6 @@ public static partial class CFunc {
 
 	//! 객체를 탐색한다
 	public static List<GameObject> FindObjs(string a_oName) {
-		CAccess.Assert(a_oName.ExIsValid());
 		var oObjList = new List<GameObject>();
 		
 		CFunc.EnumerateScenes((a_stScene) => {
@@ -73,27 +71,27 @@ public static partial class CFunc {
 
 	//! 함수를 지연 호출한다
 	public static void LateCallFunc(MonoBehaviour a_oComponent,
-		System.Action<MonoBehaviour, object[]> a_oCallback, object[] a_oParams = null) {
+		System.Action<MonoBehaviour, object[]> a_oCallback, object[] a_oParams = null) 
+	{
 		a_oComponent?.StartCoroutine(CFunc.DoLateCallFunc(a_oComponent, a_oCallback, a_oParams));
 	}
 
 	//! 함수를 지연 호출한다
 	public static void LateCallFunc(MonoBehaviour a_oComponent,
-		float a_fDelay, System.Action<MonoBehaviour, object[]> a_oCallback, bool a_bIsRealtime = false, object[] a_oParams = null) {
+		float a_fDelay, System.Action<MonoBehaviour, object[]> a_oCallback, bool a_bIsRealtime = false, object[] a_oParams = null) 
+	{
 		a_oComponent?.StartCoroutine(CFunc.DoLateCallFunc(a_oComponent, a_fDelay, a_oCallback, a_bIsRealtime, a_oParams));
 	}
 
 	//! 함수를 반복 호출한다
 	public static void RepeatCallFunc(MonoBehaviour a_oComponent,
-		float a_fDeltaTime, float a_fMaxDeltaTime, System.Func<MonoBehaviour, object[], bool, bool> a_oCallback, bool a_bIsRealtime = false, object[] a_oParams = null) {
-		CAccess.Assert(a_oCallback != null);
+		float a_fDeltaTime, float a_fMaxDeltaTime, System.Func<MonoBehaviour, object[], bool, bool> a_oCallback, bool a_bIsRealtime = false, object[] a_oParams = null) 
+	{
 		a_oComponent?.StartCoroutine(CFunc.DoRepeatCallFunc(a_oComponent, a_fDeltaTime, a_fMaxDeltaTime, a_oCallback, a_bIsRealtime, a_oParams));
 	}
 
 	//! 지역화 파일 경로를 생성한다
 	public static string MakeLocalizeFilepath(string a_oBaseFilepath, string a_oLanguage) {
-		CAccess.Assert(a_oBaseFilepath.ExIsValid() && a_oLanguage.ExIsValid());
-
 		var oFilename = Path.GetFileNameWithoutExtension(a_oBaseFilepath);
 		var oLocalizeFilename = string.Format(KCDefine.B_FILENAME_FORMAT_LOCALIZE, oFilename, a_oLanguage);
 
@@ -102,21 +100,24 @@ public static partial class CFunc {
 
 	//! 함수를 지연 호출한다
 	private static IEnumerator DoLateCallFunc(MonoBehaviour a_oComponent,
-		System.Action<MonoBehaviour, object[]> a_oCallback, object[] a_oParams) {
+		System.Action<MonoBehaviour, object[]> a_oCallback, object[] a_oParams) 
+	{
 		yield return new WaitForEndOfFrame();
 		a_oCallback?.Invoke(a_oComponent, a_oParams);
 	}
 
 	//! 함수를 지연 호출한다
 	private static IEnumerator DoLateCallFunc(MonoBehaviour a_oComponent,
-		float a_fDelay, System.Action<MonoBehaviour, object[]> a_oCallback, bool a_bIsRealtime, object[] a_oParams) {
+		float a_fDelay, System.Action<MonoBehaviour, object[]> a_oCallback, bool a_bIsRealtime, object[] a_oParams) 
+	{
 		yield return CFactory.CreateWaitForSeconds(a_fDelay, a_bIsRealtime);
 		a_oCallback?.Invoke(a_oComponent, a_oParams);
 	}
 
 	//! 함수를 반복 호출한다
 	private static IEnumerator DoRepeatCallFunc(MonoBehaviour a_oComponent,
-		float a_fDeltaTime, double a_dblMaxDeltaTime, System.Func<MonoBehaviour, object[], bool, bool> a_oCallback, bool a_bIsRealtime, object[] a_oParams) {
+		float a_fDeltaTime, double a_dblMaxDeltaTime, System.Func<MonoBehaviour, object[], bool, bool> a_oCallback, bool a_bIsRealtime, object[] a_oParams) 
+	{
 		var stStartTime = System.DateTime.Now;
 		System.TimeSpan stDeltaTime;
 		
@@ -147,7 +148,6 @@ public static partial class CFunc {
 #if UNITY_EDITOR
 	//! 객체를 선택한다
 	public static void SelectObj(GameObject a_oObj, bool a_bIsPing = false) {
-		CAccess.Assert(a_oObj != null);
 		Selection.activeGameObject = a_oObj;
 
 		// 핑 모드 일 경우
@@ -158,7 +158,6 @@ public static partial class CFunc {
 
 	//! 객체를 선택한다
 	public static void SelectObjs(GameObject[] a_oObjs, bool a_bIsPing = false) {
-		CAccess.Assert(a_oObjs.ExIsValid());
 		Selection.objects = a_oObjs;
 
 		// 핑 모드 일 경우

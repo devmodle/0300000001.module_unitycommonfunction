@@ -44,7 +44,7 @@ public static partial class CFunc {
 		// 렌더링 파이프라인을 설정한다 {			
 #if UNIVERSAL_PIPELINE_MODULE_ENABLE
 		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.U_PIPELINE_PATH_UNIVERSAL_RENDER_PIPELINE);
-
+		
 		// 렌더 파이프라인이 존재 할 경우
 		if(oRenderPipeline != null) {
 			oRenderPipeline.supportsHDR = false;

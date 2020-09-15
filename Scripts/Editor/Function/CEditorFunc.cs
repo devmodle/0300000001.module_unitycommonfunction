@@ -12,9 +12,7 @@ public static partial class CEditorFunc {
 	#region 클래스 함수
 	//! 에셋을 로드한다
 	public static Object LoadAsset(string a_oFilepath) {
-		CAccess.Assert(a_oFilepath.ExIsValid());
 		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilepath);
-
 		return oAssets.ExIsValid() ? oAssets.First() : null;
 	}
 
@@ -37,8 +35,6 @@ public static partial class CEditorFunc {
 	
 	//! 커맨드 라인을 실행한다
 	public static void ExecuteCmdline(string a_oParams) {
-		CAccess.Assert(a_oParams.ExIsValid());
-
 		// 맥 플랫폼 일 경우
 		if(CAccess.IsMacPlatform()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_SHELL,
@@ -53,8 +49,6 @@ public static partial class CEditorFunc {
 
 	//! 커맨드 라인을 실행한다
 	public static void ExecuteCmdline(string a_oFilepath, string a_oParams) {
-		CAccess.Assert(a_oFilepath.ExIsValid() && a_oParams.ExIsValid());
-
 		var oStartInfo = new ProcessStartInfo(a_oFilepath, a_oParams);
 		oStartInfo.UseShellExecute = true;
 
@@ -70,7 +64,6 @@ public static partial class CEditorFunc {
 	#region 제네릭 클래스 함수
 	//! 에셋을 탐색한다
 	public static T FindAsset<T>(string a_oFilepath) where T : Object {
-		CAccess.Assert(a_oFilepath.ExIsValid());
 		return AssetDatabase.LoadAssetAtPath<T>(a_oFilepath);
 	}
 
@@ -82,18 +75,19 @@ public static partial class CEditorFunc {
 
 	//! 에셋을 탐색한다
 	public static List<T> FindAssets<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
-		CAccess.Assert(a_oFilter.ExIsValid() && a_oSearchPaths.ExIsValid());
-
 		var oAssetList = new List<T>();
 		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPaths);
 
-		for(int i = 0; i < oAssetGUIDs?.Length; ++i) {
-			string oPath = AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]);
-			var oAsset = AssetDatabase.LoadAssetAtPath<T>(oPath);
+		// 에셋 GUID 가 존재 할 경우
+		if(oAssetGUIDs.ExIsValid()) {
+			for(int i = 0; i < oAssetGUIDs.Length; ++i) {
+				string oPath = AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]);
+				var oAsset = AssetDatabase.LoadAssetAtPath<T>(oPath);
 
-			// 에셋이 존재 할 경우
-			if(oAsset != null) {
-				oAssetList.Add(oAsset);
+				// 에셋이 존재 할 경우
+				if(oAsset != null) {
+					oAssetList.Add(oAsset);
+				}
 			}
 		}
 
