@@ -36,7 +36,7 @@ public static partial class CFunc {
 	//! 객체를 탐색한다
 	public static List<GameObject> FindObjs(string a_oName) {
 		var oObjList = new List<GameObject>();
-		
+
 		CFunc.EnumerateScenes((a_stScene) => {
 			var oChildObjList = a_stScene.ExFindChildren(a_oName);
 
