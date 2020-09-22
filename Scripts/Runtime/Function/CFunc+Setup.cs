@@ -33,8 +33,11 @@ public static partial class CFunc {
 		QualitySettings.asyncUploadPersistentBuffer = KCDefine.U_QUALITY_ASYNC_UPLOAD_PERSISTENT_BUFFER;
 		QualitySettings.resolutionScalingFixedDPIFactor = KCDefine.U_QUALITY_RESOLUTION_SCALE_FIXED_DPI_FACTOR;
 
-		QualitySettings.vSyncCount = (eQualityLevel >= EQualityLevel.HIGH) ? (int)EVSyncType.EVERY : (int)EVSyncType.NEVER;
-		QualitySettings.anisotropicFiltering = (eQualityLevel >= EQualityLevel.HIGH) ? AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
+		QualitySettings.vSyncCount = (eQualityLevel >= EQualityLevel.HIGH) ? 
+			(int)EVSyncType.EVERY : (int)EVSyncType.NEVER;
+
+		QualitySettings.anisotropicFiltering = (eQualityLevel >= EQualityLevel.HIGH) ? 
+			AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
 #endif			// #if UNITY_EDITOR
 
 		QualitySettings.SetQualityLevel((int)eQualityLevel, a_bIsApplyExpensiveChange);

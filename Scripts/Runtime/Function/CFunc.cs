@@ -60,8 +60,8 @@ public static partial class CFunc {
 				var oStringBuilder = new System.Text.StringBuilder();
 
 				for(int i = 0; i < oStringLines.Length; ++i) {
-					string oString = !oStringLines[i].ExIsValid() ? string.Empty
-						: oStringLines[i].ExGetReplaceString(a_oSearch, a_oReplace, short.MaxValue);
+					string oString = !oStringLines[i].ExIsValid() ? 
+						string.Empty : oStringLines[i].ExGetReplaceString(a_oSearch, a_oReplace, short.MaxValue);
 						
 					oStringBuilder.AppendLine(oString);
 				}
@@ -109,7 +109,9 @@ public static partial class CFunc {
 	//! 보안 바이트를 읽어들인다
 	public static byte[] ReadSecurityBytes(string a_oFilepath) {
 		var oBytes = CFunc.ReadBytes(a_oFilepath);
-		return (oBytes != null) ? System.Convert.FromBase64String(System.Text.Encoding.Default.GetString(oBytes)) : null;
+
+		return (oBytes != null) ? 
+			System.Convert.FromBase64String(System.Text.Encoding.Default.GetString(oBytes)) : null;
 	}
 
 	//! 문자열을 읽어들인다
