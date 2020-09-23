@@ -198,6 +198,7 @@ public static partial class CFunc {
 
 	//! URL 을 개방한다
 	public static void OpenURL(string a_oURL) {
+		CAccess.Assert(a_oURL.ExIsValid());
 		Application.OpenURL(a_oURL);
 	}
 
