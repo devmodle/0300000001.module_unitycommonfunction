@@ -35,13 +35,13 @@ public static partial class CEditorFunc {
 	
 	//! 커맨드 라인을 실행한다
 	public static void ExecuteCmdline(string a_oParams) {
-		// 맥 플랫폼 일 경우
-		if(CAccess.IsMacPlatform()) {
+		// 맥 일 경우
+		if(CAccess.IsMac()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_SHELL,
 				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_SHELL, a_oParams));
 		}
-		// 윈도우즈 플랫폼 일 경우
-		else if(CAccess.IsWindowsPlatform()) {
+		// 윈도우즈 일 경우
+		else if(CAccess.IsWindows()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_CMD_PROMPT,
 				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_CMD_PROMPT, a_oParams));
 		}
