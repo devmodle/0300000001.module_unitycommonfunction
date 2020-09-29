@@ -11,6 +11,14 @@ using MessagePack;
 
 //! 기본 함수
 public static partial class CFunc {
+	#region 클래스 변수
+	private static Dictionary<LogType, System.Action<string>> m_oLogList = new Dictionary<LogType, System.Action<string>>() {
+		[LogType.Log] = UnityEngine.Debug.Log,
+		[LogType.Warning] = UnityEngine.Debug.LogWarning,
+		[LogType.Error] = UnityEngine.Debug.LogError
+	};
+	#endregion			// 클래스 변수
+
 	#region 클래스 함수
 	//! 파일을 복사한다
 	public static void CopyFile(string a_oSrcFilepath, 
@@ -213,36 +221,36 @@ public static partial class CFunc {
 	//! 로그를 출력한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, params object[] a_oParams) {
-		CFunc.DoShowLog(string.Format(a_oFormat, a_oParams), LogType.Log);
+		CFunc.DoShowLog(LogType.Log, string.Format(a_oFormat, a_oParams));
 	}
 
 	//! 로그를 출력한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, Color a_stColor, params object[] a_oParams) {
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
-		CFunc.DoShowLog(string.Format(oFormat, a_oParams), LogType.Log);
+		CFunc.DoShowLog(LogType.Log, string.Format(oFormat, a_oParams));
 	}
 
 	//! 경고 로그를 출력한다
 	public static void ShowLogWarning(string a_oFormat, params object[] a_oParams) {
-		CFunc.DoShowLog(string.Format(a_oFormat, a_oParams), LogType.Warning);
+		CFunc.DoShowLog(LogType.Warning, string.Format(a_oFormat, a_oParams));
 	}
 
 	//! 경고 로그를 출력한다
 	public static void ShowLogWarning(string a_oFormat, Color a_stColor, params object[] a_oParams) {
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
-		CFunc.DoShowLog(string.Format(oFormat, a_oParams), LogType.Warning);
+		CFunc.DoShowLog(LogType.Warning, string.Format(oFormat, a_oParams));
 	}
 
 	//! 에러 로그를 출력한다
 	public static void ShowLogError(string a_oFormat, params object[] a_oParams) {
-		CFunc.DoShowLog(string.Format(a_oFormat, a_oParams), LogType.Error);
+		CFunc.DoShowLog(LogType.Error, string.Format(a_oFormat, a_oParams));
 	}
 
 	//! 에러 로그를 출력한다
 	public static void ShowLogError(string a_oFormat, Color a_stColor, params object[] a_oParams) {
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
-		CFunc.DoShowLog(string.Format(oFormat, a_oParams), LogType.Error);
+		CFunc.DoShowLog(LogType.Error, string.Format(oFormat, a_oParams));
 	}
 
 	//! 정수 랜덤 값을 생성한다
@@ -284,17 +292,9 @@ public static partial class CFunc {
 	}
 
 	//! 로그를 출력한다
-	private static void DoShowLog(string a_oLog, LogType a_eLogType) {
-		// 에러 로그 일 경우
-		if(a_eLogType == LogType.Error) {
-			UnityEngine.Debug.LogError(a_oLog);
-		}
-		// 경고 로그 일 경우
-		else if(a_eLogType == LogType.Warning) {
-			UnityEngine.Debug.LogWarning(a_oLog);
-		} else {
-			UnityEngine.Debug.Log(a_oLog);
-		}
+	private static void DoShowLog(LogType a_eLogType, string a_oLog) {
+		CAccess.Assert(CFunc.m_oLogList.ContainsKey(a_eLogType));
+		CFunc.m_oLogList[a_eLogType](a_oLog);
 	}
 	#endregion			// 클래스 함수
 
