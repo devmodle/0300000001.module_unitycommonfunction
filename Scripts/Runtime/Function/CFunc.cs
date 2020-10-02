@@ -21,23 +21,21 @@ public static partial class CFunc {
 
 	#region 클래스 함수
 	//! 파일을 복사한다
-	public static void CopyFile(string a_oSrcFilepath, 
-		string a_oDestFilepath, bool a_bIsOverwrite = true) 
-	{
+	public static void CopyFile(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true) {
 		// 파일 복사가 가능 할 경우
-		if(File.Exists(a_oSrcFilepath) && (a_bIsOverwrite || !File.Exists(a_oDestFilepath))) {
-			var oBytes = CFunc.ReadBytes(a_oSrcFilepath);
-			CFunc.WriteBytes(a_oDestFilepath, oBytes);
+		if(File.Exists(a_oSrcPath) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
+			var oBytes = CFunc.ReadBytes(a_oSrcPath);
+			CFunc.WriteBytes(a_oDestPath, oBytes);
 		}
 	}
 
 	//! 파일을 복사한다
-	public static void CopyFile(string a_oSrcFilepath, 
-		string a_oDestFilepath, string a_oIgnore, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
+	public static void CopyFile(string a_oSrcPath, 
+		string a_oDestPath, string a_oIgnore, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
 	{
 		// 파일 복사가 가능 할 경우
-		if(File.Exists(a_oSrcFilepath) && (a_bIsOverwrite || !File.Exists(a_oDestFilepath))) {
-			var oStringLines = CFunc.ReadStringLines(a_oSrcFilepath, a_oEncoding);
+		if(File.Exists(a_oSrcPath) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
+			var oStringLines = CFunc.ReadStringLines(a_oSrcPath, a_oEncoding);
 
 			// 문자열이 유효 할 경우
 			if(oStringLines.ExIsValid()) {
@@ -50,18 +48,18 @@ public static partial class CFunc {
 					}
 				}
 
-				CFunc.WriteString(a_oDestFilepath, oStringBuilder.ToString(), a_oEncoding);
+				CFunc.WriteString(a_oDestPath, oStringBuilder.ToString(), a_oEncoding);
 			}
 		}
 	}
 
 	//! 파일을 복사한다
-	public static void CopyFile(string a_oSrcFilepath, 
-		string a_oDestFilepath, string a_oSearch, string a_oReplace, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
+	public static void CopyFile(string a_oSrcPath, 
+		string a_oDestPath, string a_oSearch, string a_oReplace, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
 	{
 		// 파일 복사가 가능 할 경우
-		if(File.Exists(a_oSrcFilepath) && (a_bIsOverwrite || !File.Exists(a_oDestFilepath))) {
-			var oStringLines = CFunc.ReadStringLines(a_oSrcFilepath, a_oEncoding);
+		if(File.Exists(a_oSrcPath) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
+			var oStringLines = CFunc.ReadStringLines(a_oSrcPath, a_oEncoding);
 
 			// 문자열이 유효 할 경우
 			if(oStringLines.ExIsValid()) {
@@ -74,38 +72,38 @@ public static partial class CFunc {
 					oStringBuilder.AppendLine(oString);
 				}
 
-				CFunc.WriteString(a_oDestFilepath, oStringBuilder.ToString(), a_oEncoding);
+				CFunc.WriteString(a_oDestPath, oStringBuilder.ToString(), a_oEncoding);
 			}
 		}
 	}
 
 	//! 디렉토리를 복사한다
-	public static void CopyDir(string a_oSrcPath, 
-		string a_oDestPath, bool a_bIsOverwrite = true) 
-	{
-		// 디렉토리가 존재 할 경우
-		if(Directory.Exists(a_oSrcPath)) {
-			// 디렉토리 복사가 가능 할 경우
-			if(a_bIsOverwrite || !Directory.Exists(a_oDestPath)) {
-				CAccess.RemoveDirectory(a_oDestPath);
-				Directory.CreateDirectory(a_oDestPath);
+	public static void CopyDir(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true) {
+		// 디렉토리 복사가 가능 할 경우
+		if(Directory.Exists(a_oSrcPath) && (a_bIsOverwrite || !Directory.Exists(a_oDestPath))) {
+			CAccess.RemoveDirectory(a_oDestPath);
 
-				var oFiles = Directory.GetFiles(a_oSrcPath);
-
-				for(int i = 0; i < oFiles.Length; ++i) {
-					string oFilename = Path.GetFileName(oFiles[i]);
-					CFunc.CopyFile(oFiles[i], Path.Combine(a_oDestPath, oFilename), a_bIsOverwrite);
+			CFunc.EnumerateDirs(a_oSrcPath, (a_oFilepaths, a_oDirpaths) => {
+				for(int i = 0; i < a_oFilepaths.Length; ++i) {
+					string oDestFilepath = a_oFilepaths[i].ExGetReplaceString(a_oSrcPath, a_oDestPath);
+					CFunc.CopyFile(a_oFilepaths[i], oDestFilepath, a_bIsOverwrite);
 				}
-			}
+			});
+		}
+	}
 
-			// 하위 디렉토리를 복사한다 {
-			var oDirectories = Directory.GetDirectories(a_oSrcPath);
+	//! 디렉토리를 순회한다
+	public static void EnumerateDirs(string a_oDirpath, System.Action<string[], string[]> a_oCallback) {
+		// 디렉토리가 존재 할 경우
+		if(Directory.Exists(a_oDirpath)) {
+			var oFilepaths = Directory.GetFiles(a_oDirpath);
+			var oDirpaths = Directory.GetDirectories(a_oDirpath);
 
-			for(int i = 0; i < oDirectories.Length; ++i) {
-				string oDirectoryName = Path.GetFileNameWithoutExtension(oDirectories[i]);
-				CFunc.CopyDir(oDirectories[i], Path.Combine(a_oDestPath, oDirectoryName), a_bIsOverwrite);
+			a_oCallback?.Invoke(oFilepaths, oDirpaths);
+
+			for(int i = 0; i < oDirpaths.Length; ++i) {
+				CFunc.EnumerateDirs(oDirpaths[i], a_oCallback);
 			}
-			// 하위 디렉토리를 복사한다 }
 		}
 	}
 
@@ -255,16 +253,12 @@ public static partial class CFunc {
 
 	//! 정수 랜덤 값을 생성한다
 	public static int[] MakeIntRandomValues(int a_nMin, int a_nMax, int a_nNumValues) {
-		return CFunc.MakeValues<int>(a_nNumValues, (a_nIndex) => {
-			return Random.Range(a_nMin, a_nMax + 1);
-		});
+		return CFunc.MakeValues<int>(a_nNumValues, (a_nIndex) => Random.Range(a_nMin, a_nMax + 1));
 	}
 
 	//! 실수 랜덤 값을 생성한다
 	public static float[] MakeFloatRandomValues(float a_fMin, float a_fMax, int a_nNumValues) {
-		return CFunc.MakeValues<float>(a_nNumValues, (a_nIndex) => {
-			return Random.Range(a_fMin, a_fMax);
-		});
+		return CFunc.MakeValues<float>(a_nNumValues, (a_nIndex) => Random.Range(a_fMin, a_fMax));
 	}
 
 	//! 정수 랜덤 분할 값을 생성한다

@@ -26,9 +26,8 @@ public static partial class CFunc {
 	public static GameObject FindObj(string a_oName) {
 		GameObject oObj = null;
 
-		CFunc.EnumerateScenes((a_stScene) => {
-			oObj = (oObj != null) ? oObj : a_stScene.ExFindChild(a_oName);
-		});
+		CFunc.EnumerateScenes((a_stScene) => 
+			oObj = (oObj != null) ? oObj : a_stScene.ExFindChild(a_oName));
 
 		return oObj;
 	}
@@ -57,9 +56,7 @@ public static partial class CFunc {
 
 	//! 메세지를 전파한다
 	public static void BroadcastMsg(string a_oMsg, object a_oParams) {
-		CFunc.EnumerateScenes((a_stScene) => {
-			a_stScene.ExBroadcastMsg(a_oMsg, a_oParams);
-		});
+		CFunc.EnumerateScenes((a_stScene) => a_stScene.ExBroadcastMsg(a_oMsg, a_oParams));
 	}
 
 	//! 씬을 순회한다
