@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
@@ -107,7 +105,7 @@ public static partial class CFunc {
 
 		// 핑 모드 일 경우
 		if(a_bIsPing) {
-			EditorGUIUtility.PingObject(a_oObjs.First());
+			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_INDEX_FIRST]);
 		}
 	}
 #endif			// #if UNITY_EDITOR

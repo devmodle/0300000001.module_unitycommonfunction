@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -13,7 +12,7 @@ public static partial class CEditorFunc {
 	//! 에셋을 로드한다
 	public static Object LoadAsset(string a_oFilepath) {
 		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilepath);
-		return oAssets.ExIsValid() ? oAssets.First() : null;
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_INDEX_FIRST] : null;
 	}
 
 	//! 알림 팝업을 출력한다
@@ -70,7 +69,7 @@ public static partial class CEditorFunc {
 	//! 에셋을 탐색한다
 	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
-		return oAssets.ExIsValid() ? oAssets.First() : null;
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_INDEX_FIRST] : null;
 	}
 
 	//! 에셋을 탐색한다
