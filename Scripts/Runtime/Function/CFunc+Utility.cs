@@ -105,7 +105,7 @@ public static partial class CFunc {
 
 		// 핑 모드 일 경우
 		if(a_bIsPing) {
-			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_INDEX_FIRST]);
+			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_INDEX_START]);
 		}
 	}
 #endif			// #if UNITY_EDITOR
