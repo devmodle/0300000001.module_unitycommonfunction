@@ -64,6 +64,14 @@ public static partial class CFunc {
 		}
 	}
 
+	//! 버전을 생성한다
+	public static STVersion MakeDefVersion(string a_oVersion) {
+		return new STVersion() {
+			m_oVersion = a_oVersion,
+			m_oExtraInfoList = new Dictionary<string, string>()
+		};
+	}
+
 	//! 지역화 파일 경로를 생성한다
 	public static string MakeLocalizeFilepath(string a_oBaseFilepath, string a_oLanguage) {
 		var oFilename = Path.GetFileNameWithoutExtension(a_oBaseFilepath);
@@ -109,15 +117,5 @@ public static partial class CFunc {
 		}
 	}
 #endif			// #if UNITY_EDITOR
-
-#if MSG_PACK_ENABLE
-	//! 버전을 생성한다
-	public static STVersion MakeDefVersion(string a_oVersion) {
-		return new STVersion() {
-			m_oVersion = a_oVersion,
-			m_oExtraInfoList = new Dictionary<string, string>()
-		};
-	}
-#endif			// #if MSG_PACK_ENABLE
 	#endregion			// 조건부 클래스 함수
 }

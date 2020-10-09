@@ -4,10 +4,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
-
-#if MSG_PACK_ENABLE
 using MessagePack;
-#endif			// #if MSG_PACK_ENABLE
 
 //! 기본 함수
 public static partial class CFunc {
@@ -330,21 +327,6 @@ public static partial class CFunc {
 		return oString.ExJSONStringToObj<T>();
 	}
 
-	//! JSON 객체를 기록한다
-	public static void WriteJSONObj<T>(string a_oFilepath, 
-		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false) {
-		var oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
-
-#if SECURITY_ENABLE
-		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
-#else
-		CFunc.WriteString(a_oFilepath, oString, a_oEncoding);
-#endif			// #if SECURITY_ENABLE
-	}
-	#endregion			// 제네릭 클래스 함수
-
-	#region 조건부 제네릭 클래스 함수
-#if MSG_PACK_ENABLE
 	//! 메세지 팩 객체를 읽어들인다
 	public static T ReadMsgPackObj<T>(string a_oFilepath) {
 #if SECURITY_ENABLE
@@ -365,6 +347,18 @@ public static partial class CFunc {
 #endif			// #if SECURITY_ENABLE
 
 		return oString.ExMsgPackJSONStringToObj<T>();
+	}
+
+	//! JSON 객체를 기록한다
+	public static void WriteJSONObj<T>(string a_oFilepath, 
+		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false) {
+		var oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
+
+#if SECURITY_ENABLE
+		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
+#else
+		CFunc.WriteString(a_oFilepath, oString, a_oEncoding);
+#endif			// #if SECURITY_ENABLE
 	}
 
 	//! 메세지 팩 객체를 기록한다
@@ -388,6 +382,5 @@ public static partial class CFunc {
 		CFunc.WriteString(a_oFilepath, oString, a_oEncoding);
 #endif			// #if SECURITY_ENABLE		
 	}
-#endif			// #if MSG_PACK_ENABLE
-	#endregion			// 조건부 제네릭 클래스 함수
+	#endregion			// 제네릭 클래스 함수
 }
