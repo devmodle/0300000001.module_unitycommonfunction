@@ -79,7 +79,7 @@ public static partial class CEditorFunc {
 
 		// 에셋 GUID 가 존재 할 경우
 		if(oAssetGUIDs.ExIsValid()) {
-			for(int i = 0; i < oAssetGUIDs.Length; ++i) {
+			for(int i = KCDefine.B_INDEX_START; i < oAssetGUIDs.Length; ++i) {
 				string oPath = AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]);
 				var oAsset = AssetDatabase.LoadAssetAtPath<T>(oPath);
 

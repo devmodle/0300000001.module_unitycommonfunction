@@ -12,7 +12,7 @@ using UnityEditor;
 public static partial class CFunc {
 	#region 클래스 함수
 	//! 앱을 종료한다
-	public static void QuitApplication(int a_nExitCode = 0) {
+	public static void QuitApplication(int a_nExitCode = KCDefine.B_ZERO_VALUE_INT) {
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.ExitPlaymode();
 #else
@@ -59,7 +59,7 @@ public static partial class CFunc {
 
 	//! 씬을 순회한다
 	public static void EnumerateScenes(System.Action<Scene> a_oCallback) {
-		for(int i = 0; i < SceneManager.sceneCount; ++i) {
+		for(int i = KCDefine.B_INDEX_START; i < SceneManager.sceneCount; ++i) {
 			a_oCallback?.Invoke(SceneManager.GetSceneAt(i));
 		}
 	}
