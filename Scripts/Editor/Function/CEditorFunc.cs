@@ -17,7 +17,8 @@ public static partial class CEditorFunc {
 
 	//! 경고 팝업을 출력한다
 	public static bool ShowAlertPopup(string a_oTitle,
-		string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText) {
+		string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText = KCDefine.B_EMPTY_STRING) 
+	{
 		// 취소 버튼 텍스트가 유효 할 경우
 		if(a_oCancelBtnText.ExIsValid()) {
 			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText, a_oCancelBtnText);
