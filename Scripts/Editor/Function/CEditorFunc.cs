@@ -15,7 +15,7 @@ public static partial class CEditorFunc {
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_INDEX_START] : null;
 	}
 
-	//! 알림 팝업을 출력한다
+	//! 경고 팝업을 출력한다
 	public static bool ShowAlertPopup(string a_oTitle,
 		string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText) {
 		// 취소 버튼 텍스트가 유효 할 경우
