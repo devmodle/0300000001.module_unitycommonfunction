@@ -27,7 +27,7 @@ public static partial class CEditorFunc {
 	}
 
 	//! 에셋 데이터 베이스를 갱신한다
-	public static void UpdateAssetDatabaseState() {
+	public static void UpdateAssetDBState() {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 	}
