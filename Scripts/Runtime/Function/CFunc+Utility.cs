@@ -8,6 +8,10 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 #endif			// #if UNITY_EDITOR
 
+#if UNITY_ANDROID
+using UnityEngine.Android;
+#endif			// #if UNITY_ANDROID
+
 //! 유틸리티 함수
 public static partial class CFunc {
 	#region 클래스 함수
@@ -55,6 +59,36 @@ public static partial class CFunc {
 	//! 메세지를 전파한다
 	public static void BroadcastMsg(string a_oMsg, object a_oParams) {
 		CFunc.EnumerateScenes((a_stScene) => a_stScene.ExBroadcastMsg(a_oMsg, a_oParams));
+	}
+
+	//! 권한을 요청한다
+	public static void RequestPermission(MonoBehaviour a_oComponent, 
+		string a_oPermission, System.Action<string, bool> a_oCallback) 
+	{
+		CAccess.Assert(a_oComponent != null && a_oPermission.ExIsValid());
+
+#if UNITY_ANDROID
+		// 권한이 유효 할 경우
+		if(CAccess.IsEnablePermission(a_oPermission)) {
+			a_oCallback?.Invoke(a_oPermission, true);
+		} else {
+			Permission.RequestUserPermission(a_oPermission);
+
+			float fDeltaTime = KCDefine.U_DELTA_TIME_PERMISSION_M_REQUEST_CHECK;
+			float fMaxDeltaTime = KCDefine.U_MAX_DELTA_TIME_PERMISSION_M_REQUEST_CHECK;
+			
+			a_oComponent.ExRepeatCallFunc(fDeltaTime, fMaxDeltaTime, (a_oSender, a_oParams, a_bIsComplete) => {
+				// 요청이 완료 되었을 경우
+				if(a_bIsComplete) {
+					a_oCallback?.Invoke(a_oPermission, CAccess.IsEnablePermission(a_oPermission));
+				}
+
+				return !CAccess.IsEnablePermission(a_oPermission);
+			});
+		}
+#else
+		a_oCallback?.Invoke(a_oPermission, false);
+#endif			// #if UNITY_ANDROID
 	}
 
 	//! 씬을 순회한다
