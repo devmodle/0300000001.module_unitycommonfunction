@@ -12,7 +12,7 @@ public static partial class CEditorFunc {
 	//! 에셋을 로드한다
 	public static Object LoadAsset(string a_oFilepath) {
 		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilepath);
-		return oAssets.ExIsValid() ? oAssets[KCDefine.B_INDEX_START] : null;
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_INT_0] : null;
 	}
 
 	//! 경고 팝업을 출력한다
@@ -70,7 +70,7 @@ public static partial class CEditorFunc {
 	//! 에셋을 탐색한다
 	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
-		return oAssets.ExIsValid() ? oAssets[KCDefine.B_INDEX_START] : null;
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_INT_0] : null;
 	}
 
 	//! 에셋을 탐색한다
@@ -80,7 +80,7 @@ public static partial class CEditorFunc {
 
 		// 에셋 GUID 가 존재 할 경우
 		if(oAssetGUIDs.ExIsValid()) {
-			for(int i = KCDefine.B_INDEX_START; i < oAssetGUIDs.Length; ++i) {
+			for(int i = KCDefine.B_VALUE_INT_0; i < oAssetGUIDs.Length; ++i) {
 				string oPath = AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]);
 				var oAsset = AssetDatabase.LoadAssetAtPath<T>(oPath);
 

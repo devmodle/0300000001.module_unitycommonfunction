@@ -16,7 +16,7 @@ using UnityEngine.Android;
 public static partial class CFunc {
 	#region 클래스 함수
 	//! 앱을 종료한다
-	public static void QuitApplication(int a_nExitCode = KCDefine.B_ZERO_VALUE_INT) {
+	public static void QuitApplication(int a_nExitCode = KCDefine.B_VALUE_INT_0) {
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.ExitPlaymode();
 #else
@@ -93,7 +93,7 @@ public static partial class CFunc {
 
 	//! 씬을 순회한다
 	public static void EnumerateScenes(System.Action<Scene> a_oCallback) {
-		for(int i = KCDefine.B_INDEX_START; i < SceneManager.sceneCount; ++i) {
+		for(int i = KCDefine.B_VALUE_INT_0; i < SceneManager.sceneCount; ++i) {
 			a_oCallback?.Invoke(SceneManager.GetSceneAt(i));
 		}
 	}
@@ -147,7 +147,7 @@ public static partial class CFunc {
 
 		// 핑 모드 일 경우
 		if(a_bIsPing) {
-			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_INDEX_START]);
+			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_VALUE_INT_0]);
 		}
 	}
 #endif			// #if UNITY_EDITOR

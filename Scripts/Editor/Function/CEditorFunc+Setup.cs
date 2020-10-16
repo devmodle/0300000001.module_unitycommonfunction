@@ -13,7 +13,7 @@ public static partial class CEditorFunc {
 		foreach(var stKeyValue in a_oDefineSymbolListContainer) {
 			var oDefineSymbolList = new List<string>();
 
-			for(int i = KCDefine.B_INDEX_START; i < stKeyValue.Value.Count; ++i) {
+			for(int i = KCDefine.B_VALUE_INT_0; i < stKeyValue.Value.Count; ++i) {
 				oDefineSymbolList.ExAddValue(stKeyValue.Value[i]);
 			}
 

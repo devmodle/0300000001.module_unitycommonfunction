@@ -38,7 +38,7 @@ public static partial class CFunc {
 			if(oStringLines.ExIsValid()) {
 				var oStringBuilder = new System.Text.StringBuilder();
 
-				for(int i = KCDefine.B_INDEX_START; i < oStringLines.Length; ++i) {
+				for(int i = KCDefine.B_VALUE_INT_0; i < oStringLines.Length; ++i) {
 					// 문자열 추가가 가능 할 경우
 					if(!oStringLines[i].Contains(a_oIgnore)) {
 						oStringBuilder.AppendLine(oStringLines[i]);
@@ -62,7 +62,7 @@ public static partial class CFunc {
 			if(oStringLines.ExIsValid()) {
 				var oStringBuilder = new System.Text.StringBuilder();
 
-				for(int i = KCDefine.B_INDEX_START; i < oStringLines.Length; ++i) {
+				for(int i = KCDefine.B_VALUE_INT_0; i < oStringLines.Length; ++i) {
 					string oString = !oStringLines[i].ExIsValid() ? 
 						string.Empty : oStringLines[i].ExGetReplaceString(a_oSearch, a_oReplace, short.MaxValue);
 						
@@ -81,7 +81,7 @@ public static partial class CFunc {
 			CAccess.RemoveDirectory(a_oDestPath);
 
 			CFunc.EnumerateDirs(a_oSrcPath, (a_oFilepaths, a_oDirpaths) => {
-				for(int i = KCDefine.B_INDEX_START; i < a_oFilepaths.Length; ++i) {
+				for(int i = KCDefine.B_VALUE_INT_0; i < a_oFilepaths.Length; ++i) {
 					string oDestFilepath = a_oFilepaths[i].ExGetReplaceString(a_oSrcPath, a_oDestPath);
 					CFunc.CopyFile(a_oFilepaths[i], oDestFilepath, a_bIsOverwrite);
 				}
@@ -98,7 +98,7 @@ public static partial class CFunc {
 
 			a_oCallback?.Invoke(oFilepaths, oDirpaths);
 
-			for(int i = KCDefine.B_INDEX_START; i < oDirpaths.Length; ++i) {
+			for(int i = KCDefine.B_VALUE_INT_0; i < oDirpaths.Length; ++i) {
 				CFunc.EnumerateDirs(oDirpaths[i], a_oCallback);
 			}
 		}
@@ -146,7 +146,7 @@ public static partial class CFunc {
 
 	//! 바이트를 기록한다
 	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes) {
-		a_oWStream.Write(a_oBytes, KCDefine.B_INDEX_START, a_oBytes.Length);
+		a_oWStream.Write(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
 		a_oWStream.Flush(true);
 	}
 
@@ -163,7 +163,7 @@ public static partial class CFunc {
 
 	//! 보안 바이트를 기록한다
 	public static void WriteSecurityBytes(FileStream a_oWStream, byte[] a_oBytes) {
-		var oString = System.Convert.ToBase64String(a_oBytes, KCDefine.B_INDEX_START, a_oBytes.Length);
+		var oString = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
 		CFunc.WriteBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(oString));
 	}
 
@@ -250,7 +250,7 @@ public static partial class CFunc {
 
 	//! 정수 랜덤 값을 생성한다
 	public static int[] MakeIntRandomValues(int a_nMin, int a_nMax, int a_nNumValues) {
-		return CFunc.MakeValues<int>(a_nNumValues, (a_nIndex) => Random.Range(a_nMin, a_nMax + 1));
+		return CFunc.MakeValues<int>(a_nNumValues, (a_nIndex) => Random.Range(a_nMin, a_nMax + KCDefine.B_VALUE_INT_1));
 	}
 
 	//! 실수 랜덤 값을 생성한다
@@ -260,22 +260,22 @@ public static partial class CFunc {
 
 	//! 정수 랜덤 분할 값을 생성한다
 	public static int[] MakeIntRandomSplitValues(int a_nValue, int a_nNumValues) {
-		int nSumValue = KCDefine.B_ZERO_VALUE_INT;
+		int nSumValue = KCDefine.B_VALUE_INT_0;
 
 		var oValues = CFunc.MakeValues<int>(a_nNumValues, (a_nIndex) => {
 			int nValue = a_nValue / a_nNumValues;
 			nSumValue += nValue;
 
-			return (a_nIndex < a_nNumValues - 1) ? nValue : a_nValue - nSumValue;
+			return (a_nIndex < a_nNumValues - KCDefine.B_VALUE_INT_1) ? nValue : a_nValue - nSumValue;
 		});
 
-		for(int i = KCDefine.B_INDEX_START; i < oValues.Length; ++i) {
-			int nIndex = Random.Range(KCDefine.B_INDEX_START, oValues.Length);
+		for(int i = KCDefine.B_VALUE_INT_0; i < oValues.Length; ++i) {
+			int nIndex = Random.Range(KCDefine.B_VALUE_INT_0, oValues.Length);
 
 			// 값 보정이 가능 할 경우
-			if(oValues[i] > 1 && oValues[nIndex] > 1) {
-				oValues[i] += 1;
-				oValues[nIndex] -= 1;
+			if(oValues[i] > KCDefine.B_VALUE_INT_1 && oValues[nIndex] > KCDefine.B_VALUE_INT_1) {
+				oValues[i] += KCDefine.B_VALUE_INT_1;
+				oValues[nIndex] -= KCDefine.B_VALUE_INT_1;
 			}
 		}
 
@@ -301,7 +301,7 @@ public static partial class CFunc {
 	public static T[] MakeValues<T>(int a_nNumValues, System.Func<int, T> a_oCallback) {
 		var oValues = new T[a_nNumValues];
 
-		for(int i = KCDefine.B_INDEX_START; i < a_nNumValues; ++i) {
+		for(int i = KCDefine.B_VALUE_INT_0; i < a_nNumValues; ++i) {
 			oValues[i] = a_oCallback.Invoke(i);
 		}
 
