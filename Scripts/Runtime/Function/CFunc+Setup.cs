@@ -150,11 +150,11 @@ public static partial class CFunc {
 		oCanvasScaler.referenceResolution = new Vector2(KCDefine.B_SCREEN_WIDTH, KCDefine.B_SCREEN_HEIGHT);
 		oCanvasScaler.referencePixelsPerUnit = KCDefine.B_REF_PIXELS_UNIT;
 
-#if PIXEL_PERFECT_ENABLE
+#if PIXELS_PERFECT_ENABLE
 		oCanvas.pixelPerfect = true;
 #else
 		oCanvas.pixelPerfect = false;
-#endif			// #if PIXEL_PERFECT_ENABLE
+#endif			// #if PIXELS_PERFECT_ENABLE
 	}
 	#endregion			// 클래스 함수
 }
