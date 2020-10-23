@@ -63,7 +63,7 @@ public static partial class CFunc {
 
 	//! 권한을 요청한다
 	public static void RequestPermission(MonoBehaviour a_oComponent, 
-		string a_oPermission, System.Action<string, bool> a_oCallback) 
+		string a_oPermission, System.Action<string, bool> a_oCallback, bool a_bIsRealtime = false) 
 	{
 		CAccess.Assert(a_oComponent != null && a_oPermission.ExIsValid());
 
@@ -84,7 +84,7 @@ public static partial class CFunc {
 				}
 
 				return !CAccess.IsEnablePermission(a_oPermission);
-			});
+			}, a_bIsRealtime);
 		}
 #else
 		a_oCallback?.Invoke(a_oPermission, false);
