@@ -106,12 +106,28 @@ public static partial class CFunc {
 		};
 	}
 
-	//! 지역화 파일 경로를 생성한다
-	public static string MakeLocalizeFilepath(string a_oBaseFilepath, string a_oLanguage) {
-		var oFilename = Path.GetFileNameWithoutExtension(a_oBaseFilepath);
+	//! 지역화 경로를 생성한다
+	public static string MakeLocalizePath(string a_oBasePath, string a_oLanguage) {
+		var oFilename = Path.GetFileNameWithoutExtension(a_oBasePath);
 		var oLocalizeFilename = string.Format(KCDefine.B_FILENAME_FORMAT_LOCALIZE, oFilename, a_oLanguage);
 
-		return a_oBaseFilepath.ExGetReplaceFilenamePath(oLocalizeFilename);
+		return a_oBasePath.ExGetReplaceFilenamePath(oLocalizeFilename);
+	}
+
+	//! 지역화 경로를 생성한다
+	public static string MakeLocalizePath(string a_oBasePath, 
+		string a_oDefLocalizePath, string a_oLanguage, string a_oCountryCode) 
+	{
+		string oFilepath = string.Empty;
+
+		// 언어가 유효 할 경우
+		if(a_oLanguage.ExIsValidLanguage()) {
+			oFilepath = CFunc.MakeLocalizePath(a_oBasePath, a_oLanguage);
+		} else {
+			oFilepath = CFunc.MakeLocalizePath(a_oBasePath, a_oCountryCode);
+		}
+
+		return CAccess.IsExistsRes<TextAsset>(oFilepath, true) ? oFilepath : a_oDefLocalizePath;
 	}
 	#endregion			// 클래스 함수
 
