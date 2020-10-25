@@ -163,7 +163,7 @@ public static partial class CFunc {
 
 	//! 보안 바이트를 기록한다
 	public static void WriteSecurityBytes(FileStream a_oWStream, byte[] a_oBytes) {
-		var oString = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
+		string oString = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
 		CFunc.WriteBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(oString));
 	}
 
@@ -319,9 +319,9 @@ public static partial class CFunc {
 	//! JSON 객체를 읽어들인다
 	public static T ReadJSONObj<T>(string a_oFilepath, System.Text.Encoding a_oEncoding) {
 #if SECURITY_ENABLE
-		var oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
 #else
-		var oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
 #endif			// #if SECURITY_ENABLE
 
 		return oString.ExJSONStringToObj<T>();
@@ -341,18 +341,19 @@ public static partial class CFunc {
 	//! 메세지 팩 JSON 객체를 읽어들인다
 	public static T ReadMsgPackJSONObj<T>(string a_oFilepath, System.Text.Encoding a_oEncoding) {
 #if SECURITY_ENABLE
-		var oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
 #else
-		var oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
 #endif			// #if SECURITY_ENABLE
 
 		return oString.ExMsgPackJSONStringToObj<T>();
 	}
-
+	
 	//! JSON 객체를 기록한다
 	public static void WriteJSONObj<T>(string a_oFilepath, 
-		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false) {
-		var oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
+		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false) 
+	{
+		string oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
 
 #if SECURITY_ENABLE
 		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
@@ -373,8 +374,10 @@ public static partial class CFunc {
 	}
 
 	//! 메세지 팩 JSON 객체를 기록한다
-	public static void WriteMsgPackJSONObj<T>(string a_oFilepath, T a_oObj, System.Text.Encoding a_oEncoding) {
-		var oString = a_oObj.ExToMsgPackJSONString();
+	public static void WriteMsgPackJSONObj<T>(string a_oFilepath, 
+		T a_oObj, System.Text.Encoding a_oEncoding) 
+	{
+		string oString = a_oObj.ExToMsgPackJSONString();
 		
 #if SECURITY_ENABLE
 		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
