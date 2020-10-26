@@ -204,15 +204,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oURL.ExIsValid());
 		Application.OpenURL(a_oURL);
 	}
-
-	//! 메일을 전송한다
-	public static void SendMail(string a_oRecipient, string a_oTitle, string a_oMsg) {
-		string oURL = string.Format(KCDefine.B_MAIL_URL_FORMAT,
-			a_oRecipient, System.Uri.EscapeUriString(a_oTitle), System.Uri.EscapeUriString(a_oMsg));
-
-		CFunc.OpenURL(oURL);
-	}
-
+	
 	//! 로그를 출력한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, params object[] a_oParams) {
