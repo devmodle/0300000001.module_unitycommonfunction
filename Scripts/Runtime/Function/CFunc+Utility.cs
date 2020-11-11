@@ -16,7 +16,7 @@ using UnityEngine.Android;
 public static partial class CFunc {
 	#region 클래스 함수
 	//! 앱을 종료한다
-	public static void QuitApplication(int a_nExitCode = KCDefine.B_VALUE_INT_0) {
+	public static void QuitApp(int a_nExitCode = KCDefine.B_VALUE_INT_0) {
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.ExitPlaymode();
 #else
