@@ -204,6 +204,12 @@ public static partial class CFunc {
 		CAccess.Assert(a_oURL.ExIsValid());
 		Application.OpenURL(a_oURL);
 	}
+
+	//! 함수를 호출한다
+	public static void Invoke(ref System.Action a_oAction) {
+		a_oAction?.Invoke();
+		a_oAction = null;
+	}
 	
 	//! 로그를 출력한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
@@ -287,6 +293,80 @@ public static partial class CFunc {
 		T tTemp = a_tLhs;
 		a_tLhs = a_tRhs;
 		a_tRhs = tTemp;
+	}
+
+	//! 함수를 호출한다
+	public static void Invoke<T1>(ref System.Action<T1> a_oAction, T1 a_tParamsA) {
+		a_oAction?.Invoke(a_tParamsA);
+		a_oAction = null;
+	}
+
+	//! 함수를 호출한다
+	public static void Invoke<T1, T2>(ref System.Action<T1, T2> a_oAction, T1 a_tParamsA, T2 a_tParamsB) {
+		a_oAction?.Invoke(a_tParamsA, a_tParamsB);
+		a_oAction = null;
+	}
+
+	//! 함수를 호출한다
+	public static void Invoke<T1, T2, T3>(ref System.Action<T1, T2, T3> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) {
+		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
+		a_oAction = null;
+	}
+
+	//! 함수를 호출한다
+	public static void Invoke<T1, T2, T3, T4>(ref System.Action<T1, T2, T3, T4> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) {
+		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
+		a_oAction = null;
+	}
+
+	//! 함수를 호출한다
+	public static Result Invoke<Result>(ref System.Func<Result> a_oFunc) {
+		CAccess.Assert(a_oFunc != null);
+		
+		var tResult = a_oFunc.Invoke();
+		a_oFunc = null;
+
+		return tResult;
+	}
+
+	//! 함수를 호출한다
+	public static Result Invoke<T1, Result>(ref System.Func<T1, Result> a_oFunc, T1 a_tParamsA) {
+		CAccess.Assert(a_oFunc != null);
+		
+		var tResult = a_oFunc.Invoke(a_tParamsA);
+		a_oFunc = null;
+
+		return tResult;
+	}
+
+	//! 함수를 호출한다
+	public static Result Invoke<T1, T2, Result>(ref System.Func<T1, T2, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB) {
+		CAccess.Assert(a_oFunc != null);
+		
+		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB);
+		a_oFunc = null;
+
+		return tResult;
+	}
+
+	//! 함수를 호출한다
+	public static Result Invoke<T1, T2, T3, Result>(ref System.Func<T1, T2, T3, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) {
+		CAccess.Assert(a_oFunc != null);
+		
+		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
+		a_oFunc = null;
+
+		return tResult;
+	}
+
+	//! 함수를 호출한다
+	public static Result Invoke<T1, T2, T3, T4, Result>(ref System.Func<T1, T2, T3, T4, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) {
+		CAccess.Assert(a_oFunc != null);
+		
+		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
+		a_oFunc = null;
+
+		return tResult;
 	}
 	
 	//! 값을 생성한다
