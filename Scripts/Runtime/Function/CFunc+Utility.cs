@@ -15,15 +15,6 @@ using UnityEngine.Android;
 //! 유틸리티 함수
 public static partial class CFunc {
 	#region 클래스 함수
-	//! 앱을 종료한다
-	public static void QuitApp(int a_nExitCode = KCDefine.B_VALUE_INT_0) {
-#if UNITY_EDITOR
-		UnityEditor.EditorApplication.ExitPlaymode();
-#else
-		Application.Quit(a_nExitCode);
-#endif			// #if UNITY_EDITOR
-	}
-
 	//! 객체를 탐색한다
 	public static GameObject FindObj(string a_oName) {
 		GameObject oObj = null;
@@ -49,7 +40,16 @@ public static partial class CFunc {
 		
 		return oObjList;
 	}
-	
+
+	//! 앱을 종료한다
+	public static void QuitApp(int a_nExitCode = KCDefine.B_VALUE_INT_0) {
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.ExitPlaymode();
+#else
+		Application.Quit(a_nExitCode);
+#endif			// #if UNITY_EDITOR
+	}
+
 	//! 메세지를 전송한다
 	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams) {
 		var oObj = CFunc.FindObj(a_oName);
