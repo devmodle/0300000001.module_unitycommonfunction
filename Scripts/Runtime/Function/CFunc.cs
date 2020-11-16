@@ -38,7 +38,7 @@ public static partial class CFunc {
 			if(oStringLines.ExIsValid()) {
 				var oStringBuilder = new System.Text.StringBuilder();
 
-				for(int i = KCDefine.B_VALUE_INT_0; i < oStringLines.Length; ++i) {
+				for(int i = 0; i < oStringLines.Length; ++i) {
 					// 문자열 추가가 가능 할 경우
 					if(!oStringLines[i].Contains(a_oIgnore)) {
 						oStringBuilder.AppendLine(oStringLines[i]);
@@ -62,7 +62,7 @@ public static partial class CFunc {
 			if(oStringLines.ExIsValid()) {
 				var oStringBuilder = new System.Text.StringBuilder();
 
-				for(int i = KCDefine.B_VALUE_INT_0; i < oStringLines.Length; ++i) {
+				for(int i = 0; i < oStringLines.Length; ++i) {
 					string oString = !oStringLines[i].ExIsValid() ? 
 						string.Empty : oStringLines[i].ExGetReplaceString(a_oSearch, a_oReplace, short.MaxValue);
 						
@@ -81,7 +81,7 @@ public static partial class CFunc {
 			CAccess.RemoveDirectory(a_oDestPath);
 
 			CFunc.EnumerateDirs(a_oSrcPath, (a_oFilepaths, a_oDirpaths) => {
-				for(int i = KCDefine.B_VALUE_INT_0; i < a_oFilepaths.Length; ++i) {
+				for(int i = 0; i < a_oFilepaths.Length; ++i) {
 					string oDestFilepath = a_oFilepaths[i].ExGetReplaceString(a_oSrcPath, a_oDestPath);
 					CFunc.CopyFile(a_oFilepaths[i], oDestFilepath, a_bIsOverwrite);
 				}
@@ -98,7 +98,7 @@ public static partial class CFunc {
 
 			a_oCallback?.Invoke(oFilepaths, oDirpaths);
 
-			for(int i = KCDefine.B_VALUE_INT_0; i < oDirpaths.Length; ++i) {
+			for(int i = 0; i < oDirpaths.Length; ++i) {
 				CFunc.EnumerateDirs(oDirpaths[i], a_oCallback);
 			}
 		}
@@ -267,7 +267,7 @@ public static partial class CFunc {
 			return (a_nIndex < a_nNumValues - KCDefine.B_VALUE_INT_1) ? nValue : a_nValue - nSumValue;
 		});
 
-		for(int i = KCDefine.B_VALUE_INT_0; i < oValues.Length; ++i) {
+		for(int i = 0; i < oValues.Length; ++i) {
 			int nIndex = Random.Range(KCDefine.B_VALUE_INT_0, oValues.Length);
 
 			// 값 보정이 가능 할 경우
@@ -405,7 +405,7 @@ public static partial class CFunc {
 	public static T[] MakeValues<T>(int a_nNumValues, System.Func<int, T> a_oCallback) {
 		var oValues = new T[a_nNumValues];
 
-		for(int i = KCDefine.B_VALUE_INT_0; i < a_nNumValues; ++i) {
+		for(int i = 0; i < a_nNumValues; ++i) {
 			oValues[i] = a_oCallback.Invoke(i);
 		}
 

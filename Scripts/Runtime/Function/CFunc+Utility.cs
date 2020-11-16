@@ -93,7 +93,7 @@ public static partial class CFunc {
 
 	//! 씬을 순회한다
 	public static void EnumerateScenes(System.Action<Scene> a_oCallback) {
-		for(int i = KCDefine.B_VALUE_INT_0; i < SceneManager.sceneCount; ++i) {
+		for(int i = 0; i < SceneManager.sceneCount; ++i) {
 			a_oCallback?.Invoke(SceneManager.GetSceneAt(i));
 		}
 	}
