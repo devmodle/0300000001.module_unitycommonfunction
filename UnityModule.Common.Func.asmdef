@@ -6,7 +6,8 @@
         "UnityModule.Common.Factory",
         "UnityModule.Common.Extension",
         "Unity.RenderPipelines.Universal.Runtime",
-        "MessagePack"
+        "MessagePack",
+        "SimpleFileBrowser.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

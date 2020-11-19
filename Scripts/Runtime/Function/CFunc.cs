@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 using MessagePack;
+using SimpleFileBrowser;
 
 //! 기본 함수
 public static partial class CFunc {
@@ -209,6 +210,18 @@ public static partial class CFunc {
 	public static void Invoke(ref System.Action a_oAction) {
 		a_oAction?.Invoke();
 		a_oAction = null;
+	}
+
+	//! 함수를 호출한다
+	public static void Invoke(ref FileBrowser.OnSuccess a_oCallback, string[] a_oFilepaths) {
+		a_oCallback?.Invoke(a_oFilepaths);
+		a_oCallback = null;
+	}
+
+	//! 함수를 호출한다
+	public static void Invoke(ref FileBrowser.OnCancel a_oCallback) {
+		a_oCallback?.Invoke();
+		a_oCallback = null;
 	}
 	
 	//! 로그를 출력한다
