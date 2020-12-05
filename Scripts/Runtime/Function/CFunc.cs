@@ -57,7 +57,7 @@ public static partial class CFunc {
 
 	//! 파일을 복사한다
 	public static void CopyFile(string a_oSrcPath, 
-		string a_oDestPath, string a_oSearch, string a_oReplace, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
+		string a_oDestPath, string a_oTarget, string a_oReplace, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
 	{
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 
@@ -71,7 +71,7 @@ public static partial class CFunc {
 
 				for(int i = 0; i < oStringLines.Length; ++i) {
 					string oString = !oStringLines[i].ExIsValid() ? 
-						string.Empty : oStringLines[i].ExGetReplaceString(a_oSearch, a_oReplace, short.MaxValue);
+						string.Empty : oStringLines[i].ExGetReplaceString(a_oTarget, a_oReplace, short.MaxValue);
 						
 					oStringBuilder.AppendLine(oString);
 				}
