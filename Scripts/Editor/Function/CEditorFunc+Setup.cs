@@ -10,6 +10,8 @@ public static partial class CEditorFunc {
 	#region 클래스 함수
 	//! 전처리기 심볼을 설정한다
 	public static void SetupDefineSymbols(Dictionary<BuildTargetGroup, List<string>> a_oDefineSymbolListContainer) {
+		CAccess.Assert(a_oDefineSymbolListContainer.ExIsValid());
+		
 		foreach(var stKeyValue in a_oDefineSymbolListContainer) {
 			var oDefineSymbolList = new List<string>();
 

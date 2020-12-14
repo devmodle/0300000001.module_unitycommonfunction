@@ -10,8 +10,10 @@ using UnityEditor;
 public static partial class CEditorFunc {
 	#region 클래스 함수
 	//! 에셋을 로드한다
-	public static Object LoadAsset(string a_oFilepath) {
-		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilepath);
+	public static Object LoadAsset(string a_oFilePath) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilePath);
+
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_INT_0] : null;
 	}
 
@@ -35,6 +37,8 @@ public static partial class CEditorFunc {
 	
 	//! 커맨드 라인을 실행한다
 	public static void ExecuteCmdline(string a_oParams) {
+		CAccess.Assert(a_oParams.ExIsValid());
+
 		// 맥 일 경우
 		if(CAccess.IsMac()) {
 			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_SHELL,
@@ -48,8 +52,10 @@ public static partial class CEditorFunc {
 	}
 
 	//! 커맨드 라인을 실행한다
-	public static void ExecuteCmdline(string a_oFilepath, string a_oParams) {
-		var oStartInfo = new ProcessStartInfo(a_oFilepath, a_oParams);
+	public static void ExecuteCmdline(string a_oFilePath, string a_oParams) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+
+		var oStartInfo = new ProcessStartInfo(a_oFilePath, a_oParams);
 		oStartInfo.UseShellExecute = true;
 
 		Process.Start(oStartInfo);
@@ -63,8 +69,9 @@ public static partial class CEditorFunc {
 
 	#region 제네릭 클래스 함수
 	//! 에셋을 탐색한다
-	public static T FindAsset<T>(string a_oFilepath) where T : Object {
-		return AssetDatabase.LoadAssetAtPath<T>(a_oFilepath);
+	public static T FindAsset<T>(string a_oFilePath) where T : Object {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+		return AssetDatabase.LoadAssetAtPath<T>(a_oFilePath);
 	}
 
 	//! 에셋을 탐색한다

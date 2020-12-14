@@ -12,7 +12,9 @@ using UnityEngine.Rendering.Universal;
 public static partial class CFunc {
 	#region 클래스 함수
 	//! 퀄리티를 설정한다
-	public static void SetupQuality(EQualityLevel a_eQualityLevel, bool a_bIsApplyExpensiveChange = false) {
+	public static void SetupQuality(EQualityLevel a_eQualityLevel, 
+		bool a_bIsApplyExpensiveChange = false) 
+	{
 		// 퀄리티 레벨을 설정한다 {
 		var eQualityLevel = a_eQualityLevel;
 		
@@ -140,6 +142,8 @@ public static partial class CFunc {
 	
 	//! 스크린 UI 를 설정한다
 	public static void SetupScreenUI(GameObject a_oScreenUI, int a_nSortingOrder) {
+		CAccess.Assert(a_oScreenUI != null);
+		
 		var oCanvas = a_oScreenUI.GetComponentInChildren<Canvas>();
 		oCanvas.sortingOrder = a_nSortingOrder;
 		oCanvas.renderMode = RenderMode.ScreenSpaceOverlay;

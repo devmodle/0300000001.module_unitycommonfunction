@@ -17,16 +17,20 @@ public static partial class CFunc {
 	#region 클래스 함수
 	//! 객체를 탐색한다
 	public static GameObject FindObj(string a_oName) {
+		CAccess.Assert(a_oName.ExIsValid());
 		GameObject oObj = null;
 
-		CFunc.EnumerateScenes((a_stScene) => 
-			oObj = (oObj != null) ? oObj : a_stScene.ExFindChild(a_oName));
+		CFunc.EnumerateScenes((a_stScene) => {
+			oObj = a_stScene.ExFindChild(a_oName);
+			return oObj == null;
+		});
 
 		return oObj;
 	}
 
 	//! 객체를 탐색한다
 	public static List<GameObject> FindObjs(string a_oName) {
+		CAccess.Assert(a_oName.ExIsValid());
 		var oObjList = new List<GameObject>();
 
 		CFunc.EnumerateScenes((a_stScene) => {
@@ -36,6 +40,8 @@ public static partial class CFunc {
 			if(oChildObjList != null) {
 				oObjList.AddRange(oChildObjList);
 			}
+
+			return true;
 		});
 		
 		return oObjList;
@@ -52,13 +58,20 @@ public static partial class CFunc {
 
 	//! 메세지를 전송한다
 	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams) {
+		CAccess.Assert(a_oName.ExIsValid() && a_oMsg.ExIsValid());
 		var oObj = CFunc.FindObj(a_oName);
+
 		oObj?.SendMessage(a_oMsg, a_oParams, SendMessageOptions.DontRequireReceiver);
 	}
 
 	//! 메세지를 전파한다
 	public static void BroadcastMsg(string a_oMsg, object a_oParams) {
-		CFunc.EnumerateScenes((a_stScene) => a_stScene.ExBroadcastMsg(a_oMsg, a_oParams));
+		CAccess.Assert(a_oMsg.ExIsValid());
+
+		CFunc.EnumerateScenes((a_stScene) => {
+			a_stScene.ExBroadcastMsg(a_oMsg, a_oParams);
+			return true;
+		});
 	}
 
 	//! 권한을 요청한다
@@ -92,55 +105,34 @@ public static partial class CFunc {
 	}
 
 	//! 씬을 순회한다
-	public static void EnumerateScenes(System.Action<Scene> a_oCallback) {
+	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback) {
+		CAccess.Assert(a_oCallback != null);
+		
 		for(int i = 0; i < SceneManager.sceneCount; ++i) {
-			a_oCallback?.Invoke(SceneManager.GetSceneAt(i));
+			var stScene = SceneManager.GetSceneAt(i);
+
+			// 씬 순회가 불가능 할 경우
+			if(!a_oCallback(stScene)) {
+				break;
+			}
 		}
-	}
-
-	//! 버전을 생성한다
-	public static STVersion MakeDefVersion(string a_oVersion) {
-		return new STVersion() {
-			m_oVersion = a_oVersion,
-			m_oExtraInfoList = new Dictionary<string, string>()
-		};
-	}
-
-	//! 지역화 경로를 생성한다
-	public static string MakeLocalizePath(string a_oBasePath, string a_oLanguage) {
-		var oFilename = Path.GetFileNameWithoutExtension(a_oBasePath);
-		var oLocalizeFilename = string.Format(KCDefine.B_FILENAME_FORMAT_LOCALIZE, oFilename, a_oLanguage);
-
-		return a_oBasePath.ExGetReplaceFilenamePath(oLocalizeFilename);
-	}
-
-	//! 지역화 경로를 생성한다
-	public static string MakeLocalizePath(string a_oBasePath, 
-		string a_oDefLocalizePath, string a_oLanguage, string a_oCountryCode) 
-	{
-		string oFilepath = string.Empty;
-
-		// 언어가 유효 할 경우
-		if(a_oLanguage.ExIsValidLanguage()) {
-			oFilepath = CFunc.MakeLocalizePath(a_oBasePath, a_oLanguage);
-		} else {
-			oFilepath = CFunc.MakeLocalizePath(a_oBasePath, a_oCountryCode);
-		}
-
-		return CAccess.IsExistsRes<TextAsset>(oFilepath, true) ? oFilepath : a_oDefLocalizePath;
 	}
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
 	//! 컴포넌트를 탐색한다
 	public static T FindComponent<T>(string a_oName) where T : Component {
+		CAccess.Assert(a_oName.ExIsValid());
 		var oObj = CFunc.FindObj(a_oName);
+
 		return oObj?.GetComponentInChildren<T>();
 	}
 
 	//! 컴포넌트를 탐색한다
 	public static T[] FindComponents<T>(string a_oName) where T : Component {
+		CAccess.Assert(a_oName.ExIsValid());
 		var oObj = CFunc.FindObj(a_oName);
+		
 		return oObj?.GetComponentsInChildren<T>();
 	}
 	#endregion			// 제네릭 클래스 함수

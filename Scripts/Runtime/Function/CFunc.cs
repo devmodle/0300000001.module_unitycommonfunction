@@ -35,25 +35,24 @@ public static partial class CFunc {
 	public static void CopyFile(string a_oSrcPath, 
 		string a_oDestPath, string a_oIgnore, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
 	{
+		CAccess.Assert(a_oEncoding != null);
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 
+		bool bIsEnableCopy = a_bIsOverwrite || !File.Exists(a_oDestPath);
+
 		// 파일 복사가 가능 할 경우
-		if(File.Exists(a_oSrcPath) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
+		if(bIsEnableCopy && File.Exists(a_oSrcPath)) {
 			var oStringLines = CFunc.ReadStringLines(a_oSrcPath, a_oEncoding);
+			var oStringBuilder = new System.Text.StringBuilder();
 
-			// 문자열이 유효 할 경우
-			if(oStringLines.ExIsValid()) {
-				var oStringBuilder = new System.Text.StringBuilder();
-
-				for(int i = 0; i < oStringLines.Length; ++i) {
-					// 문자열 추가가 가능 할 경우
-					if(!oStringLines[i].Contains(a_oIgnore)) {
-						oStringBuilder.AppendLine(oStringLines[i]);
-					}
+			for(int i = 0; i < oStringLines.Length; ++i) {
+				// 문자열 추가가 가능 할 경우
+				if(!oStringLines[i].Contains(a_oIgnore)) {
+					oStringBuilder.AppendLine(oStringLines[i]);
 				}
-
-				CFunc.WriteString(a_oDestPath, oStringBuilder.ToString(), a_oEncoding);
 			}
+
+			CFunc.WriteString(a_oDestPath, oStringBuilder.ToString(), a_oEncoding);
 		}
 	}
 
@@ -61,26 +60,24 @@ public static partial class CFunc {
 	public static void CopyFile(string a_oSrcPath, 
 		string a_oDestPath, string a_oTarget, string a_oReplace, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true) 
 	{
+		CAccess.Assert(a_oEncoding != null);
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
-		bool bIsExistsFile = Directory.Exists(a_oSrcPath);
+
+		bool bIsEnableCopy = a_bIsOverwrite || !File.Exists(a_oDestPath);
 
 		// 파일 복사가 가능 할 경우
-		if(bIsExistsFile && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
+		if(bIsEnableCopy && File.Exists(a_oSrcPath)) {
 			var oStringLines = CFunc.ReadStringLines(a_oSrcPath, a_oEncoding);
+			var oStringBuilder = new System.Text.StringBuilder();
 
-			// 문자열이 유효 할 경우
-			if(oStringLines.ExIsValid()) {
-				var oStringBuilder = new System.Text.StringBuilder();
-
-				for(int i = 0; i < oStringLines.Length; ++i) {
-					string oString = !oStringLines[i].ExIsValid() ? 
-						string.Empty : oStringLines[i].ExGetReplaceString(a_oTarget, a_oReplace, short.MaxValue);
-						
-					oStringBuilder.AppendLine(oString);
-				}
-
-				CFunc.WriteString(a_oDestPath, oStringBuilder.ToString(), a_oEncoding);
+			for(int i = 0; i < oStringLines.Length; ++i) {
+				string oString = !oStringLines[i].ExIsValid() ? 
+					string.Empty : oStringLines[i].ExGetReplaceString(a_oTarget, a_oReplace, short.MaxValue);
+					
+				oStringBuilder.AppendLine(oString);
 			}
+
+			CFunc.WriteString(a_oDestPath, oStringBuilder.ToString(), a_oEncoding);
 		}
 	}
 
@@ -89,89 +86,94 @@ public static partial class CFunc {
 		string a_oDestPath, bool a_bIsOverwrite = true) 
 	{
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
-		bool bIsExistsDir = Directory.Exists(a_oSrcPath);
+		bool bIsEnableCopy = a_bIsOverwrite || !Directory.Exists(a_oDestPath);
 
 		// 디렉토리 복사가 가능 할 경우
-		if(bIsExistsDir && (a_bIsOverwrite || !Directory.Exists(a_oDestPath))) {
-			CAccess.RemoveDirectory(a_oDestPath);
+		if(bIsEnableCopy && Directory.Exists(a_oSrcPath)) {
+			CFactory.RemoveDir(a_oDestPath);
 
-			CFunc.EnumerateDirs(a_oSrcPath, (a_oFilepaths, a_oDirpaths) => {
-				for(int i = 0; i < a_oFilepaths.Length; ++i) {
-					string oDestFilepath = a_oFilepaths[i].ExGetReplaceString(a_oSrcPath, a_oDestPath);
-					CFunc.CopyFile(a_oFilepaths[i], oDestFilepath, a_bIsOverwrite);
+			CFunc.EnumerateDirs(a_oSrcPath, (a_oFilePaths, a_oDirPaths) => {
+				for(int i = 0; i < a_oFilePaths.Length; ++i) {
+					string oDestFilePath = a_oFilePaths[i].ExGetReplaceString(a_oSrcPath, a_oDestPath);
+					CFunc.CopyFile(a_oFilePaths[i], oDestFilePath, a_bIsOverwrite);
 				}
+
+				return true;
 			});
 		}
 	}
 
 	//! 디렉토리를 순회한다
-	public static void EnumerateDirs(string a_oDirpath, 
-		System.Action<string[], string[]> a_oCallback) 
+	public static void EnumerateDirs(string a_oDirPath, 
+		System.Func<string[], string[], bool> a_oCallback) 
 	{
-		CAccess.Assert(a_oDirpath.ExIsValid());
+		CAccess.Assert(a_oCallback != null && a_oDirPath.ExIsValid());
 
 		// 디렉토리가 존재 할 경우
-		if(Directory.Exists(a_oDirpath)) {
-			var oFilepaths = Directory.GetFiles(a_oDirpath);
-			var oDirpaths = Directory.GetDirectories(a_oDirpath);
+		if(Directory.Exists(a_oDirPath)) {
+			var oFilePaths = Directory.GetFiles(a_oDirPath);
+			var oDirPaths = Directory.GetDirectories(a_oDirPath);
 
-			a_oCallback?.Invoke(oFilepaths, oDirpaths);
+			// 디렉토리 순회가 불가능 할 경우
+			if(!a_oCallback(oFilePaths, oDirPaths)) {
+				return;
+			}
 
-			for(int i = 0; i < oDirpaths.Length; ++i) {
-				CFunc.EnumerateDirs(oDirpaths[i], a_oCallback);
+			for(int i = 0; i < oDirPaths.Length; ++i) {
+				CFunc.EnumerateDirs(oDirPaths[i], a_oCallback);
 			}
 		}
 	}
 
 	//! 바이트를 읽어들인다
-	public static byte[] ReadBytes(string a_oFilepath) {
-		CAccess.Assert(a_oFilepath.ExIsValid());
-		return File.Exists(a_oFilepath) ? File.ReadAllBytes(a_oFilepath) : null;
+	public static byte[] ReadBytes(string a_oFilePath) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+		return File.Exists(a_oFilePath) ? File.ReadAllBytes(a_oFilePath) : null;
 	}
 
 	//! 보안 바이트를 읽어들인다
-	public static byte[] ReadSecurityBytes(string a_oFilepath) {
-		CAccess.Assert(a_oFilepath.ExIsValid());
+	public static byte[] ReadSecurityBytes(string a_oFilePath) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
 		
-		var oBytes = CFunc.ReadBytes(a_oFilepath);
+		var oBytes = CFunc.ReadBytes(a_oFilePath);
 		string oString = System.Text.Encoding.Default.GetString(oBytes);
 
 		return (oBytes != null) ? System.Convert.FromBase64String(oString) : null;
 	}
 
 	//! 문자열을 읽어들인다
-	public static string ReadString(string a_oFilepath, System.Text.Encoding a_oEncoding) {
-		CAccess.Assert(a_oFilepath.ExIsValid() && a_oEncoding != null);
+	public static string ReadString(string a_oFilePath, System.Text.Encoding a_oEncoding) {
+		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
 
-		return File.Exists(a_oFilepath) ? File.ReadAllText(a_oFilepath, a_oEncoding) 
+		return File.Exists(a_oFilePath) ? File.ReadAllText(a_oFilePath, a_oEncoding) 
 			: string.Empty;
 	}
 
 	//! 문자열 라인을 읽어들인다
-	public static string[] ReadStringLines(string a_oFilepath, 
+	public static string[] ReadStringLines(string a_oFilePath, 
 		System.Text.Encoding a_oEncoding) 
 	{
-		CAccess.Assert(a_oFilepath.ExIsValid() && a_oEncoding != null);
-		return File.ReadAllLines(a_oFilepath, a_oEncoding);
+		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
+		return File.ReadAllLines(a_oFilePath, a_oEncoding);
 	}
 
 	//! 보안 문자열을 읽어들인다
-	public static string ReadSecurityString(string a_oFilepath, 
+	public static string ReadSecurityString(string a_oFilePath, 
 		System.Text.Encoding a_oEncoding) 
 	{
-		CAccess.Assert(a_oFilepath.ExIsValid() && a_oEncoding != null);
-		var oBytes = CFunc.ReadSecurityBytes(a_oFilepath);
+		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
+		var oBytes = CFunc.ReadSecurityBytes(a_oFilePath);
 
 		return (oBytes != null) ? a_oEncoding.GetString(oBytes) : string.Empty;
 	}
 
 	//! 바이트를 기록한다
-	public static void WriteBytes(string a_oFilepath,
+	public static void WriteBytes(string a_oFilePath,
 		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
 	{
-		CAccess.Assert(a_oFilepath.ExIsValid() && a_oBytes != null);
+		CAccess.Assert(a_oBytes != null && a_oFilePath.ExIsValid());
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, 
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
 			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
 		{
 			CFunc.WriteBytes(oWStream, a_oBytes);
@@ -179,20 +181,20 @@ public static partial class CFunc {
 	}
 
 	//! 바이트를 기록한다
-	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes) {
+	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes, bool a_bIsFlush = true) {
 		CAccess.Assert(a_oWStream != null && a_oBytes != null);
 
 		a_oWStream.Write(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
-		a_oWStream.Flush(true);
+		a_oWStream.Flush(a_bIsFlush);
 	}
 
 	//! 보안 바이트를 기록한다
-	public static void WriteSecurityBytes(string a_oFilepath,
+	public static void WriteSecurityBytes(string a_oFilePath,
 		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
 	{
-		CAccess.Assert(a_oFilepath.ExIsValid() && a_oBytes != null);
+		CAccess.Assert(a_oBytes != null && a_oFilePath.ExIsValid());
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, 
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
 			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
 		{
 			CFunc.WriteSecurityBytes(oWStream, a_oBytes);
@@ -210,13 +212,13 @@ public static partial class CFunc {
 	}
 
 	//! 문자열을 기록한다
-	public static void WriteString(string a_oFilepath,
+	public static void WriteString(string a_oFilePath,
 		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
 	{
-		CAccess.Assert(a_oFilepath.ExIsValid());
+		CAccess.Assert(a_oFilePath.ExIsValid());
 		CAccess.Assert(a_oString != null && a_oEncoding != null);
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, 
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
 			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
 		{
 			CFunc.WriteString(oWStream, a_oString, a_oEncoding);
@@ -234,13 +236,13 @@ public static partial class CFunc {
 	}
 
 	//! 보안 문자열을 기록한다
-	public static void WriteSecurityString(string a_oFilepath,
+	public static void WriteSecurityString(string a_oFilePath,
 		string a_oString, System.Text.Encoding a_oEncoding, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
 	{
-		CAccess.Assert(a_oFilepath.ExIsValid());
+		CAccess.Assert(a_oFilePath.ExIsValid());
 		CAccess.Assert(a_oString != null && a_oEncoding != null);
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilepath, 
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
 			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
 		{
 			CFunc.WriteSecurityString(oWStream, a_oString, a_oEncoding);
@@ -270,8 +272,8 @@ public static partial class CFunc {
 	}
 
 	//! 함수를 호출한다
-	public static void Invoke(ref FileBrowser.OnSuccess a_oCallback, string[] a_oFilepaths) {
-		a_oCallback?.Invoke(a_oFilepaths);
+	public static void Invoke(ref FileBrowser.OnSuccess a_oCallback, string[] a_oFilePaths) {
+		a_oCallback?.Invoke(a_oFilePaths);
 		a_oCallback = null;
 	}
 
@@ -284,6 +286,7 @@ public static partial class CFunc {
 	//! 로그를 출력한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, params object[] a_oParams) {
+		CAccess.Assert(a_oFormat != null);
 		CFunc.DoShowLog(LogType.Log, string.Format(a_oFormat, a_oParams));
 	}
 
@@ -292,7 +295,9 @@ public static partial class CFunc {
 	public static void ShowLog(string a_oFormat, 
 		Color a_stColor, params object[] a_oParams) 
 	{
+		CAccess.Assert(a_oFormat != null);
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
+
 		CFunc.DoShowLog(LogType.Log, string.Format(oFormat, a_oParams));
 	}
 
@@ -305,12 +310,15 @@ public static partial class CFunc {
 	public static void ShowLogWarning(string a_oFormat, 
 		Color a_stColor, params object[] a_oParams) 
 	{
+		CAccess.Assert(a_oFormat != null);
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
+
 		CFunc.DoShowLog(LogType.Warning, string.Format(oFormat, a_oParams));
 	}
 
 	//! 에러 로그를 출력한다
 	public static void ShowLogError(string a_oFormat, params object[] a_oParams) {
+		CAccess.Assert(a_oFormat != null);
 		CFunc.DoShowLog(LogType.Error, string.Format(a_oFormat, a_oParams));
 	}
 
@@ -318,53 +326,10 @@ public static partial class CFunc {
 	public static void ShowLogError(string a_oFormat, 
 		Color a_stColor, params object[] a_oParams) 
 	{
+		CAccess.Assert(a_oFormat != null);
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
+
 		CFunc.DoShowLog(LogType.Error, string.Format(oFormat, a_oParams));
-	}
-
-	//! 정수 랜덤 값을 생성한다
-	public static int[] MakeIntRandomValues(int a_nMin, int a_nMax, int a_nNumValues) {
-		CAccess.Assert(a_nNumValues >= KCDefine.B_VALUE_INT_1);
-
-		return CFunc.MakeValues<int>(a_nNumValues, (a_nIndex) => 
-			Random.Range(a_nMin, a_nMax + KCDefine.B_VALUE_INT_1));
-	}
-
-	//! 실수 랜덤 값을 생성한다
-	public static float[] MakeFloatRandomValues(float a_fMin, 
-		float a_fMax, int a_nNumValues) 
-	{
-		CAccess.Assert(a_nNumValues >= KCDefine.B_VALUE_INT_1);
-
-		return CFunc.MakeValues<float>(a_nNumValues, (a_nIndex) => 
-			Random.Range(a_fMin, a_fMax));
-	}
-
-	//! 정수 랜덤 분할 값을 생성한다
-	public static int[] MakeIntRandomSplitValues(int a_nValue, int a_nNumValues) {
-		CAccess.Assert(a_nNumValues >= KCDefine.B_VALUE_INT_1);
-		int nSumValue = KCDefine.B_VALUE_INT_0;
-
-		var oValues = CFunc.MakeValues<int>(a_nNumValues, (a_nIndex) => {
-			int nValue = a_nValue / a_nNumValues;
-			nSumValue += nValue;
-
-			return (a_nIndex < a_nNumValues - KCDefine.B_VALUE_INT_1) ? nValue 
-				: a_nValue - nSumValue;
-		});
-
-		for(int i = 0; i < oValues.Length; ++i) {
-			int nIndex = Random.Range(KCDefine.B_VALUE_INT_0, oValues.Length);
-			bool bIsEnableCorrect = oValues[i] > KCDefine.B_VALUE_INT_1;
-
-			// 값 보정이 가능 할 경우
-			if(bIsEnableCorrect && oValues[nIndex] > KCDefine.B_VALUE_INT_1) {
-				oValues[i] += KCDefine.B_VALUE_INT_1;
-				oValues[nIndex] -= KCDefine.B_VALUE_INT_1;
-			}
-		}
-
-		return oValues;
 	}
 
 	//! 로그를 출력한다
@@ -514,117 +479,84 @@ public static partial class CFunc {
 		return tResult;
 	}
 	
-	//! 값을 생성한다
-	public static T[] MakeValues<T>(int a_nNumValues, System.Func<int, T> a_oCallback) {
-		CAccess.Assert(a_oCallback != null);
-		CAccess.Assert(a_nNumValues >= KCDefine.B_VALUE_INT_1);
-
-		var oValues = new T[a_nNumValues];
-
-		for(int i = 0; i < a_nNumValues; ++i) {
-			oValues[i] = a_oCallback.Invoke(i);
-		}
-
-		return oValues;
-	}
-
-	//! 섞인 값을 생성한다
-	public static T[] MakeShuffleValues<T>(int a_nNumValues, 
-		System.Func<int, T> a_oCallback) 
-	{
-		CAccess.Assert(a_oCallback != null);
-		CAccess.Assert(a_nNumValues >= KCDefine.B_VALUE_INT_1);
-
-		var oValues = CFunc.MakeValues<T>(a_nNumValues, a_oCallback);
-		oValues.ExShuffle();
-
-		return oValues;
-	}
-
 	//! JSON 객체를 읽어들인다
-	public static T ReadJSONObj<T>(string a_oFilepath, System.Text.Encoding a_oEncoding) {
-		CAccess.Assert(a_oEncoding != null);
-		CAccess.Assert(a_oFilepath.ExIsValid());
+	public static T ReadJSONObj<T>(string a_oFilePath, System.Text.Encoding a_oEncoding) {
+		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
 
 #if SECURITY_ENABLE
-		string oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadSecurityString(a_oFilePath, a_oEncoding);
 #else
-		string oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadString(a_oFilePath, a_oEncoding);
 #endif			// #if SECURITY_ENABLE
 
 		return oString.ExJSONStringToObj<T>();
 	}
 
 	//! 메세지 팩 객체를 읽어들인다
-	public static T ReadMsgPackObj<T>(string a_oFilepath) {
-		CAccess.Assert(a_oFilepath.ExIsValid());
+	public static T ReadMsgPackObj<T>(string a_oFilePath) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
 
 #if SECURITY_ENABLE
-		var oBytes = CFunc.ReadSecurityBytes(a_oFilepath);
+		var oBytes = CFunc.ReadSecurityBytes(a_oFilePath);
 #else
-		var oBytes = CFunc.ReadBytes(a_oFilepath);
+		var oBytes = CFunc.ReadBytes(a_oFilePath);
 #endif			// #if SECURITY_ENABLE
 
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
 
 	//! 메세지 팩 JSON 객체를 읽어들인다
-	public static T ReadMsgPackJSONObj<T>(string a_oFilepath, 
+	public static T ReadMsgPackJSONObj<T>(string a_oFilePath, 
 		System.Text.Encoding a_oEncoding) 
 	{
-		CAccess.Assert(a_oEncoding != null);
-		CAccess.Assert(a_oFilepath.ExIsValid());
+		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
 
 #if SECURITY_ENABLE
-		string oString = CFunc.ReadSecurityString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadSecurityString(a_oFilePath, a_oEncoding);
 #else
-		string oString = CFunc.ReadString(a_oFilepath, a_oEncoding);
+		string oString = CFunc.ReadString(a_oFilePath, a_oEncoding);
 #endif			// #if SECURITY_ENABLE
 
 		return oString.ExMsgPackJSONStringToObj<T>();
 	}
 	
 	//! JSON 객체를 기록한다
-	public static void WriteJSONObj<T>(string a_oFilepath, 
+	public static void WriteJSONObj<T>(string a_oFilePath, 
 		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false) 
 	{
-		CAccess.Assert(a_oEncoding != null);
-		CAccess.Assert(a_oFilepath.ExIsValid());
-
+		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
 
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
+		CFunc.WriteSecurityString(a_oFilePath, oString, a_oEncoding);
 #else
-		CFunc.WriteString(a_oFilepath, oString, a_oEncoding);
+		CFunc.WriteString(a_oFilePath, oString, a_oEncoding);
 #endif			// #if SECURITY_ENABLE
 	}
 
 	//! 메세지 팩 객체를 기록한다
-	public static void WriteMsgPackObj<T>(string a_oFilepath, T a_oObj) {
-		CAccess.Assert(a_oFilepath.ExIsValid());
+	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = MessagePackSerializer.Serialize<T>(a_oObj);
 
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityBytes(a_oFilepath, oBytes);
+		CFunc.WriteSecurityBytes(a_oFilePath, oBytes);
 #else
-		CFunc.WriteBytes(a_oFilepath, oBytes);
+		CFunc.WriteBytes(a_oFilePath, oBytes);
 #endif			// #if SECURITY_ENABLE
 	}
 
 	//! 메세지 팩 JSON 객체를 기록한다
-	public static void WriteMsgPackJSONObj<T>(string a_oFilepath, 
+	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, 
 		T a_oObj, System.Text.Encoding a_oEncoding) 
 	{
-		CAccess.Assert(a_oEncoding != null);
-		CAccess.Assert(a_oFilepath.ExIsValid());
-
+		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToMsgPackJSONString();
 		
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityString(a_oFilepath, oString, a_oEncoding);
+		CFunc.WriteSecurityString(a_oFilePath, oString, a_oEncoding);
 #else
-		CFunc.WriteString(a_oFilepath, oString, a_oEncoding);
+		CFunc.WriteString(a_oFilePath, oString, a_oEncoding);
 #endif			// #if SECURITY_ENABLE		
 	}
 	#endregion			// 제네릭 클래스 함수
