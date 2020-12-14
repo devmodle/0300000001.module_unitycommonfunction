@@ -36,23 +36,23 @@ public static partial class CEditorFunc {
 	}
 	
 	//! 커맨드 라인을 실행한다
-	public static void ExecuteCmdline(string a_oParams) {
+	public static void ExecuteCmdLine(string a_oParams) {
 		CAccess.Assert(a_oParams.ExIsValid());
 
 		// 맥 일 경우
 		if(CAccess.IsMac()) {
-			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_SHELL,
-				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_SHELL, a_oParams));
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_PATH_SHELL,
+				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FORMAT_SHELL, a_oParams));
 		}
 		// 윈도우즈 일 경우
 		else if(CAccess.IsWindows()) {
-			CEditorFunc.ExecuteCmdline(KCEditorDefine.B_TOOL_PATH_CMD_PROMPT,
-				string.Format(KCEditorDefine.B_CMDLINE_PARAM_FORMAT_CMD_PROMPT, a_oParams));
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_PATH_CMD_PROMPT,
+				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FORMAT_CMD_PROMPT, a_oParams));
 		}
 	}
 
 	//! 커맨드 라인을 실행한다
-	public static void ExecuteCmdline(string a_oFilePath, string a_oParams) {
+	public static void ExecuteCmdLine(string a_oFilePath, string a_oParams) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
 		var oStartInfo = new ProcessStartInfo(a_oFilePath, a_oParams);
