@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
@@ -284,14 +283,14 @@ public static partial class CFunc {
 	}
 	
 	//! 로그를 출력한다
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, params object[] a_oParams) {
 		CAccess.Assert(a_oFormat != null);
 		CFunc.DoShowLog(LogType.Log, string.Format(a_oFormat, a_oParams));
 	}
 
 	//! 로그를 출력한다
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFormat, 
 		Color a_stColor, params object[] a_oParams) 
 	{

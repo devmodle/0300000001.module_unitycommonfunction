@@ -62,7 +62,9 @@ public static partial class CEditorFunc {
 	}
 
 	//! 플랫폼을 변경한다
-	public static void ChangePlatform(BuildTargetGroup a_eTargetGroup, BuildTarget a_eTarget) {
+	public static void ChangePlatform(BuildTargetGroup a_eTargetGroup, 
+		BuildTarget a_eTarget) 
+	{
 		EditorUserBuildSettings.SwitchActiveBuildTarget(a_eTargetGroup, a_eTarget);
 	}
 	#endregion			// 클래스 함수
@@ -75,13 +77,17 @@ public static partial class CEditorFunc {
 	}
 
 	//! 에셋을 탐색한다
-	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
+	public static T FindAsset<T>(string a_oFilter, 
+		string[] a_oSearchPaths) where T : Object 
+	{
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_INT_0] : null;
 	}
 
 	//! 에셋을 탐색한다
-	public static List<T> FindAssets<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
+	public static List<T> FindAssets<T>(string a_oFilter, 
+		string[] a_oSearchPaths) where T : Object 
+	{
 		var oAssetList = new List<T>();
 		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPaths);
 
