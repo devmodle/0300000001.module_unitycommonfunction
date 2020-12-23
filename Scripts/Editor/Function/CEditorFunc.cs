@@ -41,12 +41,12 @@ public static partial class CEditorFunc {
 
 		// 맥 일 경우
 		if(CAccess.IsMac()) {
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_PATH_SHELL,
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL,
 				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, a_oParams));
 		}
 		// 윈도우즈 일 경우
 		else if(CAccess.IsWindows()) {
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_PATH_CMD_PROMPT,
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT,
 				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams));
 		}
 	}
