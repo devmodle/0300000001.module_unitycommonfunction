@@ -281,6 +281,13 @@ public static partial class CFunc {
 		a_oCallback?.Invoke();
 		a_oCallback = null;
 	}
+
+	//! 로그를 출력한다
+	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	public static void ShowLog(string a_oLog) {
+		CAccess.Assert(a_oLog != null);
+		CFunc.DoShowLog(LogType.Log, a_oLog);
+	}
 	
 	//! 로그를 출력한다
 	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
@@ -301,6 +308,11 @@ public static partial class CFunc {
 	}
 
 	//! 경고 로그를 출력한다
+	public static void ShowLogWarning(string a_oLog) {
+		CFunc.DoShowLog(LogType.Warning, a_oLog);
+	}
+
+	//! 경고 로그를 출력한다
 	public static void ShowLogWarning(string a_oFormat, params object[] a_oParams) {
 		CFunc.DoShowLog(LogType.Warning, string.Format(a_oFormat, a_oParams));
 	}
@@ -313,6 +325,11 @@ public static partial class CFunc {
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
 
 		CFunc.DoShowLog(LogType.Warning, string.Format(oFormat, a_oParams));
+	}
+
+	//! 에러 로그를 출력한다
+	public static void ShowLogError(string a_oLog) {
+		CFunc.DoShowLog(LogType.Error, a_oLog);
 	}
 
 	//! 에러 로그를 출력한다
