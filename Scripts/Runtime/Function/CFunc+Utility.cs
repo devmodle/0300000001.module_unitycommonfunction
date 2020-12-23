@@ -86,8 +86,8 @@ public static partial class CFunc {
 		} else {
 			Permission.RequestUserPermission(a_oPermission);
 
-			float fDeltaTime = KCDefine.U_DELTA_TIME_PERMISSION_M_REQUEST_CHECK;
-			float fMaxDeltaTime = KCDefine.U_MAX_DELTA_TIME_PERMISSION_M_REQUEST_CHECK;
+			float fDeltaTime = KCDefine.U_DELTA_T_PERMISSION_M_REQUEST_CHECK;
+			float fMaxDeltaTime = KCDefine.U_MAX_DELTA_T_PERMISSION_M_REQUEST_CHECK;
 			
 			a_oComponent.ExRepeatCallFunc(fDeltaTime, fMaxDeltaTime, (a_oSender, a_oParams, a_bIsComplete) => {
 				// 요청이 완료 되었을 경우
