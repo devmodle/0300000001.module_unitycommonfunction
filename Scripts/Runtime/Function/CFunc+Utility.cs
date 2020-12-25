@@ -143,7 +143,7 @@ public static partial class CFunc {
 		Selection.activeGameObject = a_oObj;
 
 		// 핑 모드 일 경우
-		if(a_bIsPing) {
+		if(a_bIsPing && a_oObj != null) {
 			EditorGUIUtility.PingObject(a_oObj);
 		}
 	}
@@ -153,7 +153,7 @@ public static partial class CFunc {
 		Selection.objects = a_oObjs;
 
 		// 핑 모드 일 경우
-		if(a_bIsPing) {
+		if(a_bIsPing && a_oObjs.ExIsValid()) {
 			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_VALUE_INT_0]);
 		}
 	}
