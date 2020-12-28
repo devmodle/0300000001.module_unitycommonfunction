@@ -48,7 +48,7 @@ public static partial class CFunc {
 #if UNITY_EDITOR
 		// 렌더링 파이프라인을 설정한다 {			
 #if UNIVERSAL_PIPELINE_MODULE_ENABLE
-		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.U_PIPELINE_P_UNIVERSAL_RENDER_PIPELINE);
+		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP);
 		
 		// 렌더 파이프라인이 존재 할 경우
 		if(oRenderPipeline != null) {
@@ -56,16 +56,13 @@ public static partial class CFunc {
 
 			oRenderPipeline.shaderVariantLogLevel = ShaderVariantLogLevel.Disabled;
 			oRenderPipeline.colorGradingMode = ColorGradingMode.LowDynamicRange;
-			oRenderPipeline.shadowCascadeOption = ShadowCascadesOption.NoCascades;
+			oRenderPipeline.shadowCascadeCount = (int)(EShadowCascadesOpts.ONE_CASCADES + 1);
 
 			oRenderPipeline.renderScale = KCDefine.U_SCALE_UNIVERSAL_RP_RENDERING;
 			oRenderPipeline.colorGradingLutSize = KCDefine.U_SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
 
 			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ANTI_ALIASING, 
 				MsaaQuality.Disabled);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_DEBUG_LEVEL, 
-				PipelineDebugLevel.Disabled);
 
 			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ_LIMIT, 
 				KCDefine.U_MAX_NUM_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ);
