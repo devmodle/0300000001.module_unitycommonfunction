@@ -1,5 +1,6 @@
 {
     "name": "UnityModule.Common.Func",
+    "rootNamespace": "",
     "references": [
         "UnityModule.Common.Define",
         "UnityModule.Common.Access",
@@ -7,6 +8,7 @@
         "UnityModule.Common.Extension",
         "Unity.RenderPipelines.Universal.Runtime",
         "MessagePack",
+        "MessagePack.Annotations",
         "SimpleFileBrowser.Runtime"
     ],
     "includePlatforms": [],
