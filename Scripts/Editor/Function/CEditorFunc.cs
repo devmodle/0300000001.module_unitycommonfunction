@@ -45,7 +45,7 @@ public static partial class CEditorFunc {
 				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, a_oParams));
 		}
 		// 윈도우즈 일 경우
-		else if(CAccess.IsWindows()) {
+		else if(CAccess.IsWnds()) {
 			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT,
 				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams));
 		}
