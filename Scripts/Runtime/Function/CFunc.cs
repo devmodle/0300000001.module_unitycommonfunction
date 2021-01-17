@@ -538,41 +538,41 @@ public static partial class CFunc {
 	
 	//! JSON 객체를 기록한다
 	public static void WriteJSONObj<T>(string a_oFilePath, 
-		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false) 
+		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsAutoBackup = false) 
 	{
 		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
 
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityString(a_oFilePath, oString, a_oEncoding);
+		CFunc.WriteSecurityString(a_oFilePath, oString, a_oEncoding, true, a_bIsAutoBackup);
 #else
-		CFunc.WriteString(a_oFilePath, oString, a_oEncoding);
+		CFunc.WriteString(a_oFilePath, oString, a_oEncoding, true, a_bIsAutoBack);
 #endif			// #if SECURITY_ENABLE
 	}
 
 	//! 메세지 팩 객체를 기록한다
-	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj) {
+	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = MessagePackSerializer.Serialize<T>(a_oObj);
 
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityBytes(a_oFilePath, oBytes);
+		CFunc.WriteSecurityBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup);
 #else
-		CFunc.WriteBytes(a_oFilePath, oBytes);
+		CFunc.WriteBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup);
 #endif			// #if SECURITY_ENABLE
 	}
 
 	//! 메세지 팩 JSON 객체를 기록한다
 	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, 
-		T a_oObj, System.Text.Encoding a_oEncoding) 
+		T a_oObj, System.Text.Encoding a_oEncoding, bool a_bIsAutoBackup = false) 
 	{
 		CAccess.Assert(a_oEncoding != null && a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToMsgPackJSONString();
 		
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityString(a_oFilePath, oString, a_oEncoding);
+		CFunc.WriteSecurityString(a_oFilePath, oString, a_oEncoding, true, a_bIsAutoBackup);
 #else
-		CFunc.WriteString(a_oFilePath, oString, a_oEncoding);
+		CFunc.WriteString(a_oFilePath, oString, a_oEncoding, true, a_bIsAutoBackup);
 #endif			// #if SECURITY_ENABLE		
 	}
 	#endregion			// 제네릭 클래스 함수
