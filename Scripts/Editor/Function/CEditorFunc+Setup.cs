@@ -19,8 +19,7 @@ public static partial class CEditorFunc {
 				oDefineSymbolList.ExAddValue(stKeyValue.Value[i]);
 			}
 
-			PlayerSettings.SetScriptingDefineSymbolsForGroup(stKeyValue.Key,
-				oDefineSymbolList.ExToString(KCEditorDefine.B_TOKEN_DEFINE_SYMBOL));
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(stKeyValue.Key, oDefineSymbolList.ExToString(KCEditorDefine.B_TOKEN_DEFINE_SYMBOL));
 		}
 	}
 	#endregion			// 클래스 함수

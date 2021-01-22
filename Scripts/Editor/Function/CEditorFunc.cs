@@ -18,9 +18,7 @@ public static partial class CEditorFunc {
 	}
 
 	//! 경고 팝업을 출력한다
-	public static bool ShowAlertPopup(string a_oTitle,
-		string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText = KCDefine.B_EMPTY_STRING) 
-	{
+	public static bool ShowAlertPopup(string a_oTitle, string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText = KCDefine.B_EMPTY_STRING) {
 		// 취소 버튼 텍스트가 유효 할 경우
 		if(a_oCancelBtnText.ExIsValid()) {
 			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText, a_oCancelBtnText);
@@ -41,13 +39,11 @@ public static partial class CEditorFunc {
 
 		// 맥 일 경우
 		if(CAccess.IsMac()) {
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL,
-				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, a_oParams));
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, a_oParams));
 		}
 		// 윈도우즈 일 경우
 		else if(CAccess.IsWnds()) {
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT,
-				string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams));
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams));
 		}
 	}
 
@@ -62,9 +58,7 @@ public static partial class CEditorFunc {
 	}
 
 	//! 플랫폼을 변경한다
-	public static void ChangePlatform(BuildTargetGroup a_eTargetGroup, 
-		BuildTarget a_eTarget) 
-	{
+	public static void ChangePlatform(BuildTargetGroup a_eTargetGroup, BuildTarget a_eTarget) {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(a_eTargetGroup, a_eTarget);
 	}
 	#endregion			// 클래스 함수
@@ -77,17 +71,13 @@ public static partial class CEditorFunc {
 	}
 
 	//! 에셋을 탐색한다
-	public static T FindAsset<T>(string a_oFilter, 
-		string[] a_oSearchPaths) where T : Object 
-	{
+	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_INT_0] : null;
 	}
 
 	//! 에셋을 탐색한다
-	public static List<T> FindAssets<T>(string a_oFilter, 
-		string[] a_oSearchPaths) where T : Object 
-	{
+	public static List<T> FindAssets<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssetList = new List<T>();
 		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPaths);
 

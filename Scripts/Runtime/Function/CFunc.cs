@@ -18,9 +18,7 @@ public static partial class CFunc {
 
 	#region 클래스 함수
 	//! 파일을 복사한다
-	public static void CopyFile(string a_oSrcPath, 
-		string a_oDestPath, bool a_bIsOverwrite = true) 
-	{
+	public static void CopyFile(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 
 		// 파일 복사가 가능 할 경우
@@ -31,9 +29,7 @@ public static partial class CFunc {
 	}
 
 	//! 파일을 복사한다
-	public static void CopyFile(string a_oSrcPath, 
-		string a_oDestPath, string a_oIgnore, bool a_bIsOverwrite = true) 
-	{
+	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oIgnore, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 		bool bIsEnableCopy = a_bIsOverwrite || !File.Exists(a_oDestPath);
 
@@ -54,9 +50,7 @@ public static partial class CFunc {
 	}
 
 	//! 파일을 복사한다
-	public static void CopyFile(string a_oSrcPath, 
-		string a_oDestPath, string a_oTarget, string a_oReplace, bool a_bIsOverwrite = true) 
-	{
+	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oTarget, string a_oReplace, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 		bool bIsEnableCopy = a_bIsOverwrite || !File.Exists(a_oDestPath);
 
@@ -66,9 +60,7 @@ public static partial class CFunc {
 			var oStringBuilder = new System.Text.StringBuilder();
 
 			for(int i = 0; i < oStringLines.Length; ++i) {
-				string oString = !oStringLines[i].ExIsValid() ? 
-					string.Empty : oStringLines[i].ExGetReplaceString(a_oTarget, a_oReplace, short.MaxValue);
-					
+				string oString = oStringLines[i].ExIsValid() ? oStringLines[i].ExGetReplaceString(a_oTarget, a_oReplace, short.MaxValue) : string.Empty;
 				oStringBuilder.AppendLine(oString);
 			}
 
@@ -77,9 +69,7 @@ public static partial class CFunc {
 	}
 
 	//! 디렉토리를 복사한다
-	public static void CopyDir(string a_oSrcPath, 
-		string a_oDestPath, bool a_bIsOverwrite = true) 
-	{
+	public static void CopyDir(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true) {
 		CAccess.Assert(a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid());
 		bool bIsEnableCopy = a_bIsOverwrite || !Directory.Exists(a_oDestPath);
 
@@ -99,9 +89,7 @@ public static partial class CFunc {
 	}
 
 	//! 디렉토리를 순회한다
-	public static void EnumerateDirs(string a_oDirPath, 
-		System.Func<string[], string[], bool> a_oCallback) 
-	{
+	public static void EnumerateDirs(string a_oDirPath, System.Func<string[], string[], bool> a_oCallback) {
 		CAccess.Assert(a_oCallback != null && a_oDirPath.ExIsValid());
 
 		// 디렉토리가 존재 할 경우
@@ -157,9 +145,7 @@ public static partial class CFunc {
 	//! 문자열을 읽어들인다
 	public static string ReadString(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-
-		return File.Exists(a_oFilePath) ? File.ReadAllText(a_oFilePath, System.Text.Encoding.Default) 
-			: string.Empty;
+		return File.Exists(a_oFilePath) ? File.ReadAllText(a_oFilePath, System.Text.Encoding.Default) : string.Empty;
 	}
 
 	//! 문자열을 읽어들인다
@@ -189,20 +175,14 @@ public static partial class CFunc {
 	//! 문자열 라인을 읽어들인다
 	public static string[] ReadStringLines(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-
-		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, System.Text.Encoding.Default) 
-			: null;
+		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, System.Text.Encoding.Default) : null;
 	}
 
 	//! 바이트를 기록한다
-	public static void WriteBytes(string a_oFilePath,
-		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
-	{
+	public static void WriteBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		CAccess.Assert(a_oBytes != null && a_oFilePath.ExIsValid());
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
-			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
-		{
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteBytes(oWStream, a_oBytes);
 		}
 	}
@@ -216,14 +196,10 @@ public static partial class CFunc {
 	}
 
 	//! 보안 바이트를 기록한다
-	public static void WriteSecurityBytes(string a_oFilePath,
-		byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
-	{
+	public static void WriteSecurityBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		CAccess.Assert(a_oBytes != null && a_oFilePath.ExIsValid());
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
-			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
-		{
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteSecurityBytes(oWStream, a_oBytes);
 		}
 	}
@@ -231,22 +207,16 @@ public static partial class CFunc {
 	//! 보안 바이트를 기록한다
 	public static void WriteSecurityBytes(FileStream a_oWStream, byte[] a_oBytes) {
 		CAccess.Assert(a_oWStream != null && a_oBytes != null);
-
-		string oString = System.Convert.ToBase64String(a_oBytes, 
-			KCDefine.B_VALUE_INT_0, a_oBytes.Length);
+		string oString = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
 
 		CFunc.WriteBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(oString));
 	}
 
 	//! 문자열을 기록한다
-	public static void WriteString(string a_oFilePath,
-		string a_oString, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
-	{
+	public static void WriteString(string a_oFilePath, string a_oString, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		CAccess.Assert(a_oString != null && a_oFilePath.ExIsValid());
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
-			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
-		{
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteString(oWStream, a_oString);
 		}
 	}
@@ -258,14 +228,10 @@ public static partial class CFunc {
 	}
 
 	//! 보안 문자열을 기록한다
-	public static void WriteSecurityString(string a_oFilePath,
-		string a_oString, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) 
-	{
+	public static void WriteSecurityString(string a_oFilePath, string a_oString, bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		CAccess.Assert(a_oString != null && a_oFilePath.ExIsValid());
 
-		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, 
-			a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) 
-		{
+		using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDirectory, a_bIsAutoBackup, a_oBackupDirectoryName)) {
 			CFunc.WriteSecurityString(oWStream, a_oString);
 		}
 	}
@@ -316,9 +282,7 @@ public static partial class CFunc {
 
 	//! 로그를 출력한다
 	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLog(string a_oFormat, 
-		Color a_stColor, params object[] a_oParams) 
-	{
+	public static void ShowLog(string a_oFormat, Color a_stColor, params object[] a_oParams) {
 		CAccess.Assert(a_oFormat != null);
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
 
@@ -332,13 +296,12 @@ public static partial class CFunc {
 
 	//! 경고 로그를 출력한다
 	public static void ShowLogWarning(string a_oFormat, params object[] a_oParams) {
+		CAccess.Assert(a_oFormat != null);
 		CFunc.DoShowLog(LogType.Warning, string.Format(a_oFormat, a_oParams));
 	}
 
 	//! 경고 로그를 출력한다
-	public static void ShowLogWarning(string a_oFormat, 
-		Color a_stColor, params object[] a_oParams) 
-	{
+	public static void ShowLogWarning(string a_oFormat, Color a_stColor, params object[] a_oParams) {
 		CAccess.Assert(a_oFormat != null);
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
 
@@ -357,9 +320,7 @@ public static partial class CFunc {
 	}
 
 	//! 에러 로그를 출력한다
-	public static void ShowLogError(string a_oFormat, 
-		Color a_stColor, params object[] a_oParams) 
-	{
+	public static void ShowLogError(string a_oFormat, Color a_stColor, params object[] a_oParams) {
 		CAccess.Assert(a_oFormat != null);
 		string oFormat = a_oFormat.ExGetColorFormatString(a_stColor);
 
@@ -388,44 +349,32 @@ public static partial class CFunc {
 	}
 
 	//! 함수를 호출한다
-	public static void Invoke<T1, T2>(ref System.Action<T1, T2> a_oAction, 
-		T1 a_tParamsA, T2 a_tParamsB) 
-	{
+	public static void Invoke<T1, T2>(ref System.Action<T1, T2> a_oAction, T1 a_tParamsA, T2 a_tParamsB) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB);
 		a_oAction = null;
 	}
 
 	//! 함수를 호출한다
-	public static void Invoke<T1, T2, T3>(ref System.Action<T1, T2, T3> a_oAction, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) 
-	{
+	public static void Invoke<T1, T2, T3>(ref System.Action<T1, T2, T3> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
 		a_oAction = null;
 	}
 
 	//! 함수를 호출한다
-	public static void Invoke<T1, T2, T3, T4>(ref System.Action<T1, T2, T3, T4> a_oAction, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) 
-	{
+	public static void Invoke<T1, T2, T3, T4>(ref System.Action<T1, T2, T3, T4> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
 		a_oAction = null;
 	}
 
 	//! 함수를 호출한다
-	public static void Invoke<T1, T2, T3, T4, T5>(ref System.Action<T1, T2, T3, T4, T5> a_oAction, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE) 
-	{
+	public static void Invoke<T1, T2, T3, T4, T5>(ref System.Action<T1, T2, T3, T4, T5> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
 		a_oAction = null;
 	}
 
 	//! 함수를 호출한다
-	public static void Invoke<T1, T2, T3, T4, T5, T6>(ref System.Action<T1, T2, T3, T4, T5, T6> a_oAction, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE, T6 a_tParamsF) 
-	{
-		a_oAction?.Invoke(a_tParamsA, 
-			a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
-			
+	public static void Invoke<T1, T2, T3, T4, T5, T6>(ref System.Action<T1, T2, T3, T4, T5, T6> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE, T6 a_tParamsF) {
+		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
 		a_oAction = null;
 	}
 
@@ -440,9 +389,7 @@ public static partial class CFunc {
 	}
 
 	//! 함수를 호출한다
-	public static Result Invoke<T1, Result>(ref System.Func<T1, Result> a_oFunc, 
-		T1 a_tParamsA) 
-	{
+	public static Result Invoke<T1, Result>(ref System.Func<T1, Result> a_oFunc, T1 a_tParamsA) {
 		CAccess.Assert(a_oFunc != null);
 		
 		var tResult = a_oFunc.Invoke(a_tParamsA);
@@ -452,9 +399,7 @@ public static partial class CFunc {
 	}
 
 	//! 함수를 호출한다
-	public static Result Invoke<T1, T2, Result>(ref System.Func<T1, T2, Result> a_oFunc, 
-		T1 a_tParamsA, T2 a_tParamsB) 
-	{
+	public static Result Invoke<T1, T2, Result>(ref System.Func<T1, T2, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB) {
 		CAccess.Assert(a_oFunc != null);
 		
 		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB);
@@ -464,9 +409,7 @@ public static partial class CFunc {
 	}
 
 	//! 함수를 호출한다
-	public static Result Invoke<T1, T2, T3, Result>(ref System.Func<T1, T2, T3, Result> a_oFunc, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) 
-	{
+	public static Result Invoke<T1, T2, T3, Result>(ref System.Func<T1, T2, T3, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) {
 		CAccess.Assert(a_oFunc != null);
 		
 		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
@@ -476,9 +419,7 @@ public static partial class CFunc {
 	}
 
 	//! 함수를 호출한다
-	public static Result Invoke<T1, T2, T3, T4, Result>(ref System.Func<T1, T2, T3, T4, Result> a_oFunc, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) 
-	{
+	public static Result Invoke<T1, T2, T3, T4, Result>(ref System.Func<T1, T2, T3, T4, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) {
 		CAccess.Assert(a_oFunc != null);
 		
 		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
@@ -488,28 +429,22 @@ public static partial class CFunc {
 	}
 
 	//! 함수를 호출한다
-	public static Result Invoke<T1, T2, T3, T4, T5, Result>(ref System.Func<T1, T2, T3, T4, T5, Result> a_oFunc, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE) 
-	{
+	public static Result Invoke<T1, T2, T3, T4, T5, Result>(ref System.Func<T1, T2, T3, T4, T5, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE) {
 		CAccess.Assert(a_oFunc != null);
 		
-		var tResult = a_oFunc.Invoke(a_tParamsA, 
-			a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
-		
+		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
 		a_oFunc = null;
+
 		return tResult;
 	}
 
 	//! 함수를 호출한다
-	public static Result Invoke<T1, T2, T3, T4, T5, T6, Result>(ref System.Func<T1, T2, T3, T4, T5, T6, Result> a_oFunc, 
-		T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE, T6 a_tParamsF) 
-	{
+	public static Result Invoke<T1, T2, T3, T4, T5, T6, Result>(ref System.Func<T1, T2, T3, T4, T5, T6, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE, T6 a_tParamsF) {
 		CAccess.Assert(a_oFunc != null);
 		
-		var tResult = a_oFunc.Invoke(a_tParamsA, 
-			a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
-		
+		var tResult = a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
 		a_oFunc = null;
+
 		return tResult;
 	}
 	
@@ -592,9 +527,7 @@ public static partial class CFunc {
 	}
 	
 	//! JSON 객체를 기록한다
-	public static void WriteJSONObj<T>(string a_oFilePath, 
-		T a_oObj, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsAutoBackup = false) 
-	{
+	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsAutoBackup = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
 
@@ -618,9 +551,7 @@ public static partial class CFunc {
 	}
 
 	//! 메세지 팩 JSON 객체를 기록한다
-	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, 
-		T a_oObj, bool a_bIsAutoBackup = false) 
-	{
+	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToMsgPackJSONString();
 		

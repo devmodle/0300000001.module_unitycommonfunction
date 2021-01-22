@@ -12,9 +12,7 @@ using UnityEngine.Rendering.Universal;
 public static partial class CFunc {
 	#region 클래스 함수
 	//! 퀄리티를 설정한다
-	public static void SetupQuality(EQualityLevel a_eQualityLevel, 
-		bool a_bIsApplyExpensiveChange = false) 
-	{
+	public static void SetupQuality(EQualityLevel a_eQualityLevel, bool a_bIsApplyExpensiveChange = false) {
 		// 퀄리티 레벨을 설정한다 {
 		var eQualityLevel = a_eQualityLevel;
 		
@@ -35,11 +33,8 @@ public static partial class CFunc {
 		QualitySettings.asyncUploadPersistentBuffer = KCDefine.U_QUALITY_ASYNC_UPLOAD_PERSISTENT_BUFFER;
 		QualitySettings.resolutionScalingFixedDPIFactor = KCDefine.U_QUALITY_RESOLUTION_SCALE_FIXED_DPI_FACTOR;
 
-		QualitySettings.vSyncCount = (eQualityLevel >= EQualityLevel.HIGH) ? 
-			(int)EVSyncType.EVERY : (int)EVSyncType.NEVER;
-
-		QualitySettings.anisotropicFiltering = (eQualityLevel >= EQualityLevel.HIGH) ? 
-			AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
+		QualitySettings.vSyncCount = (eQualityLevel >= EQualityLevel.HIGH) ? (int)EVSyncType.EVERY : (int)EVSyncType.NEVER;
+		QualitySettings.anisotropicFiltering = (eQualityLevel >= EQualityLevel.HIGH) ? AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
 #endif			// #if UNITY_EDITOR
 
 		QualitySettings.SetQualityLevel((int)eQualityLevel, a_bIsApplyExpensiveChange);
@@ -61,17 +56,10 @@ public static partial class CFunc {
 			oRenderPipeline.renderScale = KCDefine.U_SCALE_UNIVERSAL_RP_RENDERING;
 			oRenderPipeline.colorGradingLutSize = KCDefine.U_SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
 
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ANTI_ALIASING, 
-				MsaaQuality.Disabled);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ_LIMIT, 
-				KCDefine.U_MAX_NUM_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SHADOW_MAP_RESOLUTION, 
-				UnityEngine.Rendering.Universal.ShadowResolution._2048);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SHADOW_MAP_RESOLUTION, 
-				UnityEngine.Rendering.Universal.ShadowResolution._512);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ANTI_ALIASING, MsaaQuality.Disabled);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ_LIMIT, KCDefine.U_MAX_NUM_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SHADOW_MAP_RESOLUTION, UnityEngine.Rendering.Universal.ShadowResolution._2048);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SHADOW_MAP_RESOLUTION, UnityEngine.Rendering.Universal.ShadowResolution._512);
 
 #if DYNAMIC_BATCHING_ENABLE
 			oRenderPipeline.useSRPBatcher = true;
@@ -82,48 +70,28 @@ public static partial class CFunc {
 #endif			// #if DYNAMIC_BATCHING_ENABLE
 
 #if LIGHT_ENABLE
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_MIXED_LIGHTING, 
-				true);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE, 
-				LightRenderingMode.PerPixel);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_RENDERING_MODE, 
-				LightRenderingMode.PerPixel);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_MIXED_LIGHTING, true);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE, LightRenderingMode.PerPixel);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_RENDERING_MODE, LightRenderingMode.PerPixel);
 #else
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_MIXED_LIGHTING, 
-				false);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE, 
-				LightRenderingMode.Disabled);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_RENDERING_MODE, 
-				LightRenderingMode.Disabled);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_MIXED_LIGHTING, false);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE, LightRenderingMode.Disabled);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_RENDERING_MODE, LightRenderingMode.Disabled);
 #endif			// #if LIGHT_ENABLE
 
 #if LIGHT_ENABLE && SHADOW_ENABLE
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SUPPORT_SHADOW, 
-				true);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORT_SHADOW, 
-				true);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SUPPORT_SHADOW, true);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORT_SHADOW, true);
 
 #if SOFT_SHADOW_ENABLE
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, 
-				true);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, true);
 #else
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, 
-				false);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, false);
 #endif			// #if SOFT_SHADOW_ENABLE
 #else
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SUPPORT_SHADOW, 
-				false);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORT_SHADOW, 
-				false);
-
-			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, 
-				false);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SUPPORT_SHADOW, false);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORT_SHADOW, false);
+			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORT_SOFT_SHADOW, false);
 #endif			// #if LIGHT_ENABLE && SHADOW_ENABLE
 		}
 
