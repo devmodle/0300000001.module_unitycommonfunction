@@ -534,7 +534,7 @@ public static partial class CFunc {
 #if SECURITY_ENABLE
 		CFunc.WriteSecurityString(a_oFilePath, oString, true, a_bIsAutoBackup);
 #else
-		CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBack);
+		CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBackup);
 #endif			// #if SECURITY_ENABLE
 	}
 
