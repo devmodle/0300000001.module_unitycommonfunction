@@ -449,117 +449,168 @@ public static partial class CFunc {
 	}
 	
 	//! JSON 객체를 읽어들인다
-	public static T ReadJSONObj<T>(string a_oFilePath) {
+	public static T ReadJSONObj<T>(string a_oFilePath, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+		string oString = string.Empty;
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			oString = CFunc.ReadString(a_oFilePath);
+		} else {
 #if SECURITY_ENABLE
-		string oString = CFunc.ReadSecurityString(a_oFilePath);
+			oString = CFunc.ReadSecurityString(a_oFilePath);
 #else
-		string oString = CFunc.ReadString(a_oFilePath);
+			oString = CFunc.ReadString(a_oFilePath);
 #endif			// #if SECURITY_ENABLE
+		}
 
 		return oString.ExJSONStringToObj<T>();
 	}
 
 	//! JSON 객체를 읽어들인다
-	public static T ReadJSONObjFromRes<T>(string a_oFilePath) {
+	public static T ReadJSONObjFromRes<T>(string a_oFilePath, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+		string oString = string.Empty;
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			oString = CFunc.ReadStringFromRes(a_oFilePath);
+		} else {
 #if SECURITY_ENABLE
-		string oString = CFunc.ReadSecurityStringFromRes(a_oFilePath);
+			oString = CFunc.ReadSecurityStringFromRes(a_oFilePath);
 #else
-		string oString = CFunc.ReadStringFromRes(a_oFilePath);
+			oString = CFunc.ReadStringFromRes(a_oFilePath);
 #endif			// #if SECURITY_ENABLE
+		}
 
 		return oString.ExJSONStringToObj<T>();
 	}
 
 	//! 메세지 팩 객체를 읽어들인다
-	public static T ReadMsgPackObj<T>(string a_oFilePath) {
+	public static T ReadMsgPackObj<T>(string a_oFilePath, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+		byte[] oBytes = null;
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			oBytes = CFunc.ReadBytes(a_oFilePath);
+		} else {
 #if SECURITY_ENABLE
-		var oBytes = CFunc.ReadSecurityBytes(a_oFilePath);
+			oBytes = CFunc.ReadSecurityBytes(a_oFilePath);
 #else
-		var oBytes = CFunc.ReadBytes(a_oFilePath);
+			oBytes = CFunc.ReadBytes(a_oFilePath);
 #endif			// #if SECURITY_ENABLE
+		}
 
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
 
 	//! 메세지 팩 객체를 읽어들인다
-	public static T ReadMsgPackObjFromRes<T>(string a_oFilePath) {
+	public static T ReadMsgPackObjFromRes<T>(string a_oFilePath, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+		byte[] oBytes = null;
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			oBytes = CFunc.ReadBytesFromRes(a_oFilePath);
+		} else {
 #if SECURITY_ENABLE
-		var oBytes = CFunc.ReadSecurityBytesFromRes(a_oFilePath);
+			oBytes = CFunc.ReadSecurityBytesFromRes(a_oFilePath);
 #else
-		var oBytes = CFunc.ReadBytesFromRes(a_oFilePath);
+			oBytes = CFunc.ReadBytesFromRes(a_oFilePath);
 #endif			// #if SECURITY_ENABLE
+		}
 
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
 
 	//! 메세지 팩 JSON 객체를 읽어들인다
-	public static T ReadMsgPackJSONObj<T>(string a_oFilePath) {
+	public static T ReadMsgPackJSONObj<T>(string a_oFilePath, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+		string oString = string.Empty;
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			oString = CFunc.ReadString(a_oFilePath);
+		} else {
 #if SECURITY_ENABLE
-		string oString = CFunc.ReadSecurityString(a_oFilePath);
+			oString = CFunc.ReadSecurityString(a_oFilePath);
 #else
-		string oString = CFunc.ReadString(a_oFilePath);
+			oString = CFunc.ReadString(a_oFilePath);
 #endif			// #if SECURITY_ENABLE
+		}
 
 		return oString.ExMsgPackJSONStringToObj<T>();
 	}
 
 	//! 메세지 팩 JSON 객체를 읽어들인다
-	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath) {
+	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+		string oString = string.Empty;
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			oString = CFunc.ReadStringFromRes(a_oFilePath);
+		} else {
 #if SECURITY_ENABLE
-		string oString = CFunc.ReadSecurityStringFromRes(a_oFilePath);
+			oString = CFunc.ReadSecurityStringFromRes(a_oFilePath);
 #else
-		string oString = CFunc.ReadStringFromRes(a_oFilePath);
+			oString = CFunc.ReadStringFromRes(a_oFilePath);
 #endif			// #if SECURITY_ENABLE
+		}
 
 		return oString.ExMsgPackJSONStringToObj<T>();
 	}
 	
 	//! JSON 객체를 기록한다
-	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsAutoBackup = false) {
+	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsAutoBackup = false, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToJSONString(a_bIsNeedRoot, a_bIsPretty);
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBackup);
+		} else {
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityString(a_oFilePath, oString, true, a_bIsAutoBackup);
+			CFunc.WriteSecurityString(a_oFilePath, oString, true, a_bIsAutoBackup);
 #else
-		CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBackup);
+			CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBackup);
 #endif			// #if SECURITY_ENABLE
+		}
 	}
 
 	//! 메세지 팩 객체를 기록한다
-	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false) {
+	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = MessagePackSerializer.Serialize<T>(a_oObj);
 
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			CFunc.WriteBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup);
+		} else {
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup);
+			CFunc.WriteSecurityBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup);
 #else
-		CFunc.WriteBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup);
+			CFunc.WriteBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup);
 #endif			// #if SECURITY_ENABLE
+		}
 	}
 
 	//! 메세지 팩 JSON 객체를 기록한다
-	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false) {
+	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false, bool a_bIsIgnoreSecurity = false) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oString = a_oObj.ExToMsgPackJSONString();
-		
+
+		// 보안 무시 모드 일 경우
+		if(a_bIsIgnoreSecurity) {
+			CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBackup);
+		} else {
 #if SECURITY_ENABLE
-		CFunc.WriteSecurityString(a_oFilePath, oString, true, a_bIsAutoBackup);
+			CFunc.WriteSecurityString(a_oFilePath, oString, true, a_bIsAutoBackup);
 #else
-		CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBackup);
-#endif			// #if SECURITY_ENABLE		
+			CFunc.WriteString(a_oFilePath, oString, true, a_bIsAutoBackup);
+#endif			// #if SECURITY_ENABLE
+		}
 	}
 	#endregion			// 제네릭 클래스 함수
 }
