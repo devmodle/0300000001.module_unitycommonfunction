@@ -139,14 +139,14 @@ public static partial class CFunc {
 	}
 	
 	//! 스크린 UI 를 설정한다
-	public static void SetupScreenUI(GameObject a_oScreenUI, int a_nSortingOrder) {
-		CAccess.Assert(a_oScreenUI != null);
+	public static void SetupScreenUIs(GameObject a_oScreenUIs, int a_nSortingOrder) {
+		CAccess.Assert(a_oScreenUIs != null);
 		
-		var oCanvas = a_oScreenUI.GetComponentInChildren<Canvas>();
+		var oCanvas = a_oScreenUIs.GetComponentInChildren<Canvas>();
 		oCanvas.sortingOrder = a_nSortingOrder;
 		oCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-		var oCanvasScaler = a_oScreenUI.GetComponentInChildren<CanvasScaler>();
+		var oCanvasScaler = a_oScreenUIs.GetComponentInChildren<CanvasScaler>();
 		oCanvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 		oCanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 		oCanvasScaler.referenceResolution = KCDefine.B_SCREEN_SIZE;
