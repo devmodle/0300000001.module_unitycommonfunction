@@ -47,7 +47,7 @@ public static partial class CFunc {
 	}
 
 	//! 앱을 종료한다
-	public static void QuitApp(int a_nExitCode = KCDefine.B_VALUE_INT_0) {
+	public static void QuitApp(int a_nExitCode = KCDefine.B_VALUE_0_INT) {
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.ExitPlaymode();
 #else
@@ -152,7 +152,7 @@ public static partial class CFunc {
 
 		// 핑 모드 일 경우
 		if(a_bIsPing && a_oObjs.ExIsValid()) {
-			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_VALUE_INT_0]);
+			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_VALUE_0_INT]);
 		}
 	}
 #endif			// #if UNITY_EDITOR

@@ -14,7 +14,7 @@ public static partial class CEditorFunc {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilePath);
 
-		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_INT_0] : null;
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_0_INT] : null;
 	}
 
 	//! 경고 팝업을 출력한다
@@ -73,7 +73,7 @@ public static partial class CEditorFunc {
 	//! 에셋을 탐색한다
 	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
-		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_INT_0] : null;
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VALUE_0_INT] : null;
 	}
 
 	//! 에셋을 탐색한다

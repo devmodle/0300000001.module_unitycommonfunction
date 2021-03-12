@@ -191,7 +191,7 @@ public static partial class CFunc {
 	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes, bool a_bIsFlush = true) {
 		CAccess.Assert(a_oWStream != null && a_oBytes != null);
 
-		a_oWStream.Write(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
+		a_oWStream.Write(a_oBytes, KCDefine.B_VALUE_0_INT, a_oBytes.Length);
 		a_oWStream.Flush(a_bIsFlush);
 	}
 
@@ -207,7 +207,7 @@ public static partial class CFunc {
 	//! 보안 바이트를 기록한다
 	public static void WriteSecurityBytes(FileStream a_oWStream, byte[] a_oBytes) {
 		CAccess.Assert(a_oWStream != null && a_oBytes != null);
-		string oString = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VALUE_INT_0, a_oBytes.Length);
+		string oString = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VALUE_0_INT, a_oBytes.Length);
 
 		CFunc.WriteBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(oString));
 	}
