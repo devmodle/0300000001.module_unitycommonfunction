@@ -137,7 +137,7 @@ public static partial class CFunc {
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	//! 객체를 선택한다
-	public static void SelectObj(GameObject a_oObj, bool a_bIsPing = false) {
+	public static void SelObj(GameObject a_oObj, bool a_bIsPing = false) {
 		Selection.activeGameObject = a_oObj;
 
 		// 핑 모드 일 경우
@@ -147,7 +147,7 @@ public static partial class CFunc {
 	}
 
 	//! 객체를 선택한다
-	public static void SelectObjs(GameObject[] a_oObjs, bool a_bIsPing = false) {
+	public static void SelObjs(GameObject[] a_oObjs, bool a_bIsPing = false) {
 		Selection.objects = a_oObjs;
 
 		// 핑 모드 일 경우
