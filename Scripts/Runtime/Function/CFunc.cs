@@ -77,7 +77,7 @@ public static partial class CFunc {
 		if(bIsEnableCopy && Directory.Exists(a_oSrcPath)) {
 			CFactory.RemoveDir(a_oDestPath);
 
-			CFunc.EnumerateDirs(a_oSrcPath, (a_oFilePaths, a_oDirPaths) => {
+			CFunc.EnumerateDirs(a_oSrcPath, (a_oDirPaths, a_oFilePaths) => {
 				for(int i = 0; i < a_oFilePaths.Length; ++i) {
 					string oDestFilePath = a_oFilePaths[i].ExGetReplaceString(a_oSrcPath, a_oDestPath);
 					CFunc.CopyFile(a_oFilePaths[i], oDestFilePath, a_bIsOverwrite);
@@ -98,7 +98,7 @@ public static partial class CFunc {
 			var oDirPaths = Directory.GetDirectories(a_oDirPath);
 
 			// 디렉토리 순회가 불가능 할 경우
-			if(!a_oCallback(oFilePaths, oDirPaths)) {
+			if(!a_oCallback(oDirPaths, oFilePaths)) {
 				return;
 			}
 
