@@ -8,8 +8,7 @@
         "UnityModule.Common.Extension",
         "Unity.RenderPipelines.Universal.Runtime",
         "MessagePack",
-        "MessagePack.Annotations",
-        "SimpleFileBrowser.Runtime"
+        "MessagePack.Annotations"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
