@@ -149,7 +149,7 @@ public static partial class CFunc {
 		var oCanvasScaler = a_oScreenUIs.GetComponentInChildren<CanvasScaler>();
 		oCanvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 		oCanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-		oCanvasScaler.referenceResolution = KCDefine.B_SCREEN_SIZE;
+		oCanvasScaler.referenceResolution = KCDefine.B_SCREEN_SIZE.ExTo2D();
 		oCanvasScaler.referencePixelsPerUnit = KCDefine.B_REF_PIXELS_UNIT;
 
 #if PIXELS_PERFECT_ENABLE
