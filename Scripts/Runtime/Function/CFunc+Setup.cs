@@ -70,9 +70,9 @@ public static partial class CFunc {
 			oRenderPipeline.colorGradingMode = KCDefine.U_OPTS_UNIVERSAL_RP_COLOR_GRADING_MODE;
 			oRenderPipeline.colorGradingLutSize = KCDefine.U_SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
 
-			oRenderPipeline.shadowDepthBias = KCDefine.B_VALUE_1_INT;
-			oRenderPipeline.shadowNormalBias = KCDefine.B_VALUE_1_INT;
-			oRenderPipeline.shadowCascadeCount = (int)(KCDefine.U_OPTS_UNIVERSAL_RP_SHADOW_CASCADES + KCDefine.B_VALUE_1_INT);
+			oRenderPipeline.shadowDepthBias = KCDefine.B_VAL_1_INT;
+			oRenderPipeline.shadowNormalBias = KCDefine.B_VAL_1_INT;
+			oRenderPipeline.shadowCascadeCount = (int)(KCDefine.U_OPTS_UNIVERSAL_RP_SHADOW_CASCADES + KCDefine.B_VAL_1_INT);
 
 			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ANTI_ALIASING, MsaaQuality.Disabled);
 			oRenderPipeline.ExSetRuntimeFieldValue<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_OPAQUE_DOWN_SAMPLING, KCDefine.U_OPTS_UNIVERSAL_RP_DOWN_SAMPLING);
