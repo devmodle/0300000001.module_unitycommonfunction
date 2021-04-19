@@ -12,14 +12,14 @@ public static partial class CEditorFunc {
 	public static void SetupDefineSymbols(Dictionary<BuildTargetGroup, List<string>> a_oDefineSymbolListContainer) {
 		CAccess.Assert(a_oDefineSymbolListContainer.ExIsValid());
 		
-		foreach(var stKeyValue in a_oDefineSymbolListContainer) {
+		foreach(var stKeyVal in a_oDefineSymbolListContainer) {
 			var oDefineSymbolList = new List<string>();
 
-			for(int i = 0; i < stKeyValue.Value.Count; ++i) {
-				oDefineSymbolList.ExAddValue(stKeyValue.Value[i]);
+			for(int i = 0; i < stKeyVal.Value.Count; ++i) {
+				oDefineSymbolList.ExAddVal(stKeyVal.Value[i]);
 			}
 
-			PlayerSettings.SetScriptingDefineSymbolsForGroup(stKeyValue.Key, oDefineSymbolList.ExToStr(KCEditorDefine.B_TOKEN_DEFINE_SYMBOL));
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(stKeyVal.Key, oDefineSymbolList.ExToStr(KCEditorDefine.B_TOKEN_DEFINE_SYMBOL));
 		}
 	}
 	#endregion			// 클래스 함수

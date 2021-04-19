@@ -89,7 +89,7 @@ public static partial class CEditorFunc {
 
 				// 에셋이 존재 할 경우
 				if(oAsset != null) {
-					oAssetList.ExAddValue(oAsset);
+					oAssetList.ExAddVal(oAsset);
 				}
 			}
 		}
