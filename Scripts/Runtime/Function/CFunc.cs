@@ -259,6 +259,13 @@ public static partial class CFunc {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Log, a_oLog);
 	}
+
+	//! 로그를 출력한다
+	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	public static void ShowLog(string a_oLog, Color a_stColor) {
+		CAccess.Assert(a_oLog != null);
+		CFunc.DoShowLog(LogType.Log, a_oLog.ExGetColorFmtStr(a_stColor));
+	}
 	
 	//! 로그를 출력한다
 	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
