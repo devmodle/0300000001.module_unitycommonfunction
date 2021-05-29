@@ -34,12 +34,8 @@ public static partial class CFunc {
 
 		CFunc.EnumerateScenes((a_stScene) => {
 			var oChildObjList = a_stScene.ExFindChildren(a_oName);
-
-			// 자식 객체가 존재 할 경우
-			if(oChildObjList != null) {
-				oObjList.AddRange(oChildObjList);
-			}
-
+			oObjList.AddRange(oChildObjList);
+			
 			return true;
 		});
 		
@@ -104,7 +100,7 @@ public static partial class CFunc {
 	//! 씬을 순회한다
 	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback) {
 		CAccess.Assert(a_oCallback != null);
-		
+
 		for(int i = 0; i < SceneManager.sceneCount; ++i) {
 			var stScene = SceneManager.GetSceneAt(i);
 
