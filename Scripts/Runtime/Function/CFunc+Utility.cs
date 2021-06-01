@@ -42,15 +42,6 @@ public static partial class CFunc {
 		return oObjList;
 	}
 
-	//! 앱을 종료한다
-	public static void QuitApp(int a_nExitCode = KCDefine.B_VAL_0_INT) {
-#if UNITY_EDITOR
-		UnityEditor.EditorApplication.ExitPlaymode();
-#else
-		Application.Quit(a_nExitCode);
-#endif			// #if UNITY_EDITOR
-	}
-
 	//! 메세지를 전송한다
 	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams) {
 		CAccess.Assert(a_oName.ExIsValid() && a_oMsg.ExIsValid());
