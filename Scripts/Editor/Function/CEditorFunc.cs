@@ -50,6 +50,7 @@ public static partial class CEditorFunc {
 	//! 커맨드 라인을 실행한다
 	public static void ExecuteCmdLine(string a_oFilePath, string a_oParams) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+		CFunc.ShowLog($"CEditorFunc.ExecuteCmdLine: {a_oFilePath}, {a_oParams}");
 
 		var oStartInfo = new ProcessStartInfo(a_oFilePath, a_oParams);
 		oStartInfo.UseShellExecute = true;
