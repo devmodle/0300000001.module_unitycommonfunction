@@ -235,13 +235,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oWStream != null && a_oStr != null);
 		CFunc.WriteSecurityBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(a_oStr));
 	}
-
-	//! URL 을 개방한다
-	public static void OpenURL(string a_oURL) {
-		CAccess.Assert(a_oURL.ExIsValid());
-		Application.OpenURL(a_oURL);
-	}
-
+	
 	//! 함수를 호출한다
 	public static void Invoke(ref System.Action a_oAction) {
 		a_oAction?.Invoke();
