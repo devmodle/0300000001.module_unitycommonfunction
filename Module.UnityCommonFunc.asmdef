@@ -1,11 +1,11 @@
 {
-    "name": "UnityModule.Common.Func",
+    "name": "Module.UnityCommonFunc",
     "rootNamespace": "",
     "references": [
-        "UnityModule.Common.Define",
-        "UnityModule.Common.Access",
-        "UnityModule.Common.Factory",
-        "UnityModule.Common.Extension",
+        "Module.UnityCommonDefine",
+        "Module.UnityCommonAccess",
+        "Module.UnityCommonFactory",
+        "Module.UnityCommonExtension",
         "Unity.RenderPipelines.Universal.Runtime",
         "MessagePack",
         "MessagePack.Annotations"
