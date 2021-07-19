@@ -101,6 +101,16 @@ public static partial class CFunc {
 			}
 		}
 	}
+
+	//! 객체를 순회한다
+	public static void EnumerateObjs(System.Func<GameObject[], bool> a_oCallback) {
+		CAccess.Assert(a_oCallback != null);
+
+		CFunc.EnumerateScenes((a_stScene) => {
+			var oObjs = a_stScene.GetRootGameObjects();
+			return a_oCallback(oObjs);
+		});
+	}
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
