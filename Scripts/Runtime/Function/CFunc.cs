@@ -325,6 +325,22 @@ public static partial class CFunc {
 		a_tRhs = tTemp;
 	}
 
+	//! 값을 교환한다
+	public static void LessCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
+		// 보정이 필요 할 경우
+		if(a_tLhs.CompareTo(a_tRhs) > KCDefine.B_COMPARE_EQUALS) {
+			CFunc.Swap(ref a_tLhs, ref a_tRhs);
+		}
+	}
+
+	//! 값을 교환한다
+	public static void GreateCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
+		// 보정이 필요 할 경우
+		if(a_tLhs.CompareTo(a_tRhs) < KCDefine.B_COMPARE_EQUALS) {
+			CFunc.Swap(ref a_tLhs, ref a_tRhs);
+		}
+	}
+
 	//! 함수를 호출한다
 	public static void Invoke<T1>(ref System.Action<T1> a_oAction, T1 a_tParamsA) {
 		a_oAction?.Invoke(a_tParamsA);
