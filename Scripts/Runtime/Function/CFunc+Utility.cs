@@ -43,73 +43,88 @@ public static partial class CFunc {
 	}
 
 	//! 메세지를 전송한다
-	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams) {
-		CAccess.Assert(a_oName.ExIsValid() && a_oMsg.ExIsValid());
-		var oObj = CFunc.FindObj(a_oName);
+	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oName.ExIsValid() && a_oMsg.ExIsValid()));
 
-		oObj?.SendMessage(a_oMsg, a_oParams, SendMessageOptions.DontRequireReceiver);
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid() && a_oMsg.ExIsValid()) {
+			var oObj = CFunc.FindObj(a_oName);
+			oObj.ExSendMsg(a_oMsg, a_oParams, a_bIsEnableAssert);
+		}
 	}
 
 	//! 메세지를 전파한다
-	public static void BroadcastMsg(string a_oMsg, object a_oParams) {
-		CAccess.Assert(a_oMsg.ExIsValid());
+	public static void BroadcastMsg(string a_oMsg, object a_oParams, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oMsg.ExIsValid());
 
-		CFunc.EnumerateScenes((a_stScene) => {
-			a_stScene.ExBroadcastMsg(a_oMsg, a_oParams);
-			return true;
-		});
+		// 메세지가 유효 할 경우
+		if(a_oMsg.ExIsValid()) {
+			CFunc.EnumerateScenes((a_stScene) => {
+				a_stScene.ExBroadcastMsg(a_oMsg, a_oParams, a_bIsEnableAssert);
+				return true;
+			});
+		}
 	}
 
 	//! 권한을 요청한다
-	public static void RequestPermission(MonoBehaviour a_oComponent, string a_oPermission, System.Action<string, bool> a_oCallback, bool a_bIsRealtime = false) {
-		CAccess.Assert(a_oComponent != null && a_oPermission.ExIsValid());
+	public static void RequestPermission(MonoBehaviour a_oComponent, string a_oPermission, System.Action<string, bool> a_oCallback, bool a_bIsRealtime = false, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oComponent != null && a_oPermission.ExIsValid()));
 
+		// 컴포넌트가 존재 할 경우
+		if(a_oComponent != null && a_oPermission.ExIsValid()) {
 #if UNITY_ANDROID
-		// 권한이 유효 할 경우
-		if(CAccess.IsEnablePermission(a_oPermission)) {
-			a_oCallback?.Invoke(a_oPermission, true);
-		} else {
-			Permission.RequestUserPermission(a_oPermission);
+			// 권한이 유효 할 경우
+			if(CAccess.IsEnablePermission(a_oPermission)) {
+				a_oCallback?.Invoke(a_oPermission, true);
+			} else {
+				Permission.RequestUserPermission(a_oPermission);
 
-			float fDeltaTime = KCDefine.U_DELTA_T_PERMISSION_M_REQUEST_CHECK;
-			float fMaxDeltaTime = KCDefine.U_MAX_DELTA_T_PERMISSION_M_REQUEST_CHECK;
-			
-			a_oComponent.ExRepeatCallFunc((a_oSender, a_oParams, a_bIsComplete) => {
-				// 완료 되었을 경우
-				if(a_bIsComplete) {
-					a_oCallback?.Invoke(a_oPermission, CAccess.IsEnablePermission(a_oPermission));
-				}
+				float fDeltaTime = KCDefine.U_DELTA_T_PERMISSION_M_REQUEST_CHECK;
+				float fMaxDeltaTime = KCDefine.U_MAX_DELTA_T_PERMISSION_M_REQUEST_CHECK;
+				
+				a_oComponent.ExRepeatCallFunc((a_oSender, a_oParams, a_bIsComplete) => {
+					// 완료 되었을 경우
+					if(a_bIsComplete) {
+						a_oCallback?.Invoke(a_oPermission, CAccess.IsEnablePermission(a_oPermission));
+					}
 
-				return !CAccess.IsEnablePermission(a_oPermission);
-			}, fDeltaTime, fMaxDeltaTime, a_bIsRealtime);
-		}
+					return !CAccess.IsEnablePermission(a_oPermission);
+				}, fDeltaTime, fMaxDeltaTime, a_bIsRealtime);
+			}
 #else
-		a_oCallback?.Invoke(a_oPermission, false);
+			a_oCallback?.Invoke(a_oPermission, false);
 #endif			// #if UNITY_ANDROID
+		}
 	}
 
 	//! 씬을 순회한다
-	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback) {
-		CAccess.Assert(a_oCallback != null);
+	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
-		for(int i = 0; i < SceneManager.sceneCount; ++i) {
-			var stScene = SceneManager.GetSceneAt(i);
+		// 순회가 가능 할 경우
+		if(a_oCallback != null) {
+			for(int i = 0; i < SceneManager.sceneCount; ++i) {
+				var stScene = SceneManager.GetSceneAt(i);
 
-			// 씬 순회가 불가능 할 경우
-			if(!a_oCallback(stScene)) {
-				break;
+				// 씬 순회가 불가능 할 경우
+				if(!a_oCallback(stScene)) {
+					break;
+				}
 			}
 		}
 	}
 
 	//! 객체를 순회한다
-	public static void EnumerateObjs(System.Func<GameObject[], bool> a_oCallback) {
-		CAccess.Assert(a_oCallback != null);
+	public static void EnumerateObjs(System.Func<GameObject[], bool> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
-		CFunc.EnumerateScenes((a_stScene) => {
-			var oObjs = a_stScene.GetRootGameObjects();
-			return a_oCallback(oObjs);
-		});
+		// 순회가 가능 할 경우
+		if(a_oCallback != null) {
+			CFunc.EnumerateScenes((a_stScene) => {
+				var oObjs = a_stScene.GetRootGameObjects();
+				return a_oCallback(oObjs);
+			});
+		}
 	}
 	#endregion			// 클래스 함수
 

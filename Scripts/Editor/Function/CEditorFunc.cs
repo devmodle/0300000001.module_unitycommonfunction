@@ -34,28 +34,34 @@ public static partial class CEditorFunc {
 	}
 	
 	//! 커맨드 라인을 실행한다
-	public static void ExecuteCmdLine(string a_oParams) {
-		CAccess.Assert(a_oParams.ExIsValid());
+	public static void ExecuteCmdLine(string a_oParams, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oParams.ExIsValid());
 
-		// 맥 일 경우
-		if(CAccess.IsMac) {
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, a_oParams));
-		}
-		// 윈도우즈 일 경우
-		else if(CAccess.IsWnds) {
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams));
+		// 매개 변수가 유효 할 경우
+		if(a_oParams.ExIsValid()) {
+			// 맥 일 경우
+			if(CAccess.IsMac) {
+				CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, a_oParams));
+			}
+			// 윈도우즈 일 경우
+			else if(CAccess.IsWnds) {
+				CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams));
+			}
 		}
 	}
 
 	//! 커맨드 라인을 실행한다
-	public static void ExecuteCmdLine(string a_oFilePath, string a_oParams) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
+	public static void ExecuteCmdLine(string a_oFilePath, string a_oParams, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oFilePath.ExIsValid() && a_oParams.ExIsValid()));
 		CFunc.ShowLog($"CEditorFunc.ExecuteCmdLine: {a_oFilePath}, {a_oParams}");
 
-		var oStartInfo = new ProcessStartInfo(a_oFilePath, a_oParams);
-		oStartInfo.UseShellExecute = true;
+		// 커맨드 라인 실행이 가능 할 경우
+		if(a_oFilePath.ExIsValid() && a_oParams.ExIsValid()) {
+			var oStartInfo = new ProcessStartInfo(a_oFilePath, a_oParams);
+			oStartInfo.UseShellExecute = true;
 
-		Process.Start(oStartInfo);
+			Process.Start(oStartInfo);
+		}
 	}
 
 	//! 플랫폼을 변경한다
