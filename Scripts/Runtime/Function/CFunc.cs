@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 using MessagePack;
 
 //! 기본 함수
