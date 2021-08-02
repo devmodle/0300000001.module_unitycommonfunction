@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.Experimental.SceneManagement;
 
 //! 에디터 기본 함수
 public static partial class CEditorFunc {
@@ -103,6 +104,28 @@ public static partial class CEditorFunc {
 		}
 
 		return oAssetList;
+	}
+
+	//! 컴포넌트를 탐색한다
+	public static List<T> FindComponents<T>() where T : Component {
+		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+		var oComponentList = new List<T>();
+
+		// 프리팹 모드 일 경우
+		if(oPrefabStage != null) {
+			oPrefabStage.prefabContentsRoot.GetComponentsInChildren<T>(oComponentList);
+		} else {
+			CFunc.EnumerateObjs((a_oObjs) => {
+				for(int i = 0; i < a_oObjs.Length; ++i) {
+					var oComponents = a_oObjs[i].GetComponentsInChildren<T>();
+					oComponentList.AddRange(oComponents);
+				}
+
+				return true;
+			});
+		}
+
+		return oComponentList;
 	}
 	#endregion			// 제네릭 클래스 함수
 }
