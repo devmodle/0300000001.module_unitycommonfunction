@@ -43,6 +43,65 @@ public static partial class CFunc {
 		return oObjList;
 	}
 
+	//! 경로를 탐색한다
+	public static List<Vector3Int> FindPath(Vector3Int a_stIdx, List<Vector3Int> a_oOffsetList, System.Func<CPathInfo, bool> a_oFindCallback, System.Func<CPathInfo, Vector3Int, bool> a_oMoveCallback, System.Func<CPathInfo, Vector3Int, int> a_oCostCallback) {
+		CAccess.Assert(a_oFindCallback != null && a_oMoveCallback != null && a_oCostCallback != null);
+
+		var oVisitIdxList = new List<Vector3Int>();
+		var oOpenPathInfoList = new List<CPathInfo>();
+		var oClosePathInfoList = new List<CPathInfo>();
+
+		oOpenPathInfoList.Add(CFactory.MakePathInfo(a_stIdx));
+
+		while(oOpenPathInfoList.Count > KCDefine.B_VAL_0_INT) {
+			var oPathInfo = oOpenPathInfoList[KCDefine.B_VAL_0_INT];
+
+			oClosePathInfoList.Add(oPathInfo);
+			oOpenPathInfoList.RemoveAt(KCDefine.B_VAL_0_INT);
+
+			// 경로를 탐색했을 경우
+			if(a_oFindCallback(oPathInfo)) {
+				var oIdxList = new List<Vector3Int>();
+
+				while(oPathInfo != null) {
+					oIdxList.Insert(KCDefine.B_VAL_0_INT, oPathInfo.m_stIdx);
+					oPathInfo = oPathInfo.m_oPrevPathInfo;
+				}
+
+				return oIdxList;
+			}
+
+			for(int i = 0; i < a_oOffsetList.Count; ++i) {
+				var stNextIdx = oPathInfo.m_stIdx + a_oOffsetList[i];
+
+				// 이동이 불가능 할 경우
+				if(!a_oMoveCallback(oPathInfo, stNextIdx)) {
+					continue;
+				}
+
+				int nIdx = oClosePathInfoList.ExFindVal<CPathInfo>((a_oPathInfo) => stNextIdx.Equals(a_oPathInfo.m_stIdx));
+				int nCost = a_oCostCallback(oPathInfo, stNextIdx);
+
+				// 탐색이 가능 할 경우
+				if(!oVisitIdxList.Contains(stNextIdx)) {
+					var oNextPathInfo = CFactory.MakePathInfo(stNextIdx);
+					oNextPathInfo.m_nCost = nCost;
+					oNextPathInfo.m_oPrevPathInfo = oPathInfo;
+
+					oVisitIdxList.Add(stNextIdx);
+					oOpenPathInfoList.Add(oNextPathInfo);
+				}
+				// 경로 정보 설정이 가능 할 경우
+				else if(nIdx > KCDefine.B_IDX_INVALID && nCost < oClosePathInfoList[nIdx].m_nCost) {
+					oClosePathInfoList[nIdx].m_nCost = nCost;
+					oClosePathInfoList[nIdx].m_oPrevPathInfo = oPathInfo;
+				}
+			}
+		}
+
+		return KCDefine.B_EMPTY_3D_INT_VERTICES;
+	}
+
 	//! 메세지를 전송한다
 	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oName.ExIsValid() && a_oMsg.ExIsValid()));
