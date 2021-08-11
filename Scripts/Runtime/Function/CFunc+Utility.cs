@@ -161,7 +161,7 @@ public static partial class CFunc {
 	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
-		// 순회가 가능 할 경우
+		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
 			for(int i = 0; i < SceneManager.sceneCount; ++i) {
 				var stScene = SceneManager.GetSceneAt(i);
@@ -175,15 +175,23 @@ public static partial class CFunc {
 	}
 
 	//! 객체를 순회한다
-	public static void EnumerateObjs(System.Func<GameObject[], bool> a_oCallback, bool a_bIsEnableAssert = true) {
+	public static void EnumerateRootObjs(System.Func<GameObject, bool> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
-		// 순회가 가능 할 경우
+		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
 			CFunc.EnumerateScenes((a_stScene) => {
 				var oObjs = a_stScene.GetRootGameObjects();
-				return a_oCallback(oObjs);
-			});
+
+				for(int i = 0; i < oObjs.Length; ++i) {
+					// 객체 순회가 불가능 할 경우
+					if(!a_oCallback(oObjs[i])) {
+						return false;
+					}
+				}
+
+				return true;
+			}, a_bIsEnableAssert);
 		}
 	}
 	#endregion			// 클래스 함수
@@ -203,6 +211,32 @@ public static partial class CFunc {
 		var oObj = CFunc.FindObj(a_oName);
 		
 		return oObj?.GetComponentsInChildren<T>();
+	}
+
+	//! 객체를 순회한다
+	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+
+		// 콜백이 존재 할 경우
+		if(a_oCallback != null) {
+			CFunc.EnumerateScenes((a_stScene) => {
+				var oObjs = a_stScene.GetRootGameObjects();
+
+				for(int i = 0; i < oObjs.Length; ++i) {
+					var oComponents = oObjs[i].GetComponentsInChildren<T>();
+
+					for(int j = 0; j < oComponents.Length; ++j) {
+						// 순회가 불가능 할 경우
+						if(!a_oCallback(oComponents[j])) {
+							goto EXIT_ENUMERATE_COMPONENTS;
+						}
+					}
+				}
+
+EXIT_ENUMERATE_COMPONENTS:
+				return true;
+			}, a_bIsEnableAssert);
+		}
 	}
 	#endregion			// 제네릭 클래스 함수
 
