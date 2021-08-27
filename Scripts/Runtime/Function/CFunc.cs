@@ -275,28 +275,28 @@ public static partial class CFunc {
 	}
 	
 	//! 로그를 출력한다
-	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oLog) {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Log, a_oLog);
 	}
 
 	//! 로그를 출력한다
-	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oLog, Color a_stColor) {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Log, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
 	
 	//! 로그를 출력한다
-	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFmt, params object[] a_oParams) {
 		CAccess.Assert(a_oFmt != null);
 		CFunc.DoShowLog(LogType.Log, string.Format(a_oFmt, a_oParams));
 	}
 
 	//! 로그를 출력한다
-	[Conditional("LOGIC_TEST_ENABLE"), Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oFmt, Color a_stColor, params object[] a_oParams) {
 		CAccess.Assert(a_oFmt != null);
 		string oLogFmt = a_oFmt.ExGetColorFmtStr(a_stColor);
