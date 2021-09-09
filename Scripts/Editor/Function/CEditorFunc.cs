@@ -43,7 +43,8 @@ public static partial class CEditorFunc {
 		if(a_oParams.ExIsValid()) {
 			// 맥 일 경우
 			if(CAccess.IsMac) {
-				CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, a_oParams), a_bIsAsync, a_bIsEnableAssert);
+				string oParams = string.Format(KCDefine.B_TEXT_FMT_2_SEMI_COLON_COMBINE, KCEditorDefine.B_BUILD_CMD_EXPORT_PATH, a_oParams);
+				CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, oParams), a_bIsAsync, a_bIsEnableAssert);
 			}
 			// 윈도우즈 일 경우
 			else if(CAccess.IsWnds) {
