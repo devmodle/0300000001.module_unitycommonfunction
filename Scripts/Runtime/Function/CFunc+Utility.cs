@@ -99,7 +99,7 @@ public static partial class CFunc {
 			}
 		}
 
-		return KCDefine.B_EMPTY_3D_INT_VERTICES;
+		return KCDefine.B_EMPTY_3D_INT_VECS;
 	}
 
 	//! 메세지를 전송한다
