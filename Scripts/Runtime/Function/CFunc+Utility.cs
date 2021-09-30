@@ -57,7 +57,7 @@ public static partial class CFunc {
 			var oPathInfo = oOpenPathInfoList[KCDefine.B_VAL_0_INT];
 
 			oClosePathInfoList.Add(oPathInfo);
-			oOpenPathInfoList.RemoveAt(KCDefine.B_VAL_0_INT);
+			oOpenPathInfoList.ExRemoveValAt(KCDefine.B_VAL_0_INT);
 
 			// 경로를 탐색했을 경우
 			if(a_oFindCallback(oPathInfo)) {
