@@ -288,58 +288,30 @@ public static partial class CFunc {
 		CFunc.DoShowLog(LogType.Log, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
 	
-	//! 로그를 출력한다
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLog(string a_oFmt, params object[] a_oParams) {
-		CAccess.Assert(a_oFmt != null);
-		CFunc.DoShowLog(LogType.Log, string.Format(a_oFmt, a_oParams));
-	}
-
-	//! 로그를 출력한다
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLog(string a_oFmt, Color a_stColor, params object[] a_oParams) {
-		CAccess.Assert(a_oFmt != null);
-		string oLogFmt = a_oFmt.ExGetColorFmtStr(a_stColor);
-
-		CFunc.DoShowLog(LogType.Log, string.Format(oLogFmt, a_oParams));
-	}
-
 	//! 경고 로그를 출력한다
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogWarning(string a_oLog) {
 		CFunc.DoShowLog(LogType.Warning, a_oLog);
 	}
 
 	//! 경고 로그를 출력한다
-	public static void ShowLogWarning(string a_oFmt, params object[] a_oParams) {
-		CAccess.Assert(a_oFmt != null);
-		CFunc.DoShowLog(LogType.Warning, string.Format(a_oFmt, a_oParams));
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	public static void ShowLogWarning(string a_oLog, Color a_stColor) {
+		CAccess.Assert(a_oLog != null);
+		CFunc.DoShowLog(LogType.Warning, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
-
-	//! 경고 로그를 출력한다
-	public static void ShowLogWarning(string a_oFmt, Color a_stColor, params object[] a_oParams) {
-		CAccess.Assert(a_oFmt != null);
-		string oLogFmt = a_oFmt.ExGetColorFmtStr(a_stColor);
-
-		CFunc.DoShowLog(LogType.Warning, string.Format(oLogFmt, a_oParams));
-	}
-
+	
 	//! 에러 로그를 출력한다
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogError(string a_oLog) {
 		CFunc.DoShowLog(LogType.Error, a_oLog);
 	}
 
 	//! 에러 로그를 출력한다
-	public static void ShowLogError(string a_oFmt, params object[] a_oParams) {
-		CAccess.Assert(a_oFmt != null);
-		CFunc.DoShowLog(LogType.Error, string.Format(a_oFmt, a_oParams));
-	}
-
-	//! 에러 로그를 출력한다
-	public static void ShowLogError(string a_oFmt, Color a_stColor, params object[] a_oParams) {
-		CAccess.Assert(a_oFmt != null);
-		string oLogFmt = a_oFmt.ExGetColorFmtStr(a_stColor);
-
-		CFunc.DoShowLog(LogType.Error, string.Format(oLogFmt, a_oParams));
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	public static void ShowLogError(string a_oLog, Color a_stColor) {
+		CAccess.Assert(a_oLog != null);
+		CFunc.DoShowLog(LogType.Error, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
 
 	//! 로그를 출력한다
