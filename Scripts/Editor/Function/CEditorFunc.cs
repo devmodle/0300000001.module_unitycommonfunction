@@ -113,18 +113,18 @@ public static partial class CEditorFunc {
 	}
 
 	//! 컴포넌트를 탐색한다
-	public static List<T> FindComponents<T>() where T : Component {
+	public static List<T> FindComponents<T>(bool a_bIsIncludeInactive = false) where T : Component {
 		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
 		var oComponentList = new List<T>();
 
 		// 프리팹 모드 일 경우
 		if(oPrefabStage != null) {
-			oPrefabStage.prefabContentsRoot.GetComponentsInChildren<T>(oComponentList);
+			oPrefabStage.prefabContentsRoot.GetComponentsInChildren<T>(a_bIsIncludeInactive, oComponentList);
 		} else {
 			CFunc.EnumerateComponents<T>((a_oComponent) => {
 				oComponentList.Add(a_oComponent);
 				return true;
-			});
+			}, a_bIsIncludeInactive);
 		}
 
 		return oComponentList;

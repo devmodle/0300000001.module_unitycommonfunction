@@ -214,7 +214,7 @@ public static partial class CFunc {
 	}
 
 	//! 객체를 순회한다
-	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsEnableAssert = true) where T : Component {
+	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) where T : Component {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
 		// 콜백이 존재 할 경우
@@ -223,7 +223,7 @@ public static partial class CFunc {
 				var oObjs = a_stScene.GetRootGameObjects();
 
 				for(int i = 0; i < oObjs.Length; ++i) {
-					var oComponents = oObjs[i].GetComponentsInChildren<T>();
+					var oComponents = oObjs[i].GetComponentsInChildren<T>(a_bIsIncludeInactive);
 
 					for(int j = 0; j < oComponents.Length; ++j) {
 						// 순회가 불가능 할 경우
