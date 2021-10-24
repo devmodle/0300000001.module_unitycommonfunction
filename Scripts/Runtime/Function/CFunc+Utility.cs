@@ -12,10 +12,10 @@ using UnityEditor;
 using UnityEngine.Android;
 #endif			// #if UNITY_ANDROID
 
-//! 유틸리티 함수
+/** 유틸리티 함수 */
 public static partial class CFunc {
 	#region 클래스 함수
-	//! 객체를 탐색한다
+	/** 객체를 탐색한다 */
 	public static GameObject FindObj(string a_oName) {
 		CAccess.Assert(a_oName.ExIsValid());
 		GameObject oObj = null;
@@ -28,7 +28,7 @@ public static partial class CFunc {
 		return oObj;
 	}
 
-	//! 객체를 탐색한다
+	/** 객체를 탐색한다 */
 	public static List<GameObject> FindObjs(string a_oName) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObjList = new List<GameObject>();
@@ -43,7 +43,7 @@ public static partial class CFunc {
 		return oObjList;
 	}
 
-	//! 경로를 탐색한다
+	/** 경로를 탐색한다 */
 	public static List<Vector3Int> FindPath(Vector3Int a_stIdx, List<Vector3Int> a_oOffsetList, System.Func<CPathInfo, bool> a_oFindCallback, System.Func<CPathInfo, Vector3Int, bool> a_oMoveCallback, System.Func<CPathInfo, Vector3Int, int> a_oCostCallback) {
 		CAccess.Assert(a_oFindCallback != null && a_oMoveCallback != null && a_oCostCallback != null);
 
@@ -102,7 +102,7 @@ public static partial class CFunc {
 		return KCDefine.B_EMPTY_3D_INT_VECS;
 	}
 
-	//! 메세지를 전송한다
+	/** 메세지를 전송한다 */
 	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oName.ExIsValid() && a_oMsg.ExIsValid()));
 
@@ -113,7 +113,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 메세지를 전파한다
+	/** 메세지를 전파한다 */
 	public static void BroadcastMsg(string a_oMsg, object a_oParams, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oMsg.ExIsValid());
 
@@ -126,7 +126,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 권한을 요청한다
+	/** 권한을 요청한다 */
 	public static void RequestPermission(MonoBehaviour a_oComponent, string a_oPermission, System.Action<string, bool> a_oCallback, bool a_bIsRealtime = false, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oComponent != null && a_oPermission.ExIsValid()));
 
@@ -157,7 +157,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 씬을 순회한다
+	/** 씬을 순회한다 */
 	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
@@ -174,7 +174,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 객체를 순회한다
+	/** 객체를 순회한다 */
 	public static void EnumerateRootObjs(System.Func<GameObject, bool> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
@@ -197,7 +197,7 @@ public static partial class CFunc {
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
-	//! 컴포넌트를 탐색한다
+	/** 컴포넌트를 탐색한다 */
 	public static T FindComponent<T>(string a_oName) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObj = CFunc.FindObj(a_oName);
@@ -205,7 +205,7 @@ public static partial class CFunc {
 		return oObj?.GetComponentInChildren<T>();
 	}
 
-	//! 컴포넌트를 탐색한다
+	/** 컴포넌트를 탐색한다 */
 	public static T[] FindComponents<T>(string a_oName) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObj = CFunc.FindObj(a_oName);
@@ -213,7 +213,7 @@ public static partial class CFunc {
 		return oObj?.GetComponentsInChildren<T>();
 	}
 
-	//! 객체를 순회한다
+	/** 객체를 순회한다 */
 	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) where T : Component {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
@@ -242,7 +242,7 @@ EXIT_ENUMERATE_COMPONENTS:
 
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
-	//! 객체를 선택한다
+	/** 객체를 선택한다 */
 	public static void SelObj(GameObject a_oObj, bool a_bIsPing = false) {
 		Selection.activeGameObject = a_oObj;
 
@@ -252,7 +252,7 @@ EXIT_ENUMERATE_COMPONENTS:
 		}
 	}
 
-	//! 객체를 선택한다
+	/** 객체를 선택한다 */
 	public static void SelObjs(GameObject[] a_oObjs, bool a_bIsPing = false) {
 		Selection.objects = a_oObjs;
 

@@ -8,10 +8,10 @@ using UnityEngine.UI;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
 
-//! 에디터 기본 함수
+/** 에디터 기본 함수 */
 public static partial class CEditorFunc {
 	#region 클래스 함수
-	//! 에셋을 로드한다
+	/** 에셋을 로드한다 */
 	public static Object LoadAsset(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilePath);
@@ -19,7 +19,7 @@ public static partial class CEditorFunc {
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
 	}
 
-	//! 경고 팝업을 출력한다
+	/** 경고 팝업을 출력한다 */
 	public static bool ShowAlertPopup(string a_oTitle, string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText = KCDefine.B_EMPTY_STR) {
 		// 취소 버튼 텍스트가 유효 할 경우
 		if(a_oCancelBtnText.ExIsValid()) {
@@ -29,13 +29,13 @@ public static partial class CEditorFunc {
 		return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText);
 	}
 
-	//! 에셋 데이터 베이스를 갱신한다
+	/** 에셋 데이터 베이스를 갱신한다 */
 	public static void UpdateAssetDBState() {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
 	}
 	
-	//! 커맨드 라인을 실행한다
+	/** 커맨드 라인을 실행한다 */
 	public static void ExecuteCmdLine(string a_oParams, bool a_bIsAsync = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oParams.ExIsValid());
 
@@ -53,7 +53,7 @@ public static partial class CEditorFunc {
 		}
 	}
 
-	//! 커맨드 라인을 실행한다
+	/** 커맨드 라인을 실행한다 */
 	public static void ExecuteCmdLine(string a_oFilePath, string a_oParams, bool a_bIsAsync = true, bool a_bIsEnableAssert = true) {
 		CFunc.ShowLog($"CEditorFunc.ExecuteCmdLine: {a_oFilePath}, {a_oParams}");
 		CAccess.Assert(!a_bIsEnableAssert || (a_oFilePath.ExIsValid() && a_oParams.ExIsValid()));
@@ -72,26 +72,26 @@ public static partial class CEditorFunc {
 		}
 	}
 
-	//! 플랫폼을 변경한다
+	/** 플랫폼을 변경한다 */
 	public static void ChangePlatform(BuildTargetGroup a_eTargetGroup, BuildTarget a_eTarget) {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(a_eTargetGroup, a_eTarget);
 	}
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
-	//! 에셋을 탐색한다
+	/** 에셋을 탐색한다 */
 	public static T FindAsset<T>(string a_oFilePath) where T : Object {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		return AssetDatabase.LoadAssetAtPath<T>(a_oFilePath);
 	}
 
-	//! 에셋을 탐색한다
+	/** 에셋을 탐색한다 */
 	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
 	}
 
-	//! 에셋을 탐색한다
+	/** 에셋을 탐색한다 */
 	public static List<T> FindAssets<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
 		var oAssetList = new List<T>();
 		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPaths);
@@ -112,7 +112,7 @@ public static partial class CEditorFunc {
 		return oAssetList;
 	}
 
-	//! 컴포넌트를 탐색한다
+	/** 컴포넌트를 탐색한다 */
 	public static List<T> FindComponents<T>(bool a_bIsIncludeInactive = false) where T : Component {
 		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
 		var oComponentList = new List<T>();

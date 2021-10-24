@@ -8,10 +8,10 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 #endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE
 
-//! 설정 함수
+/** 설정 함수 */
 public static partial class CFunc {
 	#region 클래스 함수
-	//! 퀄리티를 설정한다
+	/** 퀄리티를 설정한다 */
 	public static void SetupQuality(EQualityLevel a_eQualityLevel, bool a_bIsApplyExpensiveChange = false) {
 		// 퀄리티 레벨을 설정한다 {
 		var eQualityLevel = a_eQualityLevel;
@@ -138,7 +138,7 @@ public static partial class CFunc {
 #endif			// #if UNITY_EDITOR
 	}
 	
-	//! 화면 UI 를 설정한다
+	/** 화면 UI 를 설정한다 */
 	public static void SetupScreenUIs(GameObject a_oScreenUIs, int a_nSortingOrder, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oScreenUIs != null);
 

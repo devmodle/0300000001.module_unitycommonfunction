@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MessagePack;
 
-//! 기본 함수
+/** 기본 함수 */
 public static partial class CFunc {
 	#region 클래스 변수
 	private static Dictionary<LogType, System.Action<string>> m_oLogFuncDict = new Dictionary<LogType, System.Action<string>>() {
@@ -17,7 +17,7 @@ public static partial class CFunc {
 	#endregion			// 클래스 변수
 
 	#region 클래스 함수
-	//! 파일을 복사한다
+	/** 파일을 복사한다 */
 	public static void CopyFile(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
@@ -29,7 +29,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 파일을 복사한다
+	/** 파일을 복사한다 */
 	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oIgnore, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
@@ -50,7 +50,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 파일을 복사한다
+	/** 파일을 복사한다 */
 	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oTarget, string a_oReplace, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
@@ -69,7 +69,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 디렉토리를 복사한다
+	/** 디렉토리를 복사한다 */
 	public static void CopyDir(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
@@ -89,7 +89,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 디렉토리를 순회한다
+	/** 디렉토리를 순회한다 */
 	public static void EnumerateDirs(string a_oDirPath, System.Func<string[], string[], bool> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oCallback != null && a_oDirPath.ExIsValid()));
 		bool bIsValid = a_oCallback != null && a_oDirPath.ExIsValid();
@@ -108,13 +108,13 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 바이트를 읽어들인다
+	/** 바이트를 읽어들인다 */
 	public static byte[] ReadBytes(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		return File.Exists(a_oFilePath) ? File.ReadAllBytes(a_oFilePath) : null;
 	}
 
-	//! 바이트를 읽어들인다
+	/** 바이트를 읽어들인다 */
 	public static byte[] ReadBytesFromRes(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oTextAsset = Resources.Load<TextAsset>(a_oFilePath);
@@ -122,7 +122,7 @@ public static partial class CFunc {
 		return (oTextAsset != null) ? oTextAsset.bytes : null;
 	}
 
-	//! 보안 바이트를 읽어들인다
+	/** 보안 바이트를 읽어들인다 */
 	public static byte[] ReadSecurityBytes(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		
@@ -132,7 +132,7 @@ public static partial class CFunc {
 		return (oBytes != null) ? System.Convert.FromBase64String(oStr) : null;
 	}
 
-	//! 보안 바이트를 읽어들인다
+	/** 보안 바이트를 읽어들인다 */
 	public static byte[] ReadSecurityBytesFromRes(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
@@ -142,13 +142,13 @@ public static partial class CFunc {
 		return (oBytes != null) ? System.Convert.FromBase64String(oStr) : null;
 	}
 
-	//! 문자열을 읽어들인다
+	/** 문자열을 읽어들인다 */
 	public static string ReadStr(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		return File.Exists(a_oFilePath) ? File.ReadAllText(a_oFilePath, System.Text.Encoding.Default) : string.Empty;
 	}
 
-	//! 문자열을 읽어들인다
+	/** 문자열을 읽어들인다 */
 	public static string ReadStrFromRes(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oTextAsset = Resources.Load<TextAsset>(a_oFilePath);
@@ -156,7 +156,7 @@ public static partial class CFunc {
 		return (oTextAsset != null) ? oTextAsset.text : string.Empty;
 	}
 
-	//! 보안 문자열을 읽어들인다
+	/** 보안 문자열을 읽어들인다 */
 	public static string ReadSecurityStr(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = CFunc.ReadSecurityBytes(a_oFilePath);
@@ -164,7 +164,7 @@ public static partial class CFunc {
 		return (oBytes != null) ? System.Text.Encoding.Default.GetString(oBytes) : string.Empty;
 	}
 
-	//! 보안 문자열을 읽어드린다
+	/** 보안 문자열을 읽어들인다 */
 	public static string ReadSecurityStrFromRes(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = CFunc.ReadSecurityBytesFromRes(a_oFilePath);
@@ -172,13 +172,13 @@ public static partial class CFunc {
 		return (oBytes != null) ? System.Text.Encoding.Default.GetString(oBytes) : string.Empty;
 	}
 
-	//! 문자열 라인을 읽어들인다
+	/** 문자열 라인을 읽어들인다 */
 	public static string[] ReadStrLines(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, System.Text.Encoding.Default) : null;
 	}
 
-	//! 바이트를 기록한다
+	/** 바이트를 기록한다 */
 	public static void WriteBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirName = KCDefine.B_EMPTY_STR, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oBytes != null && a_oFilePath.ExIsValid()));
 
@@ -190,7 +190,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 바이트를 기록한다
+	/** 바이트를 기록한다 */
 	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes, bool a_bIsFlush = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oBytes != null));
 
@@ -201,7 +201,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 보안 바이트를 기록한다
+	/** 보안 바이트를 기록한다 */
 	public static void WriteSecurityBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirName = KCDefine.B_EMPTY_STR, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oBytes != null && a_oFilePath.ExIsValid()));
 
@@ -213,7 +213,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 보안 바이트를 기록한다
+	/** 보안 바이트를 기록한다 */
 	public static void WriteSecurityBytes(FileStream a_oWStream, byte[] a_oBytes, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oBytes != null));
 
@@ -224,7 +224,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 문자열을 기록한다
+	/** 문자열을 기록한다 */
 	public static void WriteStr(string a_oFilePath, string a_oStr, bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirName = KCDefine.B_EMPTY_STR, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oStr != null && a_oFilePath.ExIsValid()));
 
@@ -236,7 +236,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 문자열을 기록한다
+	/** 문자열을 기록한다 */
 	public static void WriteStr(FileStream a_oWStream, string a_oStr, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oStr != null));
 
@@ -246,7 +246,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 보안 문자열을 기록한다
+	/** 보안 문자열을 기록한다 */
 	public static void WriteSecurityStr(string a_oFilePath, string a_oStr, bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirName = KCDefine.B_EMPTY_STR, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oStr != null && a_oFilePath.ExIsValid()));
 
@@ -258,7 +258,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 보안 문자열을 기록한다
+	/** 보안 문자열을 기록한다 */
 	public static void WriteSecurityStr(FileStream a_oWStream, string a_oStr, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oStr != null));
 
@@ -268,53 +268,53 @@ public static partial class CFunc {
 		}
 	}
 	
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static void Invoke(ref System.Action a_oAction) {
 		a_oAction?.Invoke();
 		a_oAction = null;
 	}
 	
-	//! 로그를 출력한다
+	/** 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oLog) {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Log, a_oLog);
 	}
 
-	//! 로그를 출력한다
+	/** 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oLog, Color a_stColor) {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Log, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
 	
-	//! 경고 로그를 출력한다
+	/** 경고 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogWarning(string a_oLog) {
 		CFunc.DoShowLog(LogType.Warning, a_oLog);
 	}
 
-	//! 경고 로그를 출력한다
+	/** 경고 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogWarning(string a_oLog, Color a_stColor) {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Warning, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
 	
-	//! 에러 로그를 출력한다
+	/** 에러 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogError(string a_oLog) {
 		CFunc.DoShowLog(LogType.Error, a_oLog);
 	}
 
-	//! 에러 로그를 출력한다
+	/** 에러 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogError(string a_oLog, Color a_stColor) {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Error, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
 
-	//! 로그를 출력한다
+	/** 로그를 출력한다 */
 	private static void DoShowLog(LogType a_eLogType, string a_oLog) {
 		CAccess.Assert(CFunc.m_oLogFuncDict.ContainsKey(a_eLogType));
 		CFunc.m_oLogFuncDict[a_eLogType](a_oLog);
@@ -322,14 +322,14 @@ public static partial class CFunc {
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
-	//! 값을 교환한다
+	/** 값을 교환한다 */
 	public static void Swap<T>(ref T a_tLhs, ref T a_tRhs) {
 		T tTemp = a_tLhs;
 		a_tLhs = a_tRhs;
 		a_tRhs = tTemp;
 	}
 
-	//! 값을 교환한다
+	/** 값을 교환한다 */
 	public static void LessCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
 		if(a_tLhs.CompareTo(a_tRhs) > KCDefine.B_COMPARE_EQUALS) {
@@ -337,7 +337,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 값을 교환한다
+	/** 값을 교환한다 */
 	public static void GreateCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
 		if(a_tLhs.CompareTo(a_tRhs) < KCDefine.B_COMPARE_EQUALS) {
@@ -345,43 +345,43 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static void Invoke<T1>(ref System.Action<T1> a_oAction, T1 a_tParamsA) {
 		a_oAction?.Invoke(a_tParamsA);
 		a_oAction = null;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static void Invoke<T1, T2>(ref System.Action<T1, T2> a_oAction, T1 a_tParamsA, T2 a_tParamsB) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB);
 		a_oAction = null;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static void Invoke<T1, T2, T3>(ref System.Action<T1, T2, T3> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
 		a_oAction = null;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static void Invoke<T1, T2, T3, T4>(ref System.Action<T1, T2, T3, T4> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
 		a_oAction = null;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static void Invoke<T1, T2, T3, T4, T5>(ref System.Action<T1, T2, T3, T4, T5> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
 		a_oAction = null;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static void Invoke<T1, T2, T3, T4, T5, T6>(ref System.Action<T1, T2, T3, T4, T5, T6> a_oAction, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE, T6 a_tParamsF) {
 		a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
 		a_oAction = null;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static Result Invoke<Result>(ref System.Func<Result> a_oFunc) {
 		CAccess.Assert(a_oFunc != null);
 		
@@ -391,7 +391,7 @@ public static partial class CFunc {
 		return tResult;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static Result Invoke<T1, Result>(ref System.Func<T1, Result> a_oFunc, T1 a_tParamsA) {
 		CAccess.Assert(a_oFunc != null);
 		
@@ -401,7 +401,7 @@ public static partial class CFunc {
 		return tResult;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static Result Invoke<T1, T2, Result>(ref System.Func<T1, T2, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB) {
 		CAccess.Assert(a_oFunc != null);
 		
@@ -411,7 +411,7 @@ public static partial class CFunc {
 		return tResult;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static Result Invoke<T1, T2, T3, Result>(ref System.Func<T1, T2, T3, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC) {
 		CAccess.Assert(a_oFunc != null);
 		
@@ -421,7 +421,7 @@ public static partial class CFunc {
 		return tResult;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static Result Invoke<T1, T2, T3, T4, Result>(ref System.Func<T1, T2, T3, T4, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD) {
 		CAccess.Assert(a_oFunc != null);
 		
@@ -431,7 +431,7 @@ public static partial class CFunc {
 		return tResult;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static Result Invoke<T1, T2, T3, T4, T5, Result>(ref System.Func<T1, T2, T3, T4, T5, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE) {
 		CAccess.Assert(a_oFunc != null);
 		
@@ -441,7 +441,7 @@ public static partial class CFunc {
 		return tResult;
 	}
 
-	//! 함수를 호출한다
+	/** 함수를 호출한다 */
 	public static Result Invoke<T1, T2, T3, T4, T5, T6, Result>(ref System.Func<T1, T2, T3, T4, T5, T6, Result> a_oFunc, T1 a_tParamsA, T2 a_tParamsB, T3 a_tParamsC, T4 a_tParamsD, T5 a_tParamsE, T6 a_tParamsF) {
 		CAccess.Assert(a_oFunc != null);
 		
@@ -451,7 +451,7 @@ public static partial class CFunc {
 		return tResult;
 	}
 	
-	//! JSON 객체를 읽어들인다
+	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oStr = CFunc.ReadStr(a_oFilePath);
@@ -466,7 +466,7 @@ public static partial class CFunc {
 		return oStr.ExJSONStrToObj<T>();
 	}
 
-	//! JSON 객체를 읽어들인다
+	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oStr = CFunc.ReadStrFromRes(a_oFilePath);
@@ -481,7 +481,7 @@ public static partial class CFunc {
 		return oStr.ExJSONStrToObj<T>();
 	}
 
-	//! 메세지 팩 객체를 읽어들인다
+	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = CFunc.ReadBytes(a_oFilePath);
@@ -496,7 +496,7 @@ public static partial class CFunc {
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
 
-	//! 메세지 팩 객체를 읽어들인다
+	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = CFunc.ReadBytesFromRes(a_oFilePath);
@@ -511,7 +511,7 @@ public static partial class CFunc {
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
 
-	//! 메세지 팩 JSON 객체를 읽어들인다
+	/** 메세지 팩 JSON 객체를 읽어들인다 */
 	public static T ReadMsgPackJSONObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oStr = CFunc.ReadStr(a_oFilePath);
@@ -526,7 +526,7 @@ public static partial class CFunc {
 		return oStr.ExMsgPackJSONStrToObj<T>();
 	}
 
-	//! 메세지 팩 JSON 객체를 읽어들인다
+	/** 메세지 팩 JSON 객체를 읽어들인다 */
 	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		string oStr = CFunc.ReadStrFromRes(a_oFilePath);
@@ -541,7 +541,7 @@ public static partial class CFunc {
 		return oStr.ExMsgPackJSONStrToObj<T>();
 	}
 	
-	//! JSON 객체를 기록한다
+	/** JSON 객체를 기록한다 */
 	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsAutoBackup = false, bool a_bIsSecurity = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
@@ -562,7 +562,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 메세지 팩 객체를 기록한다
+	/** 메세지 팩 객체를 기록한다 */
 	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false, bool a_bIsSecurity = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
@@ -583,7 +583,7 @@ public static partial class CFunc {
 		}
 	}
 
-	//! 메세지 팩 JSON 객체를 기록한다
+	/** 메세지 팩 JSON 객체를 기록한다 */
 	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsAutoBackup = false, bool a_bIsSecurity = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
