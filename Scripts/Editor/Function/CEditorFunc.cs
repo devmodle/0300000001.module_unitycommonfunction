@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
+using UnityEditor.SceneManagement;
 
 /** 에디터 기본 함수 */
 public static partial class CEditorFunc {

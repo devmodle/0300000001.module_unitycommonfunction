@@ -47,21 +47,28 @@ public static partial class CFunc {
 #if UNIVERSAL_PIPELINE_MODULE_ENABLE
 		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_ASSET);
 
-		var oRenderPipelineRenderDatas = new ForwardRendererData[] {
-			Resources.Load<ForwardRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_RENDER_DATA),
-			Resources.Load<ForwardRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_SSAO_RENDER_DATA)
+		var oRenderPipelineRendererDatas = new UniversalRendererData[] {
+			Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_RENDER_DATA),
+			Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_SSAO_RENDER_DATA)
 		};
 
 		// 렌더 파이프라인이 존재 할 경우
 		if(oRenderPipeline != null) {
-			for(int i = 0; i < oRenderPipelineRenderDatas.Length; ++i) {
-				var oRenderPipelineRenderData = oRenderPipelineRenderDatas[i];
+			for(int i = 0; i < oRenderPipelineRendererDatas.Length; ++i) {
+				var oRenderPipelineRenderData = oRenderPipelineRendererDatas[i];
 				oRenderPipelineRenderData.shadowTransparentReceive = false;
 
 				oRenderPipelineRenderData.defaultStencilState = new StencilStateData() {
 					overrideStencilState = false
 				};
 			}
+
+			oRenderPipeline.useSRPBatcher = true;
+			oRenderPipeline.useAdaptivePerformance = true;
+			oRenderPipeline.supportsDynamicBatching = true;
+
+			oRenderPipeline.supportsCameraDepthTexture = true;
+			oRenderPipeline.supportsCameraOpaqueTexture = true;
 
 			oRenderPipeline.supportsHDR = KCDefine.U_OPTS_UNIVERSAL_RP_SUPPORTS_HDR;
 			oRenderPipeline.shaderVariantLogLevel = ShaderVariantLogLevel.AllShaders;
@@ -85,22 +92,6 @@ public static partial class CFunc {
 			oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ_LIMIT, KCDefine.U_MAX_NUM_UNIVERSAL_RP_ADDITIONAL_LIGHT_PER_OBJ);
 			oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SHADOW_MAP_RESOLUTION, UnityEngine.Rendering.Universal.ShadowResolution._2048);
 			oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SHADOW_MAP_RESOLUTION, UnityEngine.Rendering.Universal.ShadowResolution._512);
-
-#if !MODE_2D_ENABLE
-			oRenderPipeline.supportsCameraDepthTexture = true;
-			oRenderPipeline.supportsCameraOpaqueTexture = true;
-#else
-			oRenderPipeline.supportsCameraDepthTexture = false;
-			oRenderPipeline.supportsCameraOpaqueTexture = false;
-#endif			// #if !MODE_2D_ENABLE
-
-#if DYNAMIC_BATCHING_ENABLE
-			oRenderPipeline.useSRPBatcher = true;
-			oRenderPipeline.supportsDynamicBatching = true;
-#else
-			oRenderPipeline.useSRPBatcher = false;
-			oRenderPipeline.supportsDynamicBatching = false;
-#endif			// #if DYNAMIC_BATCHING_ENABLE
 
 #if LIGHT_ENABLE
 			oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORTS_MIXED_LIGHTING, true);
@@ -129,10 +120,14 @@ public static partial class CFunc {
 		}
 
 		QualitySettings.renderPipeline = oRenderPipeline;
+
 		GraphicsSettings.renderPipelineAsset = oRenderPipeline;
+		GraphicsSettings.useScriptableRenderPipelineBatching = true;
 #else
 		QualitySettings.renderPipeline = null;
+		
 		GraphicsSettings.renderPipelineAsset = null;
+		GraphicsSettings.useScriptableRenderPipelineBatching = false;
 #endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE
 		// 렌더링 파이프라인을 설정한다 }
 #endif			// #if UNITY_EDITOR
