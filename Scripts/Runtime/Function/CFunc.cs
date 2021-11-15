@@ -127,7 +127,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		
 		var oBytes = CFunc.ReadBytes(a_oFilePath);
-		string oStr = System.Text.Encoding.UTF8.GetString(oBytes);
+		string oStr = System.Text.Encoding.Default.GetString(oBytes);
 
 		return (oBytes != null) ? System.Convert.FromBase64String(oStr) : null;
 	}
@@ -137,7 +137,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
 		var oBytes = CFunc.ReadBytesFromRes(a_oFilePath);
-		string oStr = System.Text.Encoding.UTF8.GetString(oBytes);
+		string oStr = System.Text.Encoding.Default.GetString(oBytes);
 
 		return (oBytes != null) ? System.Convert.FromBase64String(oStr) : null;
 	}
@@ -145,7 +145,7 @@ public static partial class CFunc {
 	/** 문자열을 읽어들인다 */
 	public static string ReadStr(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		return File.Exists(a_oFilePath) ? File.ReadAllText(a_oFilePath, System.Text.Encoding.UTF8) : string.Empty;
+		return File.Exists(a_oFilePath) ? File.ReadAllText(a_oFilePath, System.Text.Encoding.Default) : string.Empty;
 	}
 
 	/** 문자열을 읽어들인다 */
@@ -161,7 +161,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = CFunc.ReadSecurityBytes(a_oFilePath);
 
-		return (oBytes != null) ? System.Text.Encoding.UTF8.GetString(oBytes) : string.Empty;
+		return (oBytes != null) ? System.Text.Encoding.Default.GetString(oBytes) : string.Empty;
 	}
 
 	/** 보안 문자열을 읽어들인다 */
@@ -169,13 +169,13 @@ public static partial class CFunc {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oBytes = CFunc.ReadSecurityBytesFromRes(a_oFilePath);
 
-		return (oBytes != null) ? System.Text.Encoding.UTF8.GetString(oBytes) : string.Empty;
+		return (oBytes != null) ? System.Text.Encoding.Default.GetString(oBytes) : string.Empty;
 	}
 
 	/** 문자열 라인을 읽어들인다 */
 	public static string[] ReadStrLines(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, System.Text.Encoding.UTF8) : null;
+		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, System.Text.Encoding.Default) : null;
 	}
 
 	/** 바이트를 기록한다 */
@@ -220,7 +220,7 @@ public static partial class CFunc {
 		// 스트림이 존재 할 경우
 		if(a_oWStream != null && a_oBytes != null) {
 			string oStr = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VAL_0_INT, a_oBytes.Length);
-			CFunc.WriteBytes(a_oWStream, System.Text.Encoding.UTF8.GetBytes(oStr), true, a_bIsEnableAssert);
+			CFunc.WriteBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(oStr), true, a_bIsEnableAssert);
 		}
 	}
 
@@ -242,7 +242,7 @@ public static partial class CFunc {
 
 		// 스트림이 존재 할 경우
 		if(a_oWStream != null && a_oStr != null) {
-			CFunc.WriteBytes(a_oWStream, System.Text.Encoding.UTF8.GetBytes(a_oStr), true, a_bIsEnableAssert);
+			CFunc.WriteBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(a_oStr), true, a_bIsEnableAssert);
 		}
 	}
 
@@ -264,7 +264,7 @@ public static partial class CFunc {
 
 		// 스트림이 존재 할 경우
 		if(a_oWStream != null && a_oStr != null) {
-			CFunc.WriteSecurityBytes(a_oWStream, System.Text.Encoding.UTF8.GetBytes(a_oStr), a_bIsEnableAssert);
+			CFunc.WriteSecurityBytes(a_oWStream, System.Text.Encoding.Default.GetBytes(a_oStr), a_bIsEnableAssert);
 		}
 	}
 	
