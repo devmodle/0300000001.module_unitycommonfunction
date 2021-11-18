@@ -454,14 +454,7 @@ public static partial class CFunc {
 	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = CFunc.ReadStr(a_oFilePath);
-
-#if SECURITY_ENABLE
-		// 보안 모드 일 경우
-		if(a_bIsSecurity) {
-			oStr = CFunc.ReadSecurityStr(a_oFilePath);
-		}
-#endif			// #if SECURITY_ENABLE
+		string oStr = a_bIsSecurity ? CFunc.ReadStr(a_oFilePath) : CFunc.ReadSecurityStr(a_oFilePath);
 
 		return oStr.ExJSONStrToObj<T>();
 	}
@@ -469,14 +462,7 @@ public static partial class CFunc {
 	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = CFunc.ReadStrFromRes(a_oFilePath);
-
-#if SECURITY_ENABLE
-		// 보안 모드 일 경우
-		if(a_bIsSecurity) {
-			oStr = CFunc.ReadSecurityStrFromRes(a_oFilePath);
-		}
-#endif			// #if SECURITY_ENABLE
+		string oStr = a_bIsSecurity ? CFunc.ReadStrFromRes(a_oFilePath) : CFunc.ReadSecurityStrFromRes(a_oFilePath);
 
 		return oStr.ExJSONStrToObj<T>();
 	}
@@ -484,14 +470,7 @@ public static partial class CFunc {
 	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = CFunc.ReadBytes(a_oFilePath);
-
-#if SECURITY_ENABLE
-		// 보안 모드 일 경우
-		if(a_bIsSecurity) {
-			oBytes = CFunc.ReadSecurityBytes(a_oFilePath);
-		}
-#endif			// #if SECURITY_ENABLE
+		var oBytes = a_bIsSecurity ? CFunc.ReadBytes(a_oFilePath) : CFunc.ReadSecurityBytes(a_oFilePath);
 
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
@@ -499,14 +478,7 @@ public static partial class CFunc {
 	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = CFunc.ReadBytesFromRes(a_oFilePath);
-
-#if SECURITY_ENABLE
-		// 보안 모드 일 경우
-		if(a_bIsSecurity) {
-			oBytes = CFunc.ReadSecurityBytesFromRes(a_oFilePath);
-		}
-#endif			// #if SECURITY_ENABLE
+		var oBytes = a_bIsSecurity ? CFunc.ReadBytesFromRes(a_oFilePath) : CFunc.ReadSecurityBytesFromRes(a_oFilePath);
 
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
@@ -514,14 +486,7 @@ public static partial class CFunc {
 	/** 메세지 팩 JSON 객체를 읽어들인다 */
 	public static T ReadMsgPackJSONObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = CFunc.ReadStr(a_oFilePath);
-
-#if SECURITY_ENABLE
-		// 보안 모드 일 경우
-		if(a_bIsSecurity) {
-			oStr = CFunc.ReadSecurityStr(a_oFilePath);
-		}
-#endif			// #if SECURITY_ENABLE
+		string oStr = a_bIsSecurity ? CFunc.ReadStr(a_oFilePath) : CFunc.ReadSecurityStr(a_oFilePath);
 
 		return oStr.ExMsgPackJSONStrToObj<T>();
 	}
@@ -529,14 +494,7 @@ public static partial class CFunc {
 	/** 메세지 팩 JSON 객체를 읽어들인다 */
 	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = CFunc.ReadStrFromRes(a_oFilePath);
-
-#if SECURITY_ENABLE
-		// 보안 모드 일 경우
-		if(a_bIsSecurity) {
-			oStr = CFunc.ReadSecurityStrFromRes(a_oFilePath);
-		}
-#endif			// #if SECURITY_ENABLE
+		string oStr = a_bIsSecurity ? CFunc.ReadStrFromRes(a_oFilePath) : CFunc.ReadSecurityStrFromRes(a_oFilePath);
 
 		return oStr.ExMsgPackJSONStrToObj<T>();
 	}
@@ -551,11 +509,7 @@ public static partial class CFunc {
 
 			// 보안 모드 일 경우
 			if(a_bIsSecurity) {
-#if SECURITY_ENABLE
 				CFunc.WriteSecurityStr(a_oFilePath, oStr, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
-#else
-				CFunc.WriteStr(a_oFilePath, oStr, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
-#endif			// #if SECURITY_ENABLE
 			} else {
 				CFunc.WriteStr(a_oFilePath, oStr, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
 			}
@@ -572,11 +526,7 @@ public static partial class CFunc {
 
 			// 보안 모드 일 경우
 			if(a_bIsSecurity) {
-#if SECURITY_ENABLE
 				CFunc.WriteSecurityBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
-#else
-				CFunc.WriteBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
-#endif			// #if SECURITY_ENABLE
 			} else {
 				CFunc.WriteBytes(a_oFilePath, oBytes, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
 			}
@@ -590,14 +540,10 @@ public static partial class CFunc {
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
 			string oStr = a_oObj.ExToMsgPackJSONStr();
-
+			
 			// 보안 모드 일 경우
 			if(a_bIsSecurity) {
-#if SECURITY_ENABLE
 				CFunc.WriteSecurityStr(a_oFilePath, oStr, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
-#else
-				CFunc.WriteStr(a_oFilePath, oStr, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
-#endif			// #if SECURITY_ENABLE
 			} else {
 				CFunc.WriteStr(a_oFilePath, oStr, true, a_bIsAutoBackup, string.Empty, a_bIsEnableAssert);
 			}
