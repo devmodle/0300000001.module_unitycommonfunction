@@ -30,20 +30,17 @@ public static partial class CFunc {
 	}
 
 	/** 파일을 복사한다 */
-	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oIgnore, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
+	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oIgnoreToken, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
 
 		// 파일 복사가 가능 할 경우
 		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
-			var oStrLines = CFunc.ReadStrLines(a_oSrcPath);
+			var oStrLines = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding);
 			var oStrBuilder = new System.Text.StringBuilder();
 
 			for(int i = 0; i < oStrLines.Length; ++i) {
-				// 문자열 추가가 가능 할 경우
-				if(!oStrLines[i].Contains(a_oIgnore)) {
-					oStrBuilder.AppendLine(oStrLines[i]);
-				}
+				oStrBuilder.AppendLine((oStrLines[i].ExIsValid() && !oStrLines[i].Contains(a_oIgnoreToken)) ? oStrLines[i] : string.Empty);
 			}
 
 			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString());
@@ -51,18 +48,17 @@ public static partial class CFunc {
 	}
 
 	/** 파일을 복사한다 */
-	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oTarget, string a_oReplace, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
+	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oTarget, string a_oReplace, System.Text.Encoding a_oEncoding, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
 
 		// 파일 복사가 가능 할 경우
 		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
-			var oStrLines = CFunc.ReadStrLines(a_oSrcPath);
+			var oStrLines = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding);
 			var oStrBuilder = new System.Text.StringBuilder();
 
 			for(int i = 0; i < oStrLines.Length; ++i) {
-				string oStr = oStrLines[i].ExIsValid() ? oStrLines[i].ExGetReplaceStr(a_oTarget, a_oReplace, short.MaxValue) : string.Empty;
-				oStrBuilder.AppendLine(oStr);
+				oStrBuilder.AppendLine(oStrLines[i].ExIsValid() ? oStrLines[i].ExGetReplaceStr(a_oTarget, a_oReplace, short.MaxValue) : string.Empty);
 			}
 
 			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString());
@@ -173,9 +169,9 @@ public static partial class CFunc {
 	}
 
 	/** 문자열 라인을 읽어들인다 */
-	public static string[] ReadStrLines(string a_oFilePath) {
+	public static string[] ReadStrLines(string a_oFilePath, System.Text.Encoding a_oEncoding) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, System.Text.Encoding.Default) : null;
+		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, a_oEncoding) : null;
 	}
 
 	/** 바이트를 기록한다 */
@@ -454,7 +450,7 @@ public static partial class CFunc {
 	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsSecurity ? CFunc.ReadStr(a_oFilePath) : CFunc.ReadSecurityStr(a_oFilePath);
+		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStr(a_oFilePath) : CFunc.ReadStr(a_oFilePath);
 
 		return oStr.ExJSONStrToObj<T>();
 	}
@@ -462,7 +458,7 @@ public static partial class CFunc {
 	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsSecurity ? CFunc.ReadStrFromRes(a_oFilePath) : CFunc.ReadSecurityStrFromRes(a_oFilePath);
+		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStrFromRes(a_oFilePath) : CFunc.ReadStrFromRes(a_oFilePath);
 
 		return oStr.ExJSONStrToObj<T>();
 	}
@@ -470,7 +466,7 @@ public static partial class CFunc {
 	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = a_bIsSecurity ? CFunc.ReadBytes(a_oFilePath) : CFunc.ReadSecurityBytes(a_oFilePath);
+		var oBytes = a_bIsSecurity ? CFunc.ReadSecurityBytes(a_oFilePath) : CFunc.ReadBytes(a_oFilePath);
 
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
@@ -478,7 +474,7 @@ public static partial class CFunc {
 	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = a_bIsSecurity ? CFunc.ReadBytesFromRes(a_oFilePath) : CFunc.ReadSecurityBytesFromRes(a_oFilePath);
+		var oBytes = a_bIsSecurity ? CFunc.ReadSecurityBytesFromRes(a_oFilePath) : CFunc.ReadBytesFromRes(a_oFilePath);
 
 		return MessagePackSerializer.Deserialize<T>(oBytes);
 	}
@@ -486,7 +482,7 @@ public static partial class CFunc {
 	/** 메세지 팩 JSON 객체를 읽어들인다 */
 	public static T ReadMsgPackJSONObj<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsSecurity ? CFunc.ReadStr(a_oFilePath) : CFunc.ReadSecurityStr(a_oFilePath);
+		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStr(a_oFilePath) : CFunc.ReadStr(a_oFilePath);
 
 		return oStr.ExMsgPackJSONStrToObj<T>();
 	}
@@ -494,7 +490,7 @@ public static partial class CFunc {
 	/** 메세지 팩 JSON 객체를 읽어들인다 */
 	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath, bool a_bIsSecurity = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsSecurity ? CFunc.ReadStrFromRes(a_oFilePath) : CFunc.ReadSecurityStrFromRes(a_oFilePath);
+		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStrFromRes(a_oFilePath) : CFunc.ReadStrFromRes(a_oFilePath);
 
 		return oStr.ExMsgPackJSONStrToObj<T>();
 	}
