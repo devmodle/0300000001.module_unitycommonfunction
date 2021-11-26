@@ -79,13 +79,12 @@ public static partial class CFunc {
 					continue;
 				}
 
-				int nIdx = oClosePathInfoList.ExFindVal<CPathInfo>((a_oPathInfo) => stNextIdx.Equals(a_oPathInfo.m_stIdx));
+				int nIdx = oClosePathInfoList.FindIndex((a_oPathInfo) => stNextIdx.Equals(a_oPathInfo.m_stIdx));
 				int nCost = a_oCostCallback(oPathInfo, stNextIdx);
 
 				// 탐색이 가능 할 경우
 				if(!oVisitIdxList.Contains(stNextIdx)) {
-					var oNextPathInfo = CFactory.MakePathInfo(stNextIdx);
-					oNextPathInfo.m_nCost = nCost;
+					var oNextPathInfo = CFactory.MakePathInfo(stNextIdx, nCost);
 					oNextPathInfo.m_oPrevPathInfo = oPathInfo;
 
 					oVisitIdxList.Add(stNextIdx);
@@ -97,6 +96,8 @@ public static partial class CFunc {
 					oClosePathInfoList[nIdx].m_oPrevPathInfo = oPathInfo;
 				}
 			}
+
+			oOpenPathInfoList.ExSort((a_oLhs, a_oRhs) => a_oLhs.m_nCost.CompareTo(a_oRhs.m_nCost));
 		}
 
 		return KCDefine.B_EMPTY_3D_INT_VECS;
