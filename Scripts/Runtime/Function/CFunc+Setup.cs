@@ -97,8 +97,7 @@ public static partial class CFunc {
 		// 렌더 파이프라인이 존재 할 경우
 		if(a_oRenderPipeline != null) {
 			var oRenderPipelineRendererDatas = new UniversalRendererData[] {
-				Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_RENDER_DATA),
-				Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_SSAO_RENDER_DATA)
+				Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_RENDER_DATA), Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_SSAO_RENDER_DATA)
 			};
 			
 			for(int i = 0; i < oRenderPipelineRendererDatas.Length; ++i) {

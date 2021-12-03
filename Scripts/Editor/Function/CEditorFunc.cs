@@ -249,15 +249,15 @@ public static partial class CEditorFunc {
 	}
 
 	/** 에셋을 탐색한다 */
-	public static T FindAsset<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
-		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPaths);
+	public static T FindAsset<T>(string a_oFilter, List<string> a_oSearchPathList) where T : Object {
+		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPathList);
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
 	}
 
 	/** 에셋을 탐색한다 */
-	public static List<T> FindAssets<T>(string a_oFilter, string[] a_oSearchPaths) where T : Object {
+	public static List<T> FindAssets<T>(string a_oFilter, List<string> a_oSearchPathList) where T : Object {
 		var oAssetList = new List<T>();
-		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPaths);
+		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPathList.ToArray());
 
 		// 에셋 GUID 가 존재 할 경우
 		if(oAssetGUIDs.ExIsValid()) {
