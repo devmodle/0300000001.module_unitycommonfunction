@@ -254,12 +254,12 @@ EXIT_ENUMERATE_COMPONENTS:
 	}
 
 	/** 객체를 선택한다 */
-	public static void SelObjs(GameObject[] a_oObjs, bool a_bIsPing = false) {
-		Selection.objects = a_oObjs;
+	public static void SelObjs(List<GameObject> a_oObjList, bool a_bIsPing = false) {
+		Selection.objects = a_oObjList.ToArray();
 
 		// 핑 모드 일 경우
-		if(a_bIsPing && a_oObjs.ExIsValid()) {
-			EditorGUIUtility.PingObject(a_oObjs[KCDefine.B_VAL_0_INT]);
+		if(a_bIsPing && a_oObjList.ExIsValid()) {
+			EditorGUIUtility.PingObject(a_oObjList[KCDefine.B_VAL_0_INT]);
 		}
 	}
 #endif			// #if UNITY_EDITOR

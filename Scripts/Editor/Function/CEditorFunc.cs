@@ -89,6 +89,156 @@ public static partial class CEditorFunc {
 	public static void ChangePlatform(BuildTargetGroup a_eTargetGroup, BuildTarget a_eTarget) {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(a_eTargetGroup, a_eTarget);
 	}
+
+	/** 상호 작용자를 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Selectables")]
+	public static void ResetSelectables() {
+		var oSelectableList = CEditorFunc.FindComponents<Selectable>();
+
+		for(int i = 0; i < oSelectableList.Count; ++i) {
+			oSelectableList[i].ExReset();
+
+			// 에디터 모드 일 경우
+			if(!Application.isPlaying) {
+				EditorSceneManager.MarkSceneDirty(oSelectableList[i].gameObject.scene);
+			}
+		}
+	}
+
+	/** 스크롤 영역을 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Scroll Rects")]
+	public static void ResetScrollRects() {
+		var oScrollRectList = CEditorFunc.FindComponents<ScrollRect>();
+
+		for(int i = 0; i < oScrollRectList.Count; ++i) {
+			oScrollRectList[i].ExReset();
+
+			// 에디터 모드 일 경우
+			if(!Application.isPlaying) {
+				EditorSceneManager.MarkSceneDirty(oScrollRectList[i].gameObject.scene);
+			}
+		}
+	}
+
+	/** 캔버스 렌더러를 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Canvas Renderers")]
+	public static void ResetCanvasRenderers() {
+		var oCanvasRendererList = CEditorFunc.FindComponents<CanvasRenderer>();
+
+		for(int i = 0; i < oCanvasRendererList.Count; ++i) {
+			oCanvasRendererList[i].ExReset();
+
+			// 에디터 모드 일 경우
+			if(!Application.isPlaying) {
+				EditorSceneManager.MarkSceneDirty(oCanvasRendererList[i].gameObject.scene);
+			}
+		}
+	}
+
+	/** 레이아웃 그룹을 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Horizontal or Vertical LayoutGroups")]
+	public static void ResetLayoutGroups() {
+		var oLayoutGroupList = CEditorFunc.FindComponents<HorizontalOrVerticalLayoutGroup>();
+
+		for(int i = 0; i < oLayoutGroupList.Count; ++i) {
+			oLayoutGroupList[i].ExReset();
+
+			// 에디터 모드 일 경우
+			if(!Application.isPlaying) {
+				EditorSceneManager.MarkSceneDirty(oLayoutGroupList[i].gameObject.scene);
+			}
+		}
+	}
+
+	/** 카메라를 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Cameras")]
+	public static void ResetCameras() {
+		var oCameraList = CEditorFunc.FindComponents<Camera>();
+
+		for(int i = 0; i < oCameraList.Count; ++i) {
+			oCameraList[i].ExReset();
+
+			// 에디터 모드 일 경우
+			if(!Application.isPlaying) {
+				EditorSceneManager.MarkSceneDirty(oCameraList[i].gameObject.scene);
+			}
+		}
+	}
+
+	/** 렌더러를 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Renderers")]
+	public static void ResetRenderers() {
+		var oRendererList = CEditorFunc.FindComponents<Renderer>();
+
+		for(int i = 0; i < oRendererList.Count; ++i) {
+			oRendererList[i].ExReset();
+
+			// 에디터 모드 일 경우
+			if(!Application.isPlaying) {
+				EditorSceneManager.MarkSceneDirty(oRendererList[i].gameObject.scene);
+			}
+		}
+	}
+
+	/** iOS 로 전환한다 */
+	[MenuItem("Tools/Utility/Change Platform/iOS")]
+	public static void ChangeiOS() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.iOS, BuildTarget.iOS);
+	}
+
+	/** 안드로이드로 전환한다 */
+	[MenuItem("Tools/Utility/Change Platform/Android")]
+	public static void ChangeAndroid() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.Android, BuildTarget.Android);
+	}
+
+	/** 맥으로 전환한다 */
+	[MenuItem("Tools/Utility/Change Platform/Mac")]
+	public static void ChangeMac() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+	}
+
+	/** 윈도우즈로 전환한다 */
+	[MenuItem("Tools/Utility/Change Platform/Windows")]
+	public static void ChangeWnds() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
+	}
+
+	/** Build Report Tool 패키지를 추가한다 */
+	[MenuItem("Tools/Utility/Import/BuildReportTool Pkgs")]
+	public static void ImportBuildReportToolPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_BUILD_REPORT_TOOLS, true);
+	}
+
+	/** Odin Inspector 패키지를 추가한다 */
+	[MenuItem("Tools/Utility/Import/OdinInspector Pkgs")]
+	public static void ImportOdinInspectorPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ODIN_INSPECTOR, true);
+	}
+
+	/** Sprite Trail 패키지를 추가한다 */
+	[MenuItem("Tools/Utility/Import/SpriteTrail Pkgs")]
+	public static void ImportSpriteTrailPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_SPRITE_TRAIL, true);
+	}
+
+	/** Ultimate Status Bar 패키지를 추가한다 */
+	[MenuItem("Tools/Utility/Import/UltimateStatusBar Pkgs")]
+	public static void ImportUltimateStatusBarPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ULTIMATE_STATUS_BAR, true);
+	}
+
+	/** Lean GUI 패키지를 추가한다 */
+	[MenuItem("Tools/Utility/Import/LeanGUI Pkgs")]
+	public static void ImportLeanGUIPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_LEAN_GUI, true);
+	}
+
+	/** Lean Touch 패키지를 추가한다 */
+	[MenuItem("Tools/Utility/Import/LeanTouch Pkgs")]
+	public static void ImportLeanTouchPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_LEAN_TOUCH, true);
+	}
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수

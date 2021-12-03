@@ -10,9 +10,7 @@ using MessagePack;
 public static partial class CFunc {
 	#region 클래스 변수
 	private static Dictionary<LogType, System.Action<string>> m_oLogFuncDict = new Dictionary<LogType, System.Action<string>>() {
-		[LogType.Log] = UnityEngine.Debug.Log,
-		[LogType.Warning] = UnityEngine.Debug.LogWarning,
-		[LogType.Error] = UnityEngine.Debug.LogError
+		[LogType.Log] = UnityEngine.Debug.Log, [LogType.Warning] = UnityEngine.Debug.LogWarning, [LogType.Error] = UnityEngine.Debug.LogError
 	};
 	#endregion			// 클래스 변수
 
