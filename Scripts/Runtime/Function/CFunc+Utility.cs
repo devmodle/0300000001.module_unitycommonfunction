@@ -143,7 +143,7 @@ public static partial class CFunc {
 				float fDeltaTime = KCDefine.U_DELTA_T_PERMISSION_M_REQUEST_CHECK;
 				float fMaxDeltaTime = KCDefine.U_MAX_DELTA_T_PERMISSION_M_REQUEST_CHECK;
 				
-				a_oComponent.ExRepeatCallFunc((a_oSender, a_oParams, a_bIsComplete) => {
+				a_oComponent.ExRepeatCallFunc((a_oSender, a_bIsComplete) => {
 					// 완료 되었을 경우
 					if(a_bIsComplete) {
 						a_oCallback?.Invoke(a_oPermission, CAccess.IsEnablePermission(a_oPermission));
