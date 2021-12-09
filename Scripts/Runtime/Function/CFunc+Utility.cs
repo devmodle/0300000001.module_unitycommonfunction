@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -97,7 +98,7 @@ public static partial class CFunc {
 				}
 			}
 
-			oOpenPathInfoList.ExSort((a_oLhs, a_oRhs) => a_oLhs.m_nCost.CompareTo(a_oRhs.m_nCost));
+			oOpenPathInfoList.Sort((a_oLhs, a_oRhs) => a_oLhs.m_nCost.CompareTo(a_oRhs.m_nCost));
 		}
 
 		return KCDefine.B_EMPTY_3D_INT_VEC_LIST;
@@ -109,8 +110,7 @@ public static partial class CFunc {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid() && a_oMsg.ExIsValid()) {
-			var oObj = CFunc.FindObj(a_oName);
-			oObj.ExSendMsg(a_oMsg, a_oParams, a_bIsEnableAssert);
+			CFunc.FindObj(a_oName)?.ExSendMsg(a_oMsg, a_oParams, a_bIsEnableAssert);
 		}
 	}
 
@@ -139,9 +139,6 @@ public static partial class CFunc {
 				a_oCallback?.Invoke(a_oPermission, true);
 			} else {
 				Permission.RequestUserPermission(a_oPermission);
-
-				float fDeltaTime = KCDefine.U_DELTA_T_PERMISSION_M_REQUEST_CHECK;
-				float fMaxDeltaTime = KCDefine.U_MAX_DELTA_T_PERMISSION_M_REQUEST_CHECK;
 				
 				a_oComponent.ExRepeatCallFunc((a_oSender, a_bIsComplete) => {
 					// 완료 되었을 경우
@@ -150,7 +147,7 @@ public static partial class CFunc {
 					}
 
 					return !CAccess.IsEnablePermission(a_oPermission);
-				}, fDeltaTime, fMaxDeltaTime, a_bIsRealtime);
+				}, KCDefine.U_DELTA_T_PERMISSION_M_REQUEST_CHECK, KCDefine.U_MAX_DELTA_T_PERMISSION_M_REQUEST_CHECK, a_bIsRealtime);
 			}
 #else
 			a_oCallback?.Invoke(a_oPermission, false);
@@ -201,17 +198,13 @@ public static partial class CFunc {
 	/** 컴포넌트를 탐색한다 */
 	public static T FindComponent<T>(string a_oName) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
-		var oObj = CFunc.FindObj(a_oName);
-
-		return oObj?.GetComponentInChildren<T>();
+		return CFunc.FindObj(a_oName)?.GetComponentInChildren<T>();
 	}
 
 	/** 컴포넌트를 탐색한다 */
-	public static T[] FindComponents<T>(string a_oName) where T : Component {
+	public static List<T> FindComponents<T>(string a_oName) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
-		var oObj = CFunc.FindObj(a_oName);
-		
-		return oObj?.GetComponentsInChildren<T>();
+		return CFunc.FindObj(a_oName)?.GetComponentsInChildren<T>().ToList();
 	}
 
 	/** 객체를 순회한다 */

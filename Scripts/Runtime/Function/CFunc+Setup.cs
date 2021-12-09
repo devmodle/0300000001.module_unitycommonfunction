@@ -27,19 +27,30 @@ public static partial class CFunc {
 #endif			// #if ULTRA_QUALITY_LEVEL_ENABLE
 		}
 
+		QualitySettings.SetQualityLevel((int)eQualityLevel, a_bIsEnableExpensiveChange);
+
 #if UNITY_EDITOR
-		QualitySettings.antiAliasing = KCDefine.U_QUALITY_ANTI_ALIASING;
-		QualitySettings.maximumLODLevel = KCDefine.U_QUALITY_MAX_LOD_LEVEL;
+		QualitySettings.streamingMipmapsActive = false;
+		QualitySettings.asyncUploadPersistentBuffer = true;
+
+		QualitySettings.antiAliasing = KCDefine.B_VAL_0_INT;
+		QualitySettings.maximumLODLevel = KCDefine.B_VAL_3_INT;
+
+		QualitySettings.lodBias = KCDefine.B_VAL_1_FLT;
+		QualitySettings.resolutionScalingFixedDPIFactor = KCDefine.B_VAL_1_FLT;
+
 		QualitySettings.asyncUploadTimeSlice = KCDefine.U_QUALITY_ASYNC_UPLOAD_TIME_SLICE;
 		QualitySettings.asyncUploadBufferSize = KCDefine.U_QUALITY_ASYNC_UPLOAD_BUFFER_SIZE;
-		QualitySettings.asyncUploadPersistentBuffer = KCDefine.U_QUALITY_ASYNC_UPLOAD_PERSISTENT_BUFFER;
-		QualitySettings.resolutionScalingFixedDPIFactor = KCDefine.U_QUALITY_RESOLUTION_SCALE_FIXED_DPI_FACTOR;
 
-		QualitySettings.vSyncCount = (eQualityLevel >= EQualityLevel.HIGH) ? (int)EVSyncType.EVERY : (int)EVSyncType.NEVER;
+		QualitySettings.vSyncCount = (int)EVSyncType.NEVER;
 		QualitySettings.anisotropicFiltering = (eQualityLevel >= EQualityLevel.HIGH) ? AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
-#endif			// #if UNITY_EDITOR
 
-		QualitySettings.SetQualityLevel((int)eQualityLevel, a_bIsEnableExpensiveChange);
+#if REALTIME_REFLECTION_PROBES_ENABLE
+		QualitySettings.realtimeReflectionProbes = true;
+#else
+		QualitySettings.realtimeReflectionProbes = false;
+#endif			// #if REALTIME_REFLECTION_PROBES_ENABLE
+#endif			// #if UNITY_EDITOR
 		// 퀄리티 레벨을 설정한다 }
 		
 #if UNITY_EDITOR
@@ -96,17 +107,16 @@ public static partial class CFunc {
 
 		// 렌더 파이프라인이 존재 할 경우
 		if(a_oRenderPipeline != null) {
-			var oRenderPipelineRendererDatas = new UniversalRendererData[] {
+			var oRenderPipelineRendererDataList = new List<UniversalRendererData>() {
 				Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_RENDER_DATA), Resources.Load<UniversalRendererData>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_SSAO_RENDER_DATA)
 			};
 			
-			for(int i = 0; i < oRenderPipelineRendererDatas.Length; ++i) {
-				var oStencilStateData = new StencilStateData() {
+			for(int i = 0; i < oRenderPipelineRendererDataList.Count; ++i) {
+				oRenderPipelineRendererDataList[i].shadowTransparentReceive = false;
+				
+				oRenderPipelineRendererDataList[i].defaultStencilState = new StencilStateData() {
 					overrideStencilState = false
 				};
-
-				oRenderPipelineRendererDatas[i].shadowTransparentReceive = false;
-				oRenderPipelineRendererDatas[i].defaultStencilState = oStencilStateData;
 			}
 
 			a_oRenderPipeline.supportsHDR = true;
@@ -149,7 +159,7 @@ public static partial class CFunc {
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_RENDERING_MODE, LightRenderingMode.Disabled);
 #endif			// #if LIGHT_ENABLE
 
-#if LIGHT_ENABLE && SHADOW_ENABLE
+#if SHADOW_ENABLE
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORTS_SOFT_SHADOW, true);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SUPPORTS_SHADOW, true);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORTS_SHADOW, true);
@@ -157,7 +167,7 @@ public static partial class CFunc {
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SUPPORTS_SHADOW, false);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORTS_SHADOW, false);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_SUPPORTS_SOFT_SHADOW, false);
-#endif			// #if LIGHT_ENABLE && SHADOW_ENABLE
+#endif			// #if SHADOW_ENABLE
 		}
 	}
 #endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE

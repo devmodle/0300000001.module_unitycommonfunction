@@ -79,8 +79,8 @@ public static partial class CEditorFunc {
 			var oProcess = Process.Start(oStartInfo);
 
 			// 동기 모드 일 경우
-			if(!a_bIsAsync && oProcess != null) {
-				oProcess.WaitForExit();
+			if(!a_bIsAsync) {
+				oProcess?.WaitForExit();
 			}
 		}
 	}
@@ -277,8 +277,8 @@ public static partial class CEditorFunc {
 
 	/** 컴포넌트를 탐색한다 */
 	public static List<T> FindComponents<T>(bool a_bIsIncludeInactive = false) where T : Component {
-		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
 		var oComponentList = new List<T>();
+		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
 
 		// 프리팹 모드 일 경우
 		if(oPrefabStage != null) {
