@@ -73,11 +73,8 @@ public static partial class CEditorFunc {
 
 		// 커맨드 라인 실행이 가능 할 경우
 		if(a_oFilePath.ExIsValid() && a_oParams.ExIsValid()) {
-			var oStartInfo = new ProcessStartInfo(a_oFilePath, a_oParams);
-			oStartInfo.UseShellExecute = true;
-
-			var oProcess = Process.Start(oStartInfo);
-
+			var oProcess = Process.Start(CEditorFactory.MakeProcessStartInfo(a_oFilePath, a_oParams));
+			
 			// 동기 모드 일 경우
 			if(!a_bIsAsync) {
 				oProcess?.WaitForExit();

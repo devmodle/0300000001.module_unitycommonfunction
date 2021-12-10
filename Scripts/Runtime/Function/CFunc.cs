@@ -314,8 +314,10 @@ public static partial class CFunc {
 
 	/** 로그를 출력한다 */
 	private static void DoShowLog(LogType a_eLogType, string a_oLog) {
-		CAccess.Assert(CFunc.m_oLogFuncDict.ContainsKey(a_eLogType));
-		CFunc.m_oLogFuncDict[a_eLogType](a_oLog);
+		bool bIsValid = CFunc.m_oLogFuncDict.TryGetValue(a_eLogType, out System.Action<string> oLogFunc);
+		CAccess.Assert(bIsValid);
+		
+		oLogFunc?.Invoke(a_oLog);
 	}
 	#endregion			// 클래스 함수
 
