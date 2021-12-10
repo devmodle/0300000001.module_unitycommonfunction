@@ -248,8 +248,8 @@ EXIT_ENUMERATE_COMPONENTS:
 
 	/** 객체를 선택한다 */
 	public static void SelObjs(List<GameObject> a_oObjList, bool a_bIsPing = false) {
-		Selection.objects = a_oObjList.ToArray();
-
+		Selection.objects = (a_oObjList != null) ? a_oObjList.ToArray() : null;
+		
 		// 핑 모드 일 경우
 		if(a_bIsPing && a_oObjList.ExIsValid()) {
 			EditorGUIUtility.PingObject(a_oObjList[KCDefine.B_VAL_0_INT]);
