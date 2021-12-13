@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -33,13 +34,18 @@ public static partial class CEditorFunc {
 	}
 
 	/** 경고 팝업을 출력한다 */
-	public static bool ShowAlertPopup(string a_oTitle, string a_oMsg, string a_oOKBtnText, string a_oCancelBtnText = KCDefine.B_EMPTY_STR) {
+	public static bool ShowAlertPopup(string a_oTitle, string a_oMsg, string a_oOKBtnText = KCDefine.B_EMPTY_STR, string a_oCancelBtnText = KCDefine.B_EMPTY_STR) {
 		// 취소 버튼 텍스트가 유효 할 경우
 		if(a_oCancelBtnText.ExIsValid()) {
-			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText, a_oCancelBtnText);
+			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText.ExIsValid() ? a_oOKBtnText : KCEditorDefine.B_TEXT_ALERT_P_OK_BTN, a_oCancelBtnText);
 		}
 
-		return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText);
+		return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText.ExIsValid() ? a_oOKBtnText : KCEditorDefine.B_TEXT_ALERT_P_OK_BTN);
+	}
+
+	/** 경고 팝업을 출력한다 */
+	public static bool ShowOKCancelAlertPopup(string a_oTitle, string a_oMsg) {
+		return CEditorFunc.ShowAlertPopup(a_oTitle, a_oMsg, KCEditorDefine.B_TEXT_ALERT_P_OK_BTN, KCEditorDefine.B_TEXT_ALERT_P_CANCEL_BTN);
 	}
 
 	/** 에셋 데이터 베이스를 갱신한다 */
@@ -84,17 +90,66 @@ public static partial class CEditorFunc {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(a_eTargetGroup, a_eTarget);
 	}
 
+	/** 텍스트를 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Texts")]
+	public static void ResetTexts() {
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oTextList = CEditorFunc.FindComponents<Text>();
+			var oTMPTextList = CEditorFunc.FindComponents<TextMeshProUGUI>();
+
+			for(int i = 0; i < oTextList.Count; ++i) {
+				oTextList[i].ExReset();
+
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oTextList[i].gameObject.scene);
+				}
+			}
+
+			for(int i = 0; i < oTMPTextList.Count; ++i) {
+				oTMPTextList[i].ExReset();
+
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oTextList[i].gameObject.scene);
+				}
+			}
+		}
+	}
+
+	/** 버튼을 리셋한다 */
+	[MenuItem("Tools/Utility/Reset/Buttons")]
+	public static void ResetBtns() {
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oBtnList = CEditorFunc.FindComponents<Button>();
+
+			for(int i = 0; i <oBtnList.Count; ++i) {
+				oBtnList[i].ExReset();
+
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oBtnList[i].gameObject.scene);
+				}
+			}
+		}
+	}
+
 	/** 상호 작용자를 리셋한다 */
 	[MenuItem("Tools/Utility/Reset/Selectables")]
 	public static void ResetSelectables() {
-		var oSelectableList = CEditorFunc.FindComponents<Selectable>();
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oSelectableList = CEditorFunc.FindComponents<Selectable>();
 
-		for(int i = 0; i < oSelectableList.Count; ++i) {
-			oSelectableList[i].ExReset();
+			for(int i = 0; i < oSelectableList.Count; ++i) {
+				oSelectableList[i].ExReset();
 
-			// 에디터 모드 일 경우
-			if(!Application.isPlaying) {
-				EditorSceneManager.MarkSceneDirty(oSelectableList[i].gameObject.scene);
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oSelectableList[i].gameObject.scene);
+				}
 			}
 		}
 	}
@@ -102,14 +157,17 @@ public static partial class CEditorFunc {
 	/** 스크롤 영역을 리셋한다 */
 	[MenuItem("Tools/Utility/Reset/Scroll Rects")]
 	public static void ResetScrollRects() {
-		var oScrollRectList = CEditorFunc.FindComponents<ScrollRect>();
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oScrollRectList = CEditorFunc.FindComponents<ScrollRect>();
 
-		for(int i = 0; i < oScrollRectList.Count; ++i) {
-			oScrollRectList[i].ExReset();
+			for(int i = 0; i < oScrollRectList.Count; ++i) {
+				oScrollRectList[i].ExReset();
 
-			// 에디터 모드 일 경우
-			if(!Application.isPlaying) {
-				EditorSceneManager.MarkSceneDirty(oScrollRectList[i].gameObject.scene);
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oScrollRectList[i].gameObject.scene);
+				}
 			}
 		}
 	}
@@ -117,14 +175,17 @@ public static partial class CEditorFunc {
 	/** 캔버스 렌더러를 리셋한다 */
 	[MenuItem("Tools/Utility/Reset/Canvas Renderers")]
 	public static void ResetCanvasRenderers() {
-		var oCanvasRendererList = CEditorFunc.FindComponents<CanvasRenderer>();
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oCanvasRendererList = CEditorFunc.FindComponents<CanvasRenderer>();
 
-		for(int i = 0; i < oCanvasRendererList.Count; ++i) {
-			oCanvasRendererList[i].ExReset();
+			for(int i = 0; i < oCanvasRendererList.Count; ++i) {
+				oCanvasRendererList[i].ExReset();
 
-			// 에디터 모드 일 경우
-			if(!Application.isPlaying) {
-				EditorSceneManager.MarkSceneDirty(oCanvasRendererList[i].gameObject.scene);
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oCanvasRendererList[i].gameObject.scene);
+				}
 			}
 		}
 	}
@@ -132,14 +193,17 @@ public static partial class CEditorFunc {
 	/** 레이아웃 그룹을 리셋한다 */
 	[MenuItem("Tools/Utility/Reset/Horizontal or Vertical LayoutGroups")]
 	public static void ResetLayoutGroups() {
-		var oLayoutGroupList = CEditorFunc.FindComponents<HorizontalOrVerticalLayoutGroup>();
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oLayoutGroupList = CEditorFunc.FindComponents<HorizontalOrVerticalLayoutGroup>();
 
-		for(int i = 0; i < oLayoutGroupList.Count; ++i) {
-			oLayoutGroupList[i].ExReset();
+			for(int i = 0; i < oLayoutGroupList.Count; ++i) {
+				oLayoutGroupList[i].ExReset();
 
-			// 에디터 모드 일 경우
-			if(!Application.isPlaying) {
-				EditorSceneManager.MarkSceneDirty(oLayoutGroupList[i].gameObject.scene);
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oLayoutGroupList[i].gameObject.scene);
+				}
 			}
 		}
 	}
@@ -147,14 +211,17 @@ public static partial class CEditorFunc {
 	/** 카메라를 리셋한다 */
 	[MenuItem("Tools/Utility/Reset/Cameras")]
 	public static void ResetCameras() {
-		var oCameraList = CEditorFunc.FindComponents<Camera>();
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oCameraList = CEditorFunc.FindComponents<Camera>();
 
-		for(int i = 0; i < oCameraList.Count; ++i) {
-			oCameraList[i].ExReset();
+			for(int i = 0; i < oCameraList.Count; ++i) {
+				oCameraList[i].ExReset();
 
-			// 에디터 모드 일 경우
-			if(!Application.isPlaying) {
-				EditorSceneManager.MarkSceneDirty(oCameraList[i].gameObject.scene);
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oCameraList[i].gameObject.scene);
+				}
 			}
 		}
 	}
@@ -162,14 +229,17 @@ public static partial class CEditorFunc {
 	/** 렌더러를 리셋한다 */
 	[MenuItem("Tools/Utility/Reset/Renderers")]
 	public static void ResetRenderers() {
-		var oRendererList = CEditorFunc.FindComponents<Renderer>();
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oRendererList = CEditorFunc.FindComponents<Renderer>();
 
-		for(int i = 0; i < oRendererList.Count; ++i) {
-			oRendererList[i].ExReset();
+			for(int i = 0; i < oRendererList.Count; ++i) {
+				oRendererList[i].ExReset();
 
-			// 에디터 모드 일 경우
-			if(!Application.isPlaying) {
-				EditorSceneManager.MarkSceneDirty(oRendererList[i].gameObject.scene);
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oRendererList[i].gameObject.scene);
+				}
 			}
 		}
 	}
