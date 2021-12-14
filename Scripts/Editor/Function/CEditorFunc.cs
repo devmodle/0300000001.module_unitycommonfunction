@@ -96,7 +96,7 @@ public static partial class CEditorFunc {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
 			var oTextList = CEditorFunc.FindComponents<Text>();
-			var oTMPTextList = CEditorFunc.FindComponents<TextMeshProUGUI>();
+			var oTMPTextList = CEditorFunc.FindComponents<TMP_Text>();
 
 			for(int i = 0; i < oTextList.Count; ++i) {
 				oTextList[i].ExReset();
