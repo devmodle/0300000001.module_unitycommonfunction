@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 
-#if UNIVERSAL_PIPELINE_MODULE_ENABLE
+#if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
 using UnityEngine.Rendering.Universal;
-#endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE
+#endif			// #if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
 
 /** 설정 함수 */
 public static partial class CFunc {
@@ -55,7 +55,7 @@ public static partial class CFunc {
 		
 #if UNITY_EDITOR
 		// 렌더링 파이프라인을 설정한다 {
-#if UNIVERSAL_PIPELINE_MODULE_ENABLE
+#if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
 		var oRenderPipeline = Resources.Load<UniversalRenderPipelineAsset>(KCDefine.U_PIPELINE_P_G_UNIVERSAL_RP_ASSET);
 		CAccess.Assert(oRenderPipeline != null);
 
@@ -69,7 +69,7 @@ public static partial class CFunc {
 		
 		GraphicsSettings.renderPipelineAsset = null;
 		GraphicsSettings.useScriptableRenderPipelineBatching = false;
-#endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE
+#endif			// #if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
 		// 렌더링 파이프라인을 설정한다 }
 #endif			// #if UNITY_EDITOR
 	}
@@ -100,7 +100,7 @@ public static partial class CFunc {
 	#endregion			// 클래스 함수
 
 	#region 조건부 클래스 함수
-#if UNIVERSAL_PIPELINE_MODULE_ENABLE
+#if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
 	/** 렌더 파이프라인을 설정한다 */
 	public static void SetupRenderPipeline(UniversalRenderPipelineAsset a_oRenderPipeline, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oRenderPipeline != null);
@@ -131,12 +131,11 @@ public static partial class CFunc {
 			a_oRenderPipeline.colorGradingMode = ColorGradingMode.HighDynamicRange;
 			a_oRenderPipeline.shaderVariantLogLevel = ShaderVariantLogLevel.AllShaders;
 
-			a_oRenderPipeline.renderScale = KCDefine.U_SCALE_UNIVERSAL_RP_RENDERING;
-			a_oRenderPipeline.colorGradingLutSize = KCDefine.U_SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
-
+			a_oRenderPipeline.renderScale = KCDefine.B_VAL_1_FLT;
 			a_oRenderPipeline.shadowDepthBias = KCDefine.B_VAL_1_INT;
 			a_oRenderPipeline.shadowNormalBias = KCDefine.B_VAL_1_INT;
 			a_oRenderPipeline.shadowCascadeCount = (int)(KCDefine.U_OPTS_UNIVERSAL_RP_SHADOW_CASCADES + KCDefine.B_VAL_1_INT);
+			a_oRenderPipeline.colorGradingLutSize = KCDefine.U_SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
 
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_ANTI_ALIASING, MsaaQuality.Disabled);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCDefine.U_FIELD_N_UNIVERSAL_RP_OPAQUE_DOWN_SAMPLING, KCDefine.U_OPTS_UNIVERSAL_RP_DOWN_SAMPLING);
@@ -165,6 +164,6 @@ public static partial class CFunc {
 #endif			// #if LIGHT_ENABLE
 		}
 	}
-#endif			// #if UNIVERSAL_PIPELINE_MODULE_ENABLE
+#endif			// #if UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
 }
