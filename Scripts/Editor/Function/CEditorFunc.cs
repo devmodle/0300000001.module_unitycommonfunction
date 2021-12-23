@@ -348,10 +348,7 @@ public static partial class CEditorFunc {
 		if(oPrefabStage != null) {
 			oPrefabStage.prefabContentsRoot.GetComponentsInChildren<T>(a_bIsIncludeInactive, oComponentList);
 		} else {
-			CFunc.EnumerateComponents<T>((a_oComponent) => {
-				oComponentList.Add(a_oComponent);
-				return true;
-			}, a_bIsIncludeInactive);
+			CFunc.EnumerateComponents<T>((a_oComponent) => { oComponentList.Add(a_oComponent); return true; }, a_bIsIncludeInactive);
 		}
 
 		return oComponentList;

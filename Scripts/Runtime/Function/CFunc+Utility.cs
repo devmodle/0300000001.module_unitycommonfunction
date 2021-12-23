@@ -21,11 +21,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oName.ExIsValid());
 		GameObject oObj = null;
 
-		CFunc.EnumerateScenes((a_stScene) => {
-			oObj = a_stScene.ExFindChild(a_oName);
-			return oObj == null;
-		});
-
+		CFunc.EnumerateScenes((a_stScene) => { oObj = a_stScene.ExFindChild(a_oName); return oObj == null; });
 		return oObj;
 	}
 
@@ -34,13 +30,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObjList = new List<GameObject>();
 
-		CFunc.EnumerateScenes((a_stScene) => {
-			var oChildObjList = a_stScene.ExFindChildren(a_oName);
-			oObjList.AddRange(oChildObjList);
-			
-			return true;
-		});
-		
+		CFunc.EnumerateScenes((a_stScene) => { var oChildObjList = a_stScene.ExFindChildren(a_oName); oObjList.AddRange(oChildObjList); return true; });
 		return oObjList;
 	}
 
@@ -120,10 +110,7 @@ public static partial class CFunc {
 
 		// 메세지가 유효 할 경우
 		if(a_oMsg.ExIsValid()) {
-			CFunc.EnumerateScenes((a_stScene) => {
-				a_stScene.ExBroadcastMsg(a_oMsg, a_oParams, a_bIsEnableAssert);
-				return true;
-			});
+			CFunc.EnumerateScenes((a_stScene) => { a_stScene.ExBroadcastMsg(a_oMsg, a_oParams, a_bIsEnableAssert); return true; });
 		}
 	}
 
