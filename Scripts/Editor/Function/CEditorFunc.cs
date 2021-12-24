@@ -91,7 +91,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 텍스트를 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Texts")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Texts", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetTexts() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -119,7 +119,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 버튼을 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Buttons")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Buttons", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetBtns() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -137,7 +137,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 상호 작용자를 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Selectables")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Selectables", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetSelectables() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -155,7 +155,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 스크롤 영역을 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Scroll Rects")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Scroll Rects", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetScrollRects() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -173,7 +173,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 캔버스 렌더러를 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Canvas Renderers")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Canvas Renderers", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetCanvasRenderers() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -191,7 +191,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 레이아웃 그룹을 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Horizontal or Vertical LayoutGroups")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Horizontal or Vertical LayoutGroups", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetLayoutGroups() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -209,7 +209,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 카메라를 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Cameras")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Cameras", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetCameras() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -227,7 +227,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 렌더러를 리셋한다 */
-	[MenuItem("Tools/Utility/Reset/Renderers")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Renderers", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetRenderers() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -244,64 +244,64 @@ public static partial class CEditorFunc {
 		}
 	}
 
-	/** iOS 로 전환한다 */
-	[MenuItem("Tools/Utility/Change Platform/iOS")]
-	public static void ChangeiOS() {
-		CEditorFunc.ChangePlatform(BuildTargetGroup.iOS, BuildTarget.iOS);
-	}
-
-	/** 안드로이드로 전환한다 */
-	[MenuItem("Tools/Utility/Change Platform/Android")]
-	public static void ChangeAndroid() {
-		CEditorFunc.ChangePlatform(BuildTargetGroup.Android, BuildTarget.Android);
-	}
-
-	/** 맥으로 전환한다 */
-	[MenuItem("Tools/Utility/Change Platform/Mac")]
-	public static void ChangeMac() {
-		CEditorFunc.ChangePlatform(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
-	}
-
-	/** 윈도우즈로 전환한다 */
-	[MenuItem("Tools/Utility/Change Platform/Windows")]
-	public static void ChangeWnds() {
-		CEditorFunc.ChangePlatform(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
-	}
-
 	/** Build Report Tool 패키지를 추가한다 */
-	[MenuItem("Tools/Utility/Import/BuildReportTool Pkgs")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "BuildReportTool Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportBuildReportToolPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_BUILD_REPORT_TOOLS, true);
 	}
 
 	/** Odin Inspector 패키지를 추가한다 */
-	[MenuItem("Tools/Utility/Import/OdinInspector Pkgs")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "OdinInspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportOdinInspectorPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ODIN_INSPECTOR, true);
 	}
 
 	/** Sprite Trail 패키지를 추가한다 */
-	[MenuItem("Tools/Utility/Import/SpriteTrail Pkgs")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "SpriteTrail Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportSpriteTrailPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_SPRITE_TRAIL, true);
 	}
 
 	/** Ultimate Status Bar 패키지를 추가한다 */
-	[MenuItem("Tools/Utility/Import/UltimateStatusBar Pkgs")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "UltimateStatusBar Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportUltimateStatusBarPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ULTIMATE_STATUS_BAR, true);
 	}
 
 	/** Lean GUI 패키지를 추가한다 */
-	[MenuItem("Tools/Utility/Import/LeanGUI Pkgs")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "LeanGUI Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportLeanGUIPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_LEAN_GUI, true);
 	}
 
 	/** Lean Touch 패키지를 추가한다 */
-	[MenuItem("Tools/Utility/Import/LeanTouch Pkgs")]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "LeanTouch Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportLeanTouchPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_LEAN_TOUCH, true);
+	}
+
+	/** iOS 로 전환한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_CHANGE_PLATFORM_BASE + "iOS", false, KCEditorDefine.B_SORTING_O_CHANGE_PLATFORM_MENU + 1)]
+	public static void ChangeiOS() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.iOS, BuildTarget.iOS);
+	}
+
+	/** 안드로이드로 전환한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_CHANGE_PLATFORM_BASE + "Android", false, KCEditorDefine.B_SORTING_O_CHANGE_PLATFORM_MENU + 1)]
+	public static void ChangeAndroid() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.Android, BuildTarget.Android);
+	}
+
+	/** 맥으로 전환한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_CHANGE_PLATFORM_BASE + "Mac", false, KCEditorDefine.B_SORTING_O_CHANGE_PLATFORM_MENU + 1)]
+	public static void ChangeMac() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX);
+	}
+
+	/** 윈도우즈로 전환한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_CHANGE_PLATFORM_BASE + "Windows", false, KCEditorDefine.B_SORTING_O_CHANGE_PLATFORM_MENU + 1)]
+	public static void ChangeWnds() {
+		CEditorFunc.ChangePlatform(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
 	}
 	#endregion			// 클래스 함수
 
@@ -341,8 +341,8 @@ public static partial class CEditorFunc {
 
 	/** 컴포넌트를 탐색한다 */
 	public static List<T> FindComponents<T>(bool a_bIsIncludeInactive = false) where T : Component {
-		var oComponentList = new List<T>();
 		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+		var oComponentList = new List<T>();
 
 		// 프리팹 모드 일 경우
 		if(oPrefabStage != null) {
