@@ -134,7 +134,7 @@ public static partial class CFunc {
 			a_oRenderPipeline.renderScale = KCDefine.B_VAL_1_FLT;
 			a_oRenderPipeline.colorGradingLutSize = KCDefine.U_SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
 
-			a_oRenderPipeline.shadowDistance = KCDefine.U_DISTANCE_CAMERA_FAR_PLANE / KCDefine.B_VAL_2_FLT;
+			a_oRenderPipeline.shadowDistance = KCDefine.U_DISTANCE_CAMERA_FAR_PLANE / (float)KCDefine.B_UNIT_DIGITS_PER_HUNDRED;
 			a_oRenderPipeline.shadowDepthBias = KCDefine.B_VAL_1_INT;
 			a_oRenderPipeline.shadowNormalBias = KCDefine.B_VAL_1_INT;
 			a_oRenderPipeline.shadowCascadeCount = (int)(KCDefine.U_OPTS_UNIVERSAL_RP_SHADOW_CASCADES + KCDefine.B_VAL_1_INT);
