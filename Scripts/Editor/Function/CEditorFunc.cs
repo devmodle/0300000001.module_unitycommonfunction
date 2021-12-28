@@ -48,7 +48,7 @@ public static partial class CEditorFunc {
 		return CEditorFunc.ShowAlertPopup(a_oTitle, a_oMsg, KCEditorDefine.B_TEXT_ALERT_P_OK_BTN, KCEditorDefine.B_TEXT_ALERT_P_CANCEL_BTN);
 	}
 
-	/** 에셋 데이터 베이스를 갱신한다 */
+	/** 에셋 데이터 베이스 상태를 갱신한다 */
 	public static void UpdateAssetDBState() {
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();
