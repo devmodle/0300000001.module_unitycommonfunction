@@ -280,6 +280,12 @@ public static partial class CEditorFunc {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_LEAN_TOUCH, true);
 	}
 
+	/** Apple Auth 패키지를 추가한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "AppleAuth Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	public static void ImportAppleAuthPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_APPLE_AUTH, true);
+	}
+
 	/** iOS 로 전환한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_CHANGE_PLATFORM_BASE + "iOS", false, KCEditorDefine.B_SORTING_O_CHANGE_PLATFORM_MENU + 1)]
 	public static void ChangeiOS() {
