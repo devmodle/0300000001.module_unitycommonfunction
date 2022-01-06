@@ -97,13 +97,13 @@ public static partial class CFunc {
 
 		// 디렉토리가 존재 할 경우
 		if(bIsValid && Directory.Exists(a_oDirPath)) {
-			var oDirPathList = Directory.GetDirectories(a_oDirPath).ToList();
-			var oFilePathList = Directory.GetFiles(a_oDirPath).ToList();
+			var oDirPaths = Directory.GetDirectories(a_oDirPath);
+			var oFilePaths = Directory.GetFiles(a_oDirPath);
 
 			// 디렉토리 순회가 가능 할 경우
-			if(a_oCallback(oDirPathList, oFilePathList)) {
-				for(int i = 0; i < oDirPathList.Count; ++i) {
-					CFunc.EnumerateDirs(oDirPathList[i], a_oCallback);
+			if(a_oCallback(oDirPaths.ToList(), oFilePaths.ToList())) {
+				for(int i = 0; i < oDirPaths.Length; ++i) {
+					CFunc.EnumerateDirs(oDirPaths[i], a_oCallback);
 				}
 			}
 		}
