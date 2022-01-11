@@ -23,7 +23,7 @@ public static partial class CFunc {
 #elif ULTRA_QUALITY_LEVEL_ENABLE
 			eQualityLevel = EQualityLevel.ULTRA;
 #else
-			eQualityLevel = EQualityLevel.VERY_LOW;
+			eQualityLevel = EQualityLevel.MEDIUM;
 #endif			// #if HIGH_QUALITY_LEVEL_ENABLE
 		}
 
@@ -43,7 +43,7 @@ public static partial class CFunc {
 		QualitySettings.asyncUploadBufferSize = KCDefine.U_QUALITY_ASYNC_UPLOAD_BUFFER_SIZE;
 
 		QualitySettings.vSyncCount = (int)EVSyncType.NEVER;
-		QualitySettings.skinWeights = SkinWeights.FourBones;
+		QualitySettings.skinWeights = (eQualityLevel >= EQualityLevel.HIGH) ? SkinWeights.FourBones : SkinWeights.TwoBones;
 		QualitySettings.anisotropicFiltering = (eQualityLevel >= EQualityLevel.HIGH) ? AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
 
 #if REALTIME_REFLECTION_PROBES_ENABLE
