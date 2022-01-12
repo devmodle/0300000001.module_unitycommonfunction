@@ -15,6 +15,20 @@ using UnityEngine.Android;
 
 /** 유틸리티 함수 */
 public static partial class CFunc {
+	#region 클래스 프로퍼티
+	public static EQualityLevel AutoQualityLevel {
+		get {
+#if HIGH_QUALITY_LEVEL_ENABLE
+			return EQualityLevel.HIGH;
+#elif ULTRA_QUALITY_LEVEL_ENABLE
+			return EQualityLevel.ULTRA;
+#else
+			return EQualityLevel.MEDIUM;
+#endif			// #if HIGH_QUALITY_LEVEL_ENABLE
+		}
+	}
+	#endregion			// 클래스 프로퍼티
+
 	#region 클래스 함수
 	/** 객체를 탐색한다 */
 	public static GameObject FindObj(string a_oName) {
