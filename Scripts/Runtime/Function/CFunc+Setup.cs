@@ -16,9 +16,7 @@ public static partial class CFunc {
 #if UNITY_EDITOR
 		for(int i = (int)EQualityLevel.VERY_LOW; i < (int)EQualityLevel.MAX_VAL; ++i) {
 			QualitySettings.SetQualityLevel(i, false);
-
-			QualitySettings.renderPipeline = null;
-			GraphicsSettings.renderPipelineAsset = null;
+			QualitySettings.renderPipeline = a_oRenderPipeline;
 
 			QualitySettings.streamingMipmapsActive = false;
 			QualitySettings.asyncUploadPersistentBuffer = true;
@@ -51,7 +49,6 @@ public static partial class CFunc {
 		CFunc.SetupRenderPipeline(a_oRenderPipeline as UniversalRenderPipelineAsset, false);
 #endif			// #if UNITY_EDITOR
 
-		QualitySettings.renderPipeline = a_oRenderPipeline;
 		GraphicsSettings.renderPipelineAsset = a_oRenderPipeline;
 		GraphicsSettings.defaultRenderPipeline = a_oRenderPipeline;
 
@@ -99,8 +96,8 @@ public static partial class CFunc {
 			for(int i = 0; i < oRenderPipelineRendererDataList.Count; ++i) {
 				// 렌더 파이프라인 렌더 데이터가 존재 할 경우
 				if(oRenderPipelineRendererDataList[i] != null) {
-					oRenderPipelineRendererDataList[i].useNativeRenderPass = true;
-					oRenderPipelineRendererDataList[i].shadowTransparentReceive = true;
+					oRenderPipelineRendererDataList[i].useNativeRenderPass = false;
+					oRenderPipelineRendererDataList[i].shadowTransparentReceive = false;
 
 					oRenderPipelineRendererDataList[i].renderingMode = RenderingMode.Forward;
 					oRenderPipelineRendererDataList[i].depthPrimingMode = DepthPrimingMode.Disabled;
@@ -137,7 +134,7 @@ public static partial class CFunc {
 			a_oRenderPipeline.shaderVariantLogLevel = ShaderVariantLogLevel.AllShaders;
 
 			a_oRenderPipeline.renderScale = KCDefine.B_VAL_1_FLT;
-			a_oRenderPipeline.colorGradingLutSize = KCEditorDefine.U_SIZE_UNIVERSAL_RP_COLOR_GRADING_LUT;
+			a_oRenderPipeline.colorGradingLutSize = sizeof(int) * KCDefine.B_UNIT_BITS_PER_BYTE;
 
 			a_oRenderPipeline.shadowDistance = KCDefine.U_DISTANCE_CAMERA_FAR_PLANE / (float)KCDefine.B_UNIT_DIGITS_PER_HUNDRED;
 			a_oRenderPipeline.shadowDepthBias = KCDefine.B_VAL_1_INT;
@@ -151,12 +148,12 @@ public static partial class CFunc {
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SUPPORTS_SHADOW, true);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_ADDITIONAL_LIGHT_SUPPORTS_SHADOW, true);
 
+			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_CASCADE_BORDER, KCDefine.B_VAL_0_FLT);
+			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_OPAQUE_DOWN_SAMPLING, Downsampling.None);
+
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_CASCADE_2_SPLIT, KCEditorDefine.U_PERCENT_UNIVERSAL_RP_CASCADE_2_SPLIT);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_CASCADE_3_SPLIT, KCEditorDefine.U_PERCENT_UNIVERSAL_RP_CASCADE_3_SPLIT);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_CASCADE_4_SPLIT, KCEditorDefine.U_PERCENT_UNIVERSAL_RP_CASCADE_4_SPLIT);
-
-			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_CASCADE_BORDER, KCDefine.B_VAL_0_FLT);
-			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_OPAQUE_DOWN_SAMPLING, KCEditorDefine.U_OPTS_UNIVERSAL_RP_DOWN_SAMPLING);
 
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE, KCEditorDefine.B_OPTS_UNIVERSAL_RP_MAIN_LIGHT_RENDERING_MODE);
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_MAIN_LIGHT_SHADOW_MAP_RESOLUTION, KCEditorDefine.B_OPTS_UNIVERSAL_MAIN_LIGHT_SHADOW_MAP_RESOLUTION);
@@ -172,6 +169,12 @@ public static partial class CFunc {
 #else
 			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_MSAA_QUALITY, MsaaQuality.Disabled);
 #endif			// #if MSAA_ENABLE
+
+#if HIGH_QUALITY_LEVEL_ENABLE || ULTRA_QUALITY_LEVEL_ENABLE
+			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_USE_FAST_SRGB_LINEAR_CONVERSION, false);
+#else
+			a_oRenderPipeline.ExSetRuntimeFieldVal<UniversalRenderPipelineAsset>(KCEditorDefine.U_FIELD_N_UNIVERSAL_RP_USE_FAST_SRGB_LINEAR_CONVERSION, true);
+#endif			// #if HIGH_QUALITY_LEVEL_ENABLE || ULTRA_QUALITY_LEVEL_ENABLE
 		}
 	}
 #endif			// #if UNITY_EDITOR && UNIVERSAL_RENDER_PIPELINE_MODULE_ENABLE

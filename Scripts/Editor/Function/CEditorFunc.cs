@@ -49,9 +49,9 @@ public static partial class CEditorFunc {
 	}
 
 	/** 에셋 데이터 베이스 상태를 갱신한다 */
-	public static void UpdateAssetDBState() {
+	public static void UpdateAssetDBState(bool a_bIsForceUpdate = false) {
 		AssetDatabase.SaveAssets();
-		AssetDatabase.Refresh();
+		AssetDatabase.Refresh(a_bIsForceUpdate ? ImportAssetOptions.ForceUpdate : ImportAssetOptions.Default);
 	}
 	
 	/** 커맨드 라인을 실행한다 */
