@@ -46,7 +46,9 @@ public static partial class CFunc {
 		GraphicsSettings.useScriptableRenderPipelineBatching = false;
 		GraphicsSettings.videoShadersIncludeMode = VideoShadersIncludeMode.Always;
 
+#if REALTIME_REFLECTION_PROBES_ENABLE
 		CFunc.SetupRenderPipeline(a_oRenderPipeline as UniversalRenderPipelineAsset, false);
+#endif			// #if REALTIME_REFLECTION_PROBES_ENABLE
 #endif			// #if UNITY_EDITOR
 
 		GraphicsSettings.renderPipelineAsset = a_oRenderPipeline;
