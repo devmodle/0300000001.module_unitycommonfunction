@@ -37,11 +37,12 @@ public static partial class CFunc {
 			QualitySettings.realtimeReflectionProbes = false;
 #endif			// #if REALTIME_REFLECTION_PROBES_ENABLE
 		}
+
+		GraphicsSettings.videoShadersIncludeMode = VideoShadersIncludeMode.Always;
 #endif			// #if UNITY_EDITOR
 
 		GraphicsSettings.renderPipelineAsset = a_oRenderPipeline;
 		GraphicsSettings.defaultRenderPipeline = a_oRenderPipeline;
-		GraphicsSettings.videoShadersIncludeMode = VideoShadersIncludeMode.Always;
 
 		QualitySettings.SetQualityLevel((int)((a_eQualityLevel == EQualityLevel.AUTO) ? CFunc.AutoQualityLevel : a_eQualityLevel), a_bIsEnableExpensiveChange);
 	}
