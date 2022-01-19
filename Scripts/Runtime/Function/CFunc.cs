@@ -268,8 +268,13 @@ public static partial class CFunc {
 	
 	/** 함수를 호출한다 */
 	public static void Invoke(ref System.Action a_oAction) {
-		a_oAction?.Invoke();
-		a_oAction = null;
+		var oAction = a_oAction;
+
+		try {
+			a_oAction = null;
+		} finally {
+			oAction?.Invoke();
+		}
 	}
 	
 	/** 로그를 출력한다 */
@@ -347,193 +352,241 @@ public static partial class CFunc {
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA>(ref System.Action<TA> a_oAction, TA a_tParamsA) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB>(ref System.Action<TA, TB> a_oAction, TA a_tParamsA, TB a_tParamsB) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB, TC>(ref System.Action<TA, TB, TC> a_oAction, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB, TC, TD>(ref System.Action<TA, TB, TC, TD> a_oAction, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB, TC, TD, TE>(ref System.Action<TA, TB, TC, TD, TE> a_oAction, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB, TC, TD, TE, TF>(ref System.Action<TA, TB, TC, TD, TE, TF> a_oAction, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB, TC, TD, TE, TF, TG>(ref System.Action<TA, TB, TC, TD, TE, TF, TG> a_oAction, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF, TG a_tParamsG) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB, TC, TD, TE, TF, TG, TH>(ref System.Action<TA, TB, TC, TD, TE, TF, TG, TH> a_oAction, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF, TG a_tParamsG, TH a_tParamsH) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static void Invoke<TA, TB, TC, TD, TE, TF, TG, TH, TI>(ref System.Action<TA, TB, TC, TD, TE, TF, TG, TH, TI> a_oAction, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF, TG a_tParamsG, TH a_tParamsH, TI a_tParamsI) {
+		var oAction = a_oAction;
+
 		try {
-			a_oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH, a_tParamsI);
-		} finally {
 			a_oAction = null;
+		} finally {
+			oAction?.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH, a_tParamsI);
 		}
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<Result>(ref System.Func<Result> a_oFunc) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke();
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke();
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, Result>(ref System.Func<TA, Result> a_oFunc, TA a_tParamsA) {
 		CAccess.Assert(a_oFunc != null);
-		
+		var oFunc = a_oFunc;
+
 		try {
-			return a_oFunc.Invoke(a_tParamsA);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, Result>(ref System.Func<TA, TB, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, TC, Result>(ref System.Func<TA, TB, TC, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, TC, TD, Result>(ref System.Func<TA, TB, TC, TD, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, TC, TD, TE, Result>(ref System.Func<TA, TB, TC, TD, TE, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something	
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, TC, TD, TE, TF, Result>(ref System.Func<TA, TB, TC, TD, TE, TF, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, TC, TD, TE, TF, TG, Result>(ref System.Func<TA, TB, TC, TD, TE, TF, TG, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF, TG a_tParamsG) {
 		CAccess.Assert(a_oFunc != null);
-		
+		var oFunc = a_oFunc;
+
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, TC, TD, TE, TF, TG, TH, Result>(ref System.Func<TA, TB, TC, TD, TE, TF, TG, TH, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF, TG a_tParamsG, TH a_tParamsH) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH);
 	}
 
 	/** 함수를 호출한다 */
 	public static Result Invoke<TA, TB, TC, TD, TE, TF, TG, TH, TI, Result>(ref System.Func<TA, TB, TC, TD, TE, TF, TG, TH, TI, Result> a_oFunc, TA a_tParamsA, TB a_tParamsB, TC a_tParamsC, TD a_tParamsD, TE a_tParamsE, TF a_tParamsF, TG a_tParamsG, TH a_tParamsH, TI a_tParamsI) {
 		CAccess.Assert(a_oFunc != null);
+		var oFunc = a_oFunc;
 
 		try {
-			return a_oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH, a_tParamsI);
-		} finally {
 			a_oFunc = null;
+		} finally {
+			// Do Something
 		}
+
+		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH, a_tParamsI);
 	}
 	
 	/** JSON 객체를 읽어들인다 */
