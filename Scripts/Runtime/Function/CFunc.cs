@@ -98,10 +98,9 @@ public static partial class CFunc {
 		// 디렉토리가 존재 할 경우
 		if(bIsValid && Directory.Exists(a_oDirPath)) {
 			var oDirPaths = Directory.GetDirectories(a_oDirPath);
-			var oFilePaths = Directory.GetFiles(a_oDirPath);
-
+			
 			// 디렉토리 순회가 가능 할 경우
-			if(a_oCallback(oDirPaths.ToList(), oFilePaths.ToList())) {
+			if(a_oCallback(oDirPaths.ToList(), Directory.GetFiles(a_oDirPath).ToList())) {
 				for(int i = 0; i < oDirPaths.Length; ++i) {
 					CFunc.EnumerateDirs(oDirPaths[i], a_oCallback);
 				}
@@ -329,9 +328,7 @@ public static partial class CFunc {
 	#region 제네릭 클래스 함수
 	/** 값을 교환한다 */
 	public static void Swap<T>(ref T a_tLhs, ref T a_tRhs) {
-		T tTemp = a_tLhs;
-		a_tLhs = a_tRhs;
-		a_tRhs = tTemp;
+		T tTemp = a_tLhs; a_tLhs = a_tRhs; a_tRhs = tTemp;
 	}
 
 	/** 값을 교환한다 */
