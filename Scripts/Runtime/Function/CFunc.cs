@@ -524,7 +524,7 @@ public static partial class CFunc {
 		try {
 			a_oFunc = null;
 		} finally {
-			// Do Something	
+			// Do Something
 		}
 
 		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE);
