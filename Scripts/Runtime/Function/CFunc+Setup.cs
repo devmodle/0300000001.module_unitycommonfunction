@@ -8,11 +8,11 @@ using UnityEngine.Rendering;
 public static partial class CFunc {
 	#region 클래스 함수
 	/** 퀄리티를 설정한다 */
-	public static void SetupQuality(EQualityLevel a_eQualityLevel, RenderPipelineAsset a_oRenderPipeline, bool a_bIsEnableExpensiveChange = false) {
+	public static void SetupQuality(EQualityLevel a_eQualityLevel, RenderPipelineAsset a_oRenderingPipeline, bool a_bIsEnableExpensiveChange = false) {
 #if UNITY_EDITOR
 		for(int i = (int)EQualityLevel.VERY_LOW; i < (int)EQualityLevel.MAX_VAL; ++i) {
 			QualitySettings.SetQualityLevel(i, false);
-			QualitySettings.renderPipeline = a_oRenderPipeline;
+			QualitySettings.renderPipeline = a_oRenderingPipeline;
 
 			QualitySettings.streamingMipmapsActive = false;
 			QualitySettings.asyncUploadPersistentBuffer = true;
@@ -41,8 +41,8 @@ public static partial class CFunc {
 		GraphicsSettings.videoShadersIncludeMode = VideoShadersIncludeMode.Always;
 #endif			// #if UNITY_EDITOR
 
-		GraphicsSettings.renderPipelineAsset = a_oRenderPipeline;
-		GraphicsSettings.defaultRenderPipeline = a_oRenderPipeline;
+		GraphicsSettings.renderPipelineAsset = a_oRenderingPipeline;
+		GraphicsSettings.defaultRenderPipeline = a_oRenderingPipeline;
 
 		QualitySettings.SetQualityLevel((int)((a_eQualityLevel == EQualityLevel.AUTO) ? CFunc.AutoQualityLevel : a_eQualityLevel), a_bIsEnableExpensiveChange);
 	}
