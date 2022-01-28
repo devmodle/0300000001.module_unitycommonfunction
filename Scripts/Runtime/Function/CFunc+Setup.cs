@@ -26,9 +26,15 @@ public static partial class CFunc {
 			QualitySettings.asyncUploadTimeSlice = KCDefine.U_QUALITY_ASYNC_UPLOAD_TIME_SLICE;
 			QualitySettings.asyncUploadBufferSize = KCDefine.U_QUALITY_ASYNC_UPLOAD_BUFFER_SIZE;
 
+			QualitySettings.shadowDistance = KCDefine.U_DISTANCE_CAMERA_FAR_PLANE / KCDefine.B_VAL_5_FLT;
+			QualitySettings.shadowCascade2Split = KCEditorDefine.U_EDITOR_OPTS_CASCADE_2_SPLIT_PERCENT;
+			QualitySettings.shadowCascade4Split = KCEditorDefine.U_EDITOR_OPTS_CASCADE_4_SPLIT_PERCENT;
+
+			QualitySettings.shadows = ShadowQuality.All;
 			QualitySettings.vSyncCount = (int)EVSyncType.NEVER;
 			QualitySettings.skinWeights = ((EQualityLevel)i >= EQualityLevel.HIGH) ? SkinWeights.FourBones : SkinWeights.TwoBones;
 			QualitySettings.shadowmaskMode = ((EQualityLevel)i >= EQualityLevel.HIGH) ? ShadowmaskMode.DistanceShadowmask : ShadowmaskMode.Shadowmask;
+			QualitySettings.shadowCascades = ((EQualityLevel)i >= EQualityLevel.HIGH) ? (int)EShadowCascadesOpts.FOUR_CASCADES : (int)EShadowCascadesOpts.TWO_CASCADES;
 			QualitySettings.anisotropicFiltering = ((EQualityLevel)i >= EQualityLevel.HIGH) ? AnisotropicFiltering.Enable : AnisotropicFiltering.Disable;
 
 #if REALTIME_REFLECTION_PROBES_ENABLE
@@ -44,7 +50,7 @@ public static partial class CFunc {
 		GraphicsSettings.renderPipelineAsset = a_oRenderingPipeline;
 		GraphicsSettings.defaultRenderPipeline = a_oRenderingPipeline;
 
-		QualitySettings.SetQualityLevel((int)((a_eQualityLevel == EQualityLevel.AUTO) ? CFunc.AutoQualityLevel : a_eQualityLevel), a_bIsEnableExpensiveChange);
+		QualitySettings.SetQualityLevel((int)((a_eQualityLevel == EQualityLevel.AUTO) ? CAccess.AutoQualityLevel : a_eQualityLevel), a_bIsEnableExpensiveChange);
 	}
 	
 	/** 화면 UI 를 설정한다 */
