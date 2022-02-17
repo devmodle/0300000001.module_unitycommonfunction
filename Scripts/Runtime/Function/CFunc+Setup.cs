@@ -14,6 +14,7 @@ public static partial class CFunc {
 		// 객체가 존재 할 경우
 		if(a_oScreenUIs != null) {
 			var oCanvas = a_oScreenUIs.GetComponentInChildren<Canvas>();
+			oCanvas.pixelPerfect = false;
 			oCanvas.sortingOrder = a_nSortingOrder;
 			oCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
@@ -22,12 +23,6 @@ public static partial class CFunc {
 			oCanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 			oCanvasScaler.referenceResolution = KCDefine.B_SCREEN_SIZE.ExTo2D();
 			oCanvasScaler.referencePixelsPerUnit = KCDefine.B_UNIT_REF_PIXELS_PER_UNIT;
-
-#if PIXELS_PERFECT_ENABLE
-			oCanvas.pixelPerfect = true;
-#else
-			oCanvas.pixelPerfect = false;
-#endif			// #if PIXELS_PERFECT_ENABLE
 		}
 	}
 	#endregion			// 클래스 함수
