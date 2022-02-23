@@ -585,22 +585,6 @@ public static partial class CFunc {
 
 		return oFunc.Invoke(a_tParamsA, a_tParamsB, a_tParamsC, a_tParamsD, a_tParamsE, a_tParamsF, a_tParamsG, a_tParamsH, a_tParamsI);
 	}
-	
-	/** JSON 객체를 읽어들인다 */
-	public static T ReadJSONObj<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsSecurity = true) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStr(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStr(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default);
-
-		return oStr.ExJSONStrToObj<T>();
-	}
-
-	/** JSON 객체를 읽어들인다 */
-	public static T ReadJSONObjFromRes<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsSecurity = true) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStrFromRes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStrFromRes(a_oFilePath);
-
-		return oStr.ExJSONStrToObj<T>();
-	}
 
 	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObj<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsSecurity = true) {
@@ -632,23 +616,6 @@ public static partial class CFunc {
 		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStrFromRes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStrFromRes(a_oFilePath);
 
 		return oStr.ExMsgPackJSONStrToObj<T>();
-	}
-	
-	/** JSON 객체를 기록한다 */
-	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, System.Text.Encoding a_oEncoding = null, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsSecurity = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
-
-		// 경로가 유효 할 경우
-		if(a_oFilePath.ExIsValid()) {
-			string oStr = a_oObj.ExToJSONStr(a_bIsNeedRoot, a_bIsPretty);
-
-			// 보안 모드 일 경우
-			if(a_bIsSecurity) {
-				CFunc.WriteSecurityStr(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
-			} else {
-				CFunc.WriteStr(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
-			}
-		}
 	}
 
 	/** 메세지 팩 객체를 기록한다 */
@@ -685,4 +652,41 @@ public static partial class CFunc {
 		}
 	}
 	#endregion			// 제네릭 클래스 함수
+
+	#region 조건부 제네릭 클래스 함수
+#if NEWTON_SOFT_JSON_MODULE_ENABLE
+	/** JSON 객체를 읽어들인다 */
+	public static T ReadJSONObj<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsSecurity = true) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStr(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStr(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default);
+
+		return oStr.ExJSONStrToObj<T>();
+	}
+
+	/** JSON 객체를 읽어들인다 */
+	public static T ReadJSONObjFromRes<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsSecurity = true) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+		string oStr = a_bIsSecurity ? CFunc.ReadSecurityStrFromRes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStrFromRes(a_oFilePath);
+
+		return oStr.ExJSONStrToObj<T>();
+	}
+	
+	/** JSON 객체를 기록한다 */
+	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, System.Text.Encoding a_oEncoding = null, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsSecurity = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
+
+		// 경로가 유효 할 경우
+		if(a_oFilePath.ExIsValid()) {
+			string oStr = a_oObj.ExToJSONStr(a_bIsNeedRoot, a_bIsPretty);
+
+			// 보안 모드 일 경우
+			if(a_bIsSecurity) {
+				CFunc.WriteSecurityStr(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
+			} else {
+				CFunc.WriteStr(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
+			}
+		}
+	}
+#endif			// #if NEWTON_SOFT_JSON_MODULE_ENABLE
+	#endregion			// 조건부 제네릭 클래스 함수
 }
