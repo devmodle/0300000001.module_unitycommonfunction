@@ -250,6 +250,12 @@ public static partial class CEditorFunc {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_BUILD_REPORT_TOOLS, true);
 	}
 
+	/** Build Report Tool 패키지를 추가한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "GoogleSheetsToUnity Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	public static void ImportGoogleSheetsToUnityPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_GOOGLE_SHEETS_TO_UNITY, true);
+	}
+
 	/** Odin Inspector 패키지를 추가한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "OdinInspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportOdinInspectorPkgs() {
