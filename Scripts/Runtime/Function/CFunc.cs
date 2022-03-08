@@ -275,6 +275,38 @@ public static partial class CFunc {
 			oAction?.Invoke();
 		}
 	}
+
+	/** 값을 교환한다 */
+	public static void LessCorrectSwap(ref float a_rfLhs, ref float a_rfRhs) {
+		// 보정이 필요 할 경우
+		if(a_rfLhs.ExIsGreate(a_rfRhs)) {
+			CFunc.Swap(ref a_rfLhs, ref a_rfRhs);
+		}
+	}
+
+	/** 값을 교환한다 */
+	public static void LessCorrectSwap(ref double a_rdblLhs, ref double a_rdblRhs) {
+		// 보정이 필요 할 경우
+		if(a_rdblLhs.ExIsGreate(a_rdblRhs)) {
+			CFunc.Swap(ref a_rdblLhs, ref a_rdblRhs);
+		}
+	}
+
+	/** 값을 교환한다 */
+	public static void GreateCorrectSwap(ref float a_rfLhs, ref float a_rfRhs) {
+		// 보정이 필요 할 경우
+		if(a_rfLhs.ExIsLess(a_rfRhs)) {
+			CFunc.Swap(ref a_rfLhs, ref a_rfRhs);
+		}
+	}
+
+	/** 값을 교환한다 */
+	public static void GreateCorrectSwap(ref double a_rdblLhs, ref double a_rdblRhs) {
+		// 보정이 필요 할 경우
+		if(a_rdblLhs.ExIsLess(a_rdblRhs)) {
+			CFunc.Swap(ref a_rdblLhs, ref a_rdblRhs);
+		}
+	}
 	
 	/** 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
@@ -327,23 +359,23 @@ public static partial class CFunc {
 
 	#region 제네릭 클래스 함수
 	/** 값을 교환한다 */
-	public static void Swap<T>(ref T a_rtLhs, ref T a_tRhs) {
-		T tTemp = a_rtLhs; a_rtLhs = a_tRhs; a_tRhs = tTemp;
+	public static void Swap<T>(ref T a_rtLhs, ref T a_rtRhs) {
+		T tTemp = a_rtLhs; a_rtLhs = a_rtRhs; a_rtRhs = tTemp;
 	}
 
 	/** 값을 교환한다 */
-	public static void LessCorrectSwap<T>(ref T a_rtLhs, ref T a_tRhs) where T : System.IComparable<T> {
+	public static void LessCorrectSwap<T>(ref T a_rtLhs, ref T a_rtRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
-		if(a_rtLhs.CompareTo(a_tRhs) > KCDefine.B_COMPARE_EQUALS) {
-			CFunc.Swap(ref a_rtLhs, ref a_tRhs);
+		if(a_rtLhs.CompareTo(a_rtRhs) > KCDefine.B_COMPARE_EQUALS) {
+			CFunc.Swap(ref a_rtLhs, ref a_rtRhs);
 		}
 	}
 
 	/** 값을 교환한다 */
-	public static void GreateCorrectSwap<T>(ref T a_rtLhs, ref T a_tRhs) where T : System.IComparable<T> {
+	public static void GreateCorrectSwap<T>(ref T a_rtLhs, ref T a_rtRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
-		if(a_rtLhs.CompareTo(a_tRhs) < KCDefine.B_COMPARE_EQUALS) {
-			CFunc.Swap(ref a_rtLhs, ref a_tRhs);
+		if(a_rtLhs.CompareTo(a_rtRhs) < KCDefine.B_COMPARE_EQUALS) {
+			CFunc.Swap(ref a_rtLhs, ref a_rtRhs);
 		}
 	}
 
