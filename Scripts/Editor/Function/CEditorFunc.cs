@@ -273,19 +273,7 @@ public static partial class CEditorFunc {
 	public static void ImportUltimateStatusBarPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ULTIMATE_STATUS_BAR, true);
 	}
-
-	/** Lean GUI 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "LeanGUI Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportLeanGUIPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_LEAN_GUI, true);
-	}
-
-	/** Lean Touch 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "LeanTouch Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportLeanTouchPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_LEAN_TOUCH, true);
-	}
-
+	
 	/** Apple Auth 패키지를 추가한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "AppleAuth Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportAppleAuthPkgs() {
