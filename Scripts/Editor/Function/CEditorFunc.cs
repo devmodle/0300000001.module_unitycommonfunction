@@ -117,25 +117,7 @@ public static partial class CEditorFunc {
 			}
 		}
 	}
-
-	/** 버튼을 리셋한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Buttons", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
-	public static void ResetBtns() {
-		// 확인 버튼을 눌렀을 경우
-		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
-			var oBtnList = CEditorFunc.FindComponents<Button>();
-
-			for(int i = 0; i <oBtnList.Count; ++i) {
-				oBtnList[i].ExReset();
-
-				// 에디터 모드 일 경우
-				if(!Application.isPlaying) {
-					EditorSceneManager.MarkSceneDirty(oBtnList[i].gameObject.scene);
-				}
-			}
-		}
-	}
-
+	
 	/** 상호 작용자를 리셋한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Selectables", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetSelectables() {
