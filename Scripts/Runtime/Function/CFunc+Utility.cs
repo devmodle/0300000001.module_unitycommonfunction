@@ -35,14 +35,14 @@ public static partial class CFunc {
 	}
 
 	/** 경로를 탐색한다 */
-	public static List<Vector3Int> FindPath(Vector3Int a_stIdx, List<Vector3Int> a_oOffsetList, System.Func<CPathInfo, bool> a_oFindCallback, System.Func<CPathInfo, Vector3Int, bool> a_oMoveCallback, System.Func<CPathInfo, Vector3Int, int> a_oCostCallback) {
+	public static List<Vector3Int> FindPath(Vector3Int a_stSrcIdx, List<Vector3Int> a_oOffsetList, System.Func<CPathInfo, bool> a_oFindCallback, System.Func<CPathInfo, Vector3Int, bool> a_oMoveCallback, System.Func<CPathInfo, Vector3Int, int> a_oCostCallback) {
 		CAccess.Assert(a_oFindCallback != null && a_oMoveCallback != null && a_oCostCallback != null);
 
 		var oVisitIdxList = new List<Vector3Int>();
 		var oOpenPathInfoList = new List<CPathInfo>();
 		var oClosePathInfoList = new List<CPathInfo>();
 
-		oOpenPathInfoList.Add(CFactory.MakePathInfo(a_stIdx));
+		oOpenPathInfoList.Add(CFactory.MakePathInfo(a_stSrcIdx));
 
 		while(oOpenPathInfoList.Count > KCDefine.B_VAL_0_INT) {
 			var oPathInfo = oOpenPathInfoList[KCDefine.B_VAL_0_INT];
