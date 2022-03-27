@@ -79,7 +79,7 @@ public static partial class CFunc {
 		if((bIsValid && Directory.Exists(a_oSrcPath)) && (a_bIsOverwrite || !Directory.Exists(a_oDestPath))) {
 			CFactory.RemoveDir(a_oDestPath);
 
-			CFunc.EnumerateDirs(a_oSrcPath, (a_oDirPathList, a_oFilePathList) => {
+			CFunc.EnumerateDirectories(a_oSrcPath, (a_oDirPathList, a_oFilePathList) => {
 				for(int i = 0; i < a_oFilePathList.Count; ++i) {
 					string oDestFilePath = a_oFilePathList[i].ExGetReplaceStr(a_oSrcPath, a_oDestPath);
 					CFunc.CopyFile(a_oFilePathList[i], oDestFilePath, a_bIsOverwrite);
@@ -91,7 +91,7 @@ public static partial class CFunc {
 	}
 
 	/** 디렉토리를 순회한다 */
-	public static void EnumerateDirs(string a_oDirPath, System.Func<List<string>, List<string>, bool> a_oCallback, bool a_bIsEnableAssert = true) {
+	public static void EnumerateDirectories(string a_oDirPath, System.Func<List<string>, List<string>, bool> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oCallback != null && a_oDirPath.ExIsValid()));
 		bool bIsValid = a_oCallback != null && a_oDirPath.ExIsValid();
 
@@ -102,7 +102,7 @@ public static partial class CFunc {
 			// 디렉토리 순회가 가능 할 경우
 			if(a_oCallback(oDirPaths.ToList(), Directory.GetFiles(a_oDirPath).ToList())) {
 				for(int i = 0; i < oDirPaths.Length; ++i) {
-					CFunc.EnumerateDirs(oDirPaths[i], a_oCallback);
+					CFunc.EnumerateDirectories(oDirPaths[i], a_oCallback);
 				}
 			}
 		}
