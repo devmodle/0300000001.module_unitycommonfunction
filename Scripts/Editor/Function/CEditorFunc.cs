@@ -28,7 +28,7 @@ public static partial class CEditorFunc {
 
 		// 에셋 복사가 가능 할 경우
 		if((bIsValid && CEditorAccess.IsExistsAsset(a_oSrcPath)) && (a_bIsOverwrite || !CEditorAccess.IsExistsAsset(a_oDestPath))) {
-			CEditorFactory.MakeDirs(Path.GetDirectoryName(a_oDestPath), a_bIsEnableAssert);
+			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath), a_bIsEnableAssert);
 			AssetDatabase.CopyAsset(a_oSrcPath, a_oDestPath);
 		}
 	}
@@ -299,7 +299,7 @@ public static partial class CEditorFunc {
 		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPathList);
 		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
 	}
-
+	
 	/** 에셋을 탐색한다 */
 	public static List<T> FindAssets<T>(string a_oFilter, List<string> a_oSearchPathList) where T : Object {
 		var oAssetList = new List<T>();
@@ -308,8 +308,7 @@ public static partial class CEditorFunc {
 		// 에셋 GUID 가 존재 할 경우
 		if(oAssetGUIDs.ExIsValid()) {
 			for(int i = 0; i < oAssetGUIDs.Length; ++i) {
-				string oPath = AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]);
-				var oAsset = AssetDatabase.LoadAssetAtPath<T>(oPath);
+				var oAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]));
 
 				// 에셋이 존재 할 경우
 				if(oAsset != null) {
