@@ -704,12 +704,12 @@ public static partial class CFunc {
 	}
 	
 	/** JSON 객체를 기록한다 */
-	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, System.Text.Encoding a_oEncoding = null, bool a_bIsNeedRoot = false, bool a_bIsPretty = false, bool a_bIsSecurity = true, bool a_bIsEnableAssert = true) {
+	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, System.Text.Encoding a_oEncoding = null, bool a_bIsNeedsRoot = false, bool a_bIsPretty = false, bool a_bIsSecurity = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
-			string oStr = a_oObj.ExToJSONStr(a_bIsNeedRoot, a_bIsPretty);
+			string oStr = a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty);
 
 			// 보안 모드 일 경우
 			if(a_bIsSecurity) {
