@@ -112,7 +112,7 @@ public static partial class CEditorFunc {
 
 				// 에디터 모드 일 경우
 				if(!Application.isPlaying) {
-					EditorSceneManager.MarkSceneDirty(oTextList[i].gameObject.scene);
+					EditorSceneManager.MarkSceneDirty(oTMPTextList[i].gameObject.scene);
 				}
 			}
 		}
