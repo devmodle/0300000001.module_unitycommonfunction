@@ -232,12 +232,6 @@ public static partial class CEditorFunc {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_BUILD_REPORT_TOOLS, true);
 	}
 	
-	/** Odin Inspector 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "OdinInspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportOdinInspectorPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ODIN_INSPECTOR, true);
-	}
-
 	/** Sprite Trail 패키지를 추가한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "SpriteTrail Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportSpriteTrailPkgs() {
