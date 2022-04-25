@@ -189,9 +189,38 @@ public static partial class CFunc {
 	}
 
 	/** 컴포넌트를 탐색한다 */
+	public static T FindComponent<T>(Scene a_stScene) where T : Component {
+		var oObjs = a_stScene.GetRootGameObjects();
+
+		for(int i = 0; i < oObjs.Length; ++i) {
+			var oComponent = oObjs[i].GetComponentInChildren<T>();
+
+			// 컴포넌트가 존재 할 경우
+			if(oComponent != null) {
+				return oComponent;
+			}
+		}
+
+		return null;
+	}
+
+	/** 컴포넌트를 탐색한다 */
 	public static List<T> FindComponents<T>(string a_oName) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
 		return CFunc.FindObj(a_oName)?.GetComponentsInChildren<T>().ToList();
+	}
+
+	/** 컴포넌트를 탐색한다 */
+	public static List<T> FindComponents<T>(Scene a_stScene) where T : Component {
+		var oObjs = a_stScene.GetRootGameObjects();
+		var oComponentList = new List<T>();
+
+		for(int i = 0; i < oObjs.Length; ++i) {
+			var oComponents = oObjs[i].GetComponentsInChildren<T>();
+			oComponentList.ExAddVals(oComponents.ToList());
+		}
+
+		return oComponentList;
 	}
 
 	/** 객체를 순회한다 */
