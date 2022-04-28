@@ -226,6 +226,12 @@ public static partial class CEditorFunc {
 		}
 	}
 
+	/** Odin Inspector 패키지를 추가한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "OdinInspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	public static void ImportOdinInspectorPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ODIN_INSPECTOR_PKGS, true);
+	}
+
 	/** Build Report Tool 패키지를 추가한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "BuildReportTool Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportBuildReportToolPkgs() {
