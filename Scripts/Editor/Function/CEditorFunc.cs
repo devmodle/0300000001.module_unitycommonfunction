@@ -29,7 +29,31 @@ public static partial class CEditorFunc {
 		// 에셋 복사가 가능 할 경우
 		if((bIsValid && CEditorAccess.IsExistsAsset(a_oSrcPath)) && (a_bIsOverwrite || !CEditorAccess.IsExistsAsset(a_oDestPath))) {
 			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath), a_bIsEnableAssert);
+
+			// 덮어쓰기 모드 일 경우
+			if(a_bIsOverwrite && CEditorAccess.IsExistsAsset(a_oDestPath)) {
+				AssetDatabase.DeleteAsset(a_oDestPath);
+			}
+
 			AssetDatabase.CopyAsset(a_oSrcPath, a_oDestPath);
+		}
+	}
+
+	/** 에셋을 이동한다 */
+	public static void MoveAsset(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
+		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
+
+		// 에셋 복사가 가능 할 경우
+		if((bIsValid && CEditorAccess.IsExistsAsset(a_oSrcPath)) && (a_bIsOverwrite || !CEditorAccess.IsExistsAsset(a_oDestPath))) {
+			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath), a_bIsEnableAssert);
+
+			// 덮어쓰기 모드 일 경우
+			if(a_bIsOverwrite && CEditorAccess.IsExistsAsset(a_oDestPath)) {
+				AssetDatabase.DeleteAsset(a_oDestPath);
+			}
+			
+			AssetDatabase.MoveAsset(a_oSrcPath, a_oDestPath);
 		}
 	}
 
