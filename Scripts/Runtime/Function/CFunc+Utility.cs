@@ -44,7 +44,7 @@ public static partial class CFunc {
 
 		oOpenPathInfoList.Add(CFactory.MakePathInfo(a_stSrcIdx));
 
-		while(oOpenPathInfoList.Count > KCDefine.B_VAL_0_INT) {
+		while(oOpenPathInfoList.ExIsValid()) {
 			var oPathInfo = oOpenPathInfoList[KCDefine.B_VAL_0_INT];
 
 			oClosePathInfoList.Add(oPathInfo);
