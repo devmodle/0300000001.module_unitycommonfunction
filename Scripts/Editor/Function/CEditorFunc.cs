@@ -250,30 +250,6 @@ public static partial class CEditorFunc {
 			}
 		}
 	}
-
-	/** Odin Inspector 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "OdinInspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportOdinInspectorPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ODIN_INSPECTOR_PKGS, true);
-	}
-
-	/** Build Report Tool 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "BuildReportTool Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportBuildReportToolPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_BUILD_REPORT_TOOLS, true);
-	}
-	
-	/** Sprite Trail 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "SpriteTrail Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportSpriteTrailPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_SPRITE_TRAIL, true);
-	}
-
-	/** Ultimate Status Bar 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "UltimateStatusBar Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportUltimateStatusBarPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ULTIMATE_STATUS_BAR, true);
-	}
 	
 	/** Apple Auth 패키지를 추가한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "AppleAuth Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
