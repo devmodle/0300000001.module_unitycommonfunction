@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif			// #if UNITY_EDITOR
-
-#if UNITY_ANDROID
-using UnityEngine.Android;
-#endif			// #if UNITY_ANDROID
 
 /** 유틸리티 함수 */
 public static partial class CFunc {
@@ -111,34 +108,6 @@ public static partial class CFunc {
 		// 메세지가 유효 할 경우
 		if(a_oMsg.ExIsValid()) {
 			CFunc.EnumerateScenes((a_stScene) => { a_stScene.ExBroadcastMsg(a_oMsg, a_oParams, a_bIsEnableAssert); return true; });
-		}
-	}
-
-	/** 권한을 요청한다 */
-	public static void RequestPermission(MonoBehaviour a_oComponent, string a_oPermission, System.Action<string, bool> a_oCallback, bool a_bIsRealtime = false, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oComponent != null && a_oPermission.ExIsValid()));
-
-		// 컴포넌트가 존재 할 경우
-		if(a_oComponent != null && a_oPermission.ExIsValid()) {
-#if UNITY_ANDROID
-			// 권한이 유효 할 경우
-			if(CAccess.IsEnablePermission(a_oPermission)) {
-				CFunc.Invoke(ref a_oCallback, a_oPermission, true);
-			} else {
-				Permission.RequestUserPermission(a_oPermission);
-				
-				a_oComponent.ExRepeatCallFunc((a_oSender, a_bIsComplete) => {
-					// 완료 되었을 경우
-					if(a_bIsComplete) {
-						CFunc.Invoke(ref a_oCallback, a_oPermission, CAccess.IsEnablePermission(a_oPermission));
-					}
-
-					return !CAccess.IsEnablePermission(a_oPermission);
-				}, KCDefine.U_DELTA_T_PERMISSION_M_REQUEST_CHECK, KCDefine.U_MAX_DELTA_T_PERMISSION_M_REQUEST_CHECK, a_bIsRealtime);
-			}
-#else
-			CFunc.Invoke(ref a_oCallback, a_oPermission, false);
-#endif			// #if UNITY_ANDROID
 		}
 	}
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using MessagePack;
 
 /** 기본 함수 */
