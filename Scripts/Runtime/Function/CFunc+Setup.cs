@@ -4,10 +4,59 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using DanielLochner.Assets.SimpleScrollSnap;
 
 /** 설정 함수 */
 public static partial class CFunc {
-	#region 클래스 함수	
+	#region 클래스 함수
+	/** 버튼을 설정한다 */
+	public static void SetupButtons(List<(GameObject, UnityAction)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item1.GetComponentInChildren<Button>()?.onClick.AddListener(a_oKeyInfoList[i].Item2);
+			}
+		}
+	}
+
+	/** 버튼을 설정한다 */
+	public static void SetupButtons(List<(string, GameObject, UnityAction)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2.ExFindComponent<Button>(a_oKeyInfoList[i].Item1)?.onClick.AddListener(a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 스크롤 스냅을 설정한다 */
+	public static void SetupScrollSnaps(List<(GameObject, UnityAction<int, int>)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item1.GetComponentInChildren<SimpleScrollSnap>()?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item2);
+			}
+		}
+	}
+
+	/** 스크롤 스냅을 설정한다 */
+	public static void SetupScrollSnaps(List<(string, GameObject, UnityAction<int, int>)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2.ExFindComponent<SimpleScrollSnap>(a_oKeyInfoList[i].Item1)?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
 	/** 화면 UI 를 설정한다 */
 	public static void SetupScreenUIs(GameObject a_oScreenUIs, int a_nSortingOrder, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oScreenUIs != null);
@@ -27,4 +76,166 @@ public static partial class CFunc {
 		}
 	}
 	#endregion			// 클래스 함수
+
+	#region 제네릭 클래스 함수
+	/** 컴포넌트를 설정한다 */
+	public static void SetupComponents<K, V>(List<(K, GameObject)> a_oKeyInfoList, Dictionary<K, V> a_oOutComponentDict, bool a_bIsEnableAssert = true) where V : Component {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = a_oKeyInfoList[i].Item2?.GetComponentInChildren<V>();
+			}
+		}
+	}
+
+	/** 컴포넌트를 설정한다 */
+	public static void SetupComponents<K, V>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, V> a_oOutComponentDict, bool a_bIsEnableAssert = true) where V : Component {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = a_oKeyInfoList[i].Item3?.ExFindComponent<V>(a_oKeyInfoList[i].Item2);
+			}
+		}
+	}
+
+	/** 컴포넌트를 설정한다 */
+	public static void SetupComponents<K, V>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, V> a_oOutComponentDict, bool a_bIsEnableAssert = true) where V : Component {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				var oComponent = a_oKeyInfoList[i].Item3?.ExFindComponent<V>(a_oKeyInfoList[i].Item2);
+				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = oComponent ?? CFactory.CreateCloneObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 버튼을 설정한다 */
+	public static void SetupButtons<K>(List<(K, GameObject, UnityAction)> a_oKeyInfoList, Dictionary<K, Button> a_oOutBtnDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutBtnDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutBtnDict != null) {
+			CFunc.SetupComponents(CFactory.MakeDefKeyInfos(a_oKeyInfoList), a_oOutBtnDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutBtnDict[a_oKeyInfoList[i].Item1]?.onClick.AddListener(a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 버튼을 설정한다 */
+	public static void SetupButtons<K>(List<(K, string, GameObject, UnityAction)> a_oKeyInfoList, Dictionary<K, Button> a_oOutBtnDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutBtnDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutBtnDict != null) {
+			CFunc.SetupComponents(CFactory.MakeDefKeyInfos(a_oKeyInfoList), a_oOutBtnDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutBtnDict[a_oKeyInfoList[i].Item1]?.onClick.AddListener(a_oKeyInfoList[i].Item4);
+			}
+		}
+	}
+
+	/** 버튼을 설정한다 */
+	public static void SetupButtons<K>(List<(K, string, GameObject, GameObject, UnityAction)> a_oKeyInfoList, Dictionary<K, Button> a_oOutBtnDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutBtnDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutBtnDict != null) {
+			CFunc.SetupComponents(CFactory.MakeDefKeyInfos(a_oKeyInfoList), a_oOutBtnDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutBtnDict[a_oKeyInfoList[i].Item1]?.onClick.AddListener(a_oKeyInfoList[i].Item5);
+			}
+		}
+	}
+	
+	/** 스크롤 스냅을 설정한다 */
+	public static void SetupScrollSnaps<K>(List<(K, GameObject, UnityAction<int, int>)> a_oKeyInfoList, Dictionary<K, SimpleScrollSnap> a_oOutScrollSnapDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutScrollSnapDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollSnapDict != null) {
+			CFunc.SetupComponents(CFactory.MakeDefKeyInfos(a_oKeyInfoList), a_oOutScrollSnapDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutScrollSnapDict[a_oKeyInfoList[i].Item1]?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 스크롤 스냅을 설정한다 */
+	public static void SetupScrollSnaps<K>(List<(K, string, GameObject, UnityAction<int, int>)> a_oKeyInfoList, Dictionary<K, SimpleScrollSnap> a_oOutScrollSnapDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutScrollSnapDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollSnapDict != null) {
+			CFunc.SetupComponents(CFactory.MakeDefKeyInfos(a_oKeyInfoList), a_oOutScrollSnapDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutScrollSnapDict[a_oKeyInfoList[i].Item1]?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item4);
+			}
+		}
+	}
+
+	/** 스크롤 스냅을 설정한다 */
+	public static void SetupScrollSnaps<K>(List<(K, string, GameObject, GameObject, UnityAction<int, int>)> a_oKeyInfoList, Dictionary<K, SimpleScrollSnap> a_oOutScrollSnapDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutScrollSnapDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollSnapDict != null) {
+			CFunc.SetupComponents(CFactory.MakeDefKeyInfos(a_oKeyInfoList), a_oOutScrollSnapDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutScrollSnapDict[a_oKeyInfoList[i].Item1]?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item5);
+			}
+		}
+	}
+
+	/** 객체를 설정한다 */
+	public static void SetupObjs<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutObjDict[a_oKeyInfoList[i].Item1] = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
+			}
+		}
+	}
+
+	/** 객체를 설정한다 */
+	public static void SetupObjs<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				var oObj = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
+				a_oOutObjDict[a_oKeyInfoList[i].Item1] = oObj ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 터치 응답자를 설정한다 */
+	public static void SetupTouchResponders<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Vector3 a_stSize, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				var oTouchResponder = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
+				a_oOutObjDict[a_oKeyInfoList[i].Item1] = oTouchResponder ?? CFactory.CreateTouchResponder(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3, a_stSize, Vector3.zero, KCDefine.U_COLOR_TRANSPARENT);
+				a_oOutObjDict[a_oKeyInfoList[i].Item1]?.ExSetRaycastTarget<Image>(true, a_bIsEnableAssert);
+			}
+		}
+	}
+	#endregion			// 제네릭 클래스 함수
 }

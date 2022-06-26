@@ -10,7 +10,8 @@
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.TextMeshPro",
         "MessagePack",
-        "MessagePack.Annotations"
+        "MessagePack.Annotations",
+        "SimpleScrollSnap"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
