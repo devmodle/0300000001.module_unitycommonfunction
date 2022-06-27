@@ -17,7 +17,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oKeyInfoList[i].Item1.GetComponentInChildren<Button>()?.onClick.AddListener(a_oKeyInfoList[i].Item2);
+				a_oKeyInfoList[i].Item1?.GetComponentInChildren<Button>()?.onClick.AddListener(a_oKeyInfoList[i].Item2);
 			}
 		}
 	}
@@ -29,7 +29,55 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oKeyInfoList[i].Item2.ExFindComponent<Button>(a_oKeyInfoList[i].Item1)?.onClick.AddListener(a_oKeyInfoList[i].Item3);
+				a_oKeyInfoList[i].Item2?.ExFindComponent<Button>(a_oKeyInfoList[i].Item1)?.onClick.AddListener(a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 스프라이트를 설정한다 */
+	public static void SetupSprites(List<GameObject> a_oKeyList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyList.Count; ++i) {
+				a_oKeyList[i]?.GetComponentInChildren<SpriteRenderer>()?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 스프라이트를 설정한다 */
+	public static void SetupSprites(List<(string, GameObject)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2?.ExFindComponent<SpriteRenderer>(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 파티클을 설정한다 */
+	public static void SetupParticles(List<GameObject> a_oKeyList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyList.Count; ++i) {
+				a_oKeyList[i]?.GetComponentInChildren<ParticleSystem>()?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 파티클을 설정한다 */
+	public static void SetupParticles(List<(string, GameObject)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2?.ExFindComponent<ParticleSystem>(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -41,7 +89,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oKeyInfoList[i].Item1.GetComponentInChildren<SimpleScrollSnap>()?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item2);
+				a_oKeyInfoList[i].Item1?.GetComponentInChildren<SimpleScrollSnap>()?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item2);
 			}
 		}
 	}
@@ -53,7 +101,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oKeyInfoList[i].Item2.ExFindComponent<SimpleScrollSnap>(a_oKeyInfoList[i].Item1)?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item3);
+				a_oKeyInfoList[i].Item2?.ExFindComponent<SimpleScrollSnap>(a_oKeyInfoList[i].Item1)?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -65,7 +113,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oKeyInfoList[i].Item1.GetComponentInChildren<EnhancedScroller>()?.ExSetDelegate(a_oKeyInfoList[i].Item2, a_bIsEnableAssert);
+				a_oKeyInfoList[i].Item1?.GetComponentInChildren<EnhancedScroller>()?.ExSetDelegate(a_oKeyInfoList[i].Item2, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -77,7 +125,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oKeyInfoList[i].Item2.ExFindComponent<EnhancedScroller>(a_oKeyInfoList[i].Item1)?.ExSetDelegate(a_oKeyInfoList[i].Item3, a_bIsEnableAssert);
+				a_oKeyInfoList[i].Item2?.ExFindComponent<EnhancedScroller>(a_oKeyInfoList[i].Item1)?.ExSetDelegate(a_oKeyInfoList[i].Item3, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -218,7 +266,91 @@ public static partial class CFunc {
 			}
 		}
 	}
-	
+
+	/** 스프라이트를 설정한다 */
+	public static void SetupSprites<K>(List<(K, GameObject)> a_oKeyInfoList, Dictionary<K, SpriteRenderer> a_oOutSpriteDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutSpriteDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutSpriteDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutSpriteDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutSpriteDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 스프라이트를 설정한다 */
+	public static void SetupSprites<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, SpriteRenderer> a_oOutSpriteDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutSpriteDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutSpriteDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutSpriteDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutSpriteDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 스프라이트를 설정한다 */
+	public static void SetupSprites<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, SpriteRenderer> a_oOutSpriteDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutSpriteDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutSpriteDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutSpriteDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutSpriteDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 파티클을 설정한다 */
+	public static void SetupParticles<K>(List<(K, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutParticleDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutParticleDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 파티클을 설정한다 */
+	public static void SetupParticles<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutParticleDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutParticleDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 파티클을 설정한다 */
+	public static void SetupParticles<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutParticleDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutParticleDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
 	/** 스크롤 스냅을 설정한다 */
 	public static void SetupScrollSnaps<K>(List<(K, GameObject, UnityAction<int, int>)> a_oKeyInfoList, Dictionary<K, SimpleScrollSnap> a_oOutScrollSnapDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutScrollSnapDict != null));
