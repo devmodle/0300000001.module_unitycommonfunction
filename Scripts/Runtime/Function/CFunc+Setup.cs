@@ -82,6 +82,30 @@ public static partial class CFunc {
 		}
 	}
 
+	/** 레이아웃 그룹을 설정한다 */
+	public static void SetupLayoutGroups(List<GameObject> a_oKeyList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyList.Count; ++i) {
+				a_oKeyList[i]?.GetComponentInChildren<HorizontalOrVerticalLayoutGroup>()?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 레이아웃 그룹을 설정한다 */
+	public static void SetupLayoutGroups(List<(string, GameObject)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2?.ExFindComponent<HorizontalOrVerticalLayoutGroup>(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
 	/** 스크롤 스냅을 설정한다 */
 	public static void SetupScrollSnaps(List<(GameObject, UnityAction<int, int>)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
@@ -158,7 +182,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = a_oKeyInfoList[i].Item2?.GetComponentInChildren<V>();
+				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, a_oKeyInfoList[i].Item2?.GetComponentInChildren<V>());
 			}
 		}
 	}
@@ -170,7 +194,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = a_oKeyInfoList[i].Item3?.ExFindComponent<V>(a_oKeyInfoList[i].Item2);
+				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, a_oKeyInfoList[i].Item3?.ExFindComponent<V>(a_oKeyInfoList[i].Item2));
 			}
 		}
 	}
@@ -183,7 +207,7 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oComponent = a_oKeyInfoList[i].Item3?.ExFindComponent<V>(a_oKeyInfoList[i].Item2);
-				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = oComponent ?? CFactory.CreateCloneObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3);
+				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oComponent ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
 			}
 		}
 	}
@@ -195,7 +219,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = (a_oKeyInfoList[i].Item2?.GetComponentInChildren<V1>(), a_oKeyInfoList[i].Item3);
+				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item2?.GetComponentInChildren<V1>(), a_oKeyInfoList[i].Item3));
 			}
 		}
 	}
@@ -207,7 +231,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = (a_oKeyInfoList[i].Item3?.ExFindComponent<V1>(a_oKeyInfoList[i].Item2), a_oKeyInfoList[i].Item4);
+				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item3?.ExFindComponent<V1>(a_oKeyInfoList[i].Item2), a_oKeyInfoList[i].Item4));
 			}
 		}
 	}
@@ -220,7 +244,7 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oComponent = a_oKeyInfoList[i].Item3?.ExFindComponent<V1>(a_oKeyInfoList[i].Item2);
-				a_oOutComponentDict[a_oKeyInfoList[i].Item1] = (oComponent ?? CFactory.CreateCloneObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3), a_oKeyInfoList[i].Item5);
+				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (oComponent ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3), a_oKeyInfoList[i].Item5));
 			}
 		}
 	}
@@ -350,6 +374,48 @@ public static partial class CFunc {
 			}
 		}
 	}
+	
+	/** 레이아웃 그룹을 설정한다 */
+	public static void SetupLayoutGroups<K, V>(List<(K, GameObject)> a_oKeyInfoList, Dictionary<K, V> a_oOutLayoutGroupDict, bool a_bIsEnableAssert = true) where V : HorizontalOrVerticalLayoutGroup {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutLayoutGroupDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutLayoutGroupDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutLayoutGroupDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutLayoutGroupDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 레이아웃 그룹을 설정한다 */
+	public static void SetupLayoutGroups<K, V>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, V> a_oOutLayoutGroupDict, bool a_bIsEnableAssert = true) where V : HorizontalOrVerticalLayoutGroup {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutLayoutGroupDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutLayoutGroupDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutLayoutGroupDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutLayoutGroupDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 레이아웃 그룹을 설정한다 */
+	public static void SetupLayoutGroups<K, V>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, V> a_oOutLayoutGroupDict, bool a_bIsEnableAssert = true) where V : HorizontalOrVerticalLayoutGroup {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutLayoutGroupDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutLayoutGroupDict != null) {
+			CFunc.SetupComponents(a_oKeyInfoList, a_oOutLayoutGroupDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutLayoutGroupDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+			}
+		}
+	}
 
 	/** 스크롤 스냅을 설정한다 */
 	public static void SetupScrollSnaps<K>(List<(K, GameObject, UnityAction<int, int>)> a_oKeyInfoList, Dictionary<K, SimpleScrollSnap> a_oOutScrollSnapDict, bool a_bIsEnableAssert = true) {
@@ -442,7 +508,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutObjDict[a_oKeyInfoList[i].Item1] = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
+				a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2));
 			}
 		}
 	}
@@ -455,7 +521,7 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oObj = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
-				a_oOutObjDict[a_oKeyInfoList[i].Item1] = oObj ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3);
+				a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oObj ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
 			}
 		}
 	}
@@ -468,8 +534,8 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oTouchResponder = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
-				a_oOutObjDict[a_oKeyInfoList[i].Item1] = oTouchResponder ?? CFactory.CreateTouchResponder(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3, a_stSize, Vector3.zero, KCDefine.U_COLOR_TRANSPARENT);
-				a_oOutObjDict[a_oKeyInfoList[i].Item1]?.ExSetRaycastTarget<Image>(true, a_bIsEnableAssert);
+				a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oTouchResponder ?? CFactory.CreateTouchResponder(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3, a_stSize, Vector3.zero, KCDefine.U_COLOR_TRANSPARENT));
+				a_oOutObjDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExSetRaycastTarget<Image>(true, a_bIsEnableAssert);
 			}
 		}
 	}
