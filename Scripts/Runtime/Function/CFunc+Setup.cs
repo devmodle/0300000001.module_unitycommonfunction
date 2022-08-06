@@ -207,7 +207,13 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oComponent = a_oKeyInfoList[i].Item3?.ExFindComponent<V>(a_oKeyInfoList[i].Item2);
-				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oComponent ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
+
+				// 컴포넌트가 존재 할 경우
+				if(oComponent != null) {
+					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oComponent);
+				} else {
+					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
+				}
 			}
 		}
 	}
@@ -244,7 +250,13 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutComponentDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oComponent = a_oKeyInfoList[i].Item3?.ExFindComponent<V1>(a_oKeyInfoList[i].Item2);
-				a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (oComponent ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3), a_oKeyInfoList[i].Item5));
+
+				// 컴포넌트가 존재 할 경우
+				if(oComponent != null) {
+					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (oComponent, a_oKeyInfoList[i].Item5));
+				} else {
+					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, ((a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3), a_oKeyInfoList[i].Item5));
+				}
 			}
 		}
 	}
@@ -521,7 +533,13 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oObj = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
-				a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oObj ?? (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
+
+				// 객체가 존재 할 경우
+				if(oObj != null) {
+					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oObj);
+				} else {
+					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
+				}
 			}
 		}
 	}
@@ -534,7 +552,14 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oTouchResponder = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
-				a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oTouchResponder ?? CFactory.CreateTouchResponder(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3, a_stSize, Vector3.zero, KCDefine.U_COLOR_TRANSPARENT));
+
+				// 터치 응답자가 존재 할 경우
+				if(oTouchResponder != null) {
+					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oTouchResponder);
+				} else {
+					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, CFactory.CreateTouchResponder(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3, a_stSize, Vector3.zero, KCDefine.U_COLOR_TRANSPARENT));
+				}
+				
 				a_oOutObjDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExSetRaycastTarget<Image>(true, a_bIsEnableAssert);
 			}
 		}
