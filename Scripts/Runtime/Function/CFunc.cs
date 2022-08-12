@@ -63,7 +63,7 @@ public static partial class CFunc {
 			for(int i = 0; i < oStrLineList.Count; ++i) {
 				// 문자열이 유효 할 경우
 				if(oStrLineList[i] != null) {
-					oStrBuilder.AppendLine(oStrLineList[i].ExGetReplaceStr(a_oTarget, a_oReplace, short.MaxValue));
+					oStrBuilder.AppendLine(oStrLineList[i].Replace(a_oTarget, a_oReplace));
 				}
 			}
 
@@ -82,7 +82,7 @@ public static partial class CFunc {
 
 			CFunc.EnumerateDirectories(a_oSrcPath, (a_oDirPathList, a_oFilePathList) => {
 				for(int i = 0; i < a_oFilePathList.Count; ++i) {
-					string oDestFilePath = a_oFilePathList[i].ExGetReplaceStr(a_oSrcPath, a_oDestPath);
+					string oDestFilePath = a_oFilePathList[i].Replace(a_oSrcPath, a_oDestPath);
 					CFunc.CopyFile(a_oFilePathList[i], oDestFilePath, a_bIsOverwrite);
 				}
 
