@@ -92,17 +92,17 @@ public static partial class CFunc {
 	}
 
 	/** 메세지를 전송한다 */
-	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams, bool a_bIsEnableAssert = true) {
+	public static void SendMsg(string a_oName, string a_oMsg, object a_oParams = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oName.ExIsValid() && a_oMsg.ExIsValid()));
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid() && a_oMsg.ExIsValid()) {
-			CFunc.FindObj(a_oName)?.ExSendMsg(a_oMsg, a_oParams, a_bIsEnableAssert);
+			CFunc.FindObj(a_oName)?.ExSendMsg(string.Empty, a_oMsg, a_oParams, a_bIsEnableAssert);
 		}
 	}
 
 	/** 메세지를 전파한다 */
-	public static void BroadcastMsg(string a_oMsg, object a_oParams, bool a_bIsEnableAssert = true) {
+	public static void BroadcastMsg(string a_oMsg, object a_oParams = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oMsg.ExIsValid());
 
 		// 메세지가 유효 할 경우
