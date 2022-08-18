@@ -270,7 +270,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutBtnDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutBtnDict[a_oKeyInfoList[i].Item1]?.onClick.AddListener(a_oKeyInfoList[i].Item3);
+				a_oOutBtnDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onClick.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -284,7 +284,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutBtnDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutBtnDict[a_oKeyInfoList[i].Item1]?.onClick.AddListener(a_oKeyInfoList[i].Item4);
+				a_oOutBtnDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onClick.AddListener(a_oKeyInfoList[i].Item4);
 			}
 		}
 	}
@@ -298,7 +298,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutBtnDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutBtnDict[a_oKeyInfoList[i].Item1]?.onClick.AddListener(a_oKeyInfoList[i].Item5);
+				a_oOutBtnDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onClick.AddListener(a_oKeyInfoList[i].Item5);
 			}
 		}
 	}
@@ -312,7 +312,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutSpriteDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutSpriteDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutSpriteDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -326,7 +326,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutSpriteDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutSpriteDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutSpriteDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -340,7 +340,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutSpriteDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutSpriteDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutSpriteDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -354,7 +354,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutParticleDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutParticleDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutParticleDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -368,7 +368,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutParticleDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutParticleDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutParticleDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -382,7 +382,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutParticleDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutParticleDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutParticleDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -396,7 +396,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutLayoutGroupDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutLayoutGroupDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutLayoutGroupDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -410,7 +410,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutLayoutGroupDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutLayoutGroupDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutLayoutGroupDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -424,7 +424,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(a_oKeyInfoList, a_oOutLayoutGroupDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutLayoutGroupDict[a_oKeyInfoList[i].Item1]?.ExReset(a_bIsEnableAssert);
+				a_oOutLayoutGroupDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExReset(a_bIsEnableAssert);
 			}
 		}
 	}
@@ -438,7 +438,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollSnapDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollSnapDict[a_oKeyInfoList[i].Item1]?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item3);
+				a_oOutScrollSnapDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -452,7 +452,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollSnapDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollSnapDict[a_oKeyInfoList[i].Item1]?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item4);
+				a_oOutScrollSnapDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item4);
 			}
 		}
 	}
@@ -466,7 +466,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollSnapDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollSnapDict[a_oKeyInfoList[i].Item1]?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item5);
+				a_oOutScrollSnapDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.OnPanelCentered.AddListener(a_oKeyInfoList[i].Item5);
 			}
 		}
 	}
@@ -480,7 +480,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollerInfoDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict[a_oKeyInfoList[i].Item1].Item1?.ExSetDelegate(a_oKeyInfoList[i].Item4, a_bIsEnableAssert);
+				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).Item1?.ExSetDelegate(a_oKeyInfoList[i].Item4, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -494,7 +494,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollerInfoDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict[a_oKeyInfoList[i].Item1].Item1?.ExSetDelegate(a_oKeyInfoList[i].Item5, a_bIsEnableAssert);
+				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).Item1?.ExSetDelegate(a_oKeyInfoList[i].Item5, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -508,7 +508,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollerInfoDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict[a_oKeyInfoList[i].Item1].Item1?.ExSetDelegate(a_oKeyInfoList[i].Item6, a_bIsEnableAssert);
+				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).Item1?.ExSetDelegate(a_oKeyInfoList[i].Item6, a_bIsEnableAssert);
 			}
 		}
 	}
