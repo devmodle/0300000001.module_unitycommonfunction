@@ -10,11 +10,11 @@ using MessagePack;
 
 /** 기본 함수 */
 public static partial class CFunc {
-	#region 상수
-	private static readonly Dictionary<LogType, System.Action<string>> LOG_FUNC_DICT = new Dictionary<LogType, System.Action<string>>() {
+	#region 변수
+	private static Dictionary<LogType, System.Action<string>> m_oLogFuncDict = new Dictionary<LogType, System.Action<string>>() {
 		[LogType.Log] = UnityEngine.Debug.Log, [LogType.Warning] = UnityEngine.Debug.LogWarning, [LogType.Error] = UnityEngine.Debug.LogError
 	};
-	#endregion			// 상수
+	#endregion			// 변수
 
 	#region 클래스 함수
 	/** 파일을 복사한다 */
@@ -351,7 +351,7 @@ public static partial class CFunc {
 
 	/** 로그를 출력한다 */
 	private static void DoShowLog(LogType a_eLogType, string a_oLog) {
-		bool bIsValid = LOG_FUNC_DICT.TryGetValue(a_eLogType, out System.Action<string> oLogFunc);
+		bool bIsValid = CFunc.m_oLogFuncDict.TryGetValue(a_eLogType, out System.Action<string> oLogFunc);
 		CAccess.Assert(bIsValid);
 		
 		oLogFunc?.Invoke(a_oLog);
