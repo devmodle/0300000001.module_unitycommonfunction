@@ -6,10 +6,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
-#if MSG_PACK_ENABLE
 using MessagePack;
-#endif			// #if MSG_PACK_ENABLE
 
 /** 기본 함수 */
 public static partial class CFunc {
