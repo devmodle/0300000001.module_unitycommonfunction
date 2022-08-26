@@ -6,7 +6,10 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+
+#if MSG_PACK_ENABLE
 using MessagePack;
+#endif			// #if MSG_PACK_ENABLE
 
 /** 기본 함수 */
 public static partial class CFunc {
@@ -24,8 +27,8 @@ public static partial class CFunc {
 
 		// 파일 복사가 가능 할 경우
 		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
-			var oBytes = CFunc.ReadBytes(a_oSrcPath);
-			CFunc.WriteBytes(a_oDestPath, oBytes);
+			var oBytes = CFunc.ReadBytes(a_oSrcPath, false);
+			CFunc.WriteBytes(a_oDestPath, oBytes, false, null, true, a_bIsEnableAssert);
 		}
 	}
 
@@ -46,7 +49,7 @@ public static partial class CFunc {
 				}
 			}
 
-			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), a_oEncoding ?? System.Text.Encoding.Default);
+			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
 		}
 	}
 
@@ -67,7 +70,7 @@ public static partial class CFunc {
 				}
 			}
 
-			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), a_oEncoding ?? System.Text.Encoding.Default);
+			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
 		}
 	}
 
@@ -110,63 +113,56 @@ public static partial class CFunc {
 	}
 
 	/** 바이트를 읽어들인다 */
-	public static byte[] ReadBytes(string a_oFilePath) {
+	public static byte[] ReadBytes(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		return File.Exists(a_oFilePath) ? File.ReadAllBytes(a_oFilePath) : null;
+
+		// 파일이 존재 할 경우
+		if(File.Exists(a_oFilePath)) {
+			var oBytes = File.ReadAllBytes(a_oFilePath);
+			return a_bIsBase64 ? System.Convert.FromBase64String((a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes)) : oBytes;
+		}
+
+		return null;
 	}
 
 	/** 바이트를 읽어들인다 */
-	public static byte[] ReadBytesFromRes(string a_oFilePath) {
+	public static byte[] ReadBytesFromRes(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oTextAsset = Resources.Load<TextAsset>(a_oFilePath);
 
-		return (oTextAsset != null) ? oTextAsset.bytes : null;
-	}
+		// 텍스트 에셋이 존재 할 경우
+		if(oTextAsset.ExIsValid()) {
+			return a_bIsBase64 ? System.Convert.FromBase64String((a_oEncoding ?? System.Text.Encoding.Default).GetString(oTextAsset.bytes)) : oTextAsset.bytes;
+		}
 
-	/** Base64 바이트를 읽어들인다 */
-	public static byte[] ReadBase64Bytes(string a_oFilePath, System.Text.Encoding a_oEncoding = null) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = CFunc.ReadBytes(a_oFilePath);
-
-		return (oBytes != null) ? System.Convert.FromBase64String((a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes)) : null;
-	}
-
-	/** Base64 바이트를 읽어들인다 */
-	public static byte[] ReadBase64BytesFromRes(string a_oFilePath, System.Text.Encoding a_oEncoding = null) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = CFunc.ReadBytesFromRes(a_oFilePath);
-
-		return (oBytes != null) ? System.Convert.FromBase64String((a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes)) : null;
+		return null;
 	}
 
 	/** 문자열을 읽어들인다 */
-	public static string ReadStr(string a_oFilePath, System.Text.Encoding a_oEncoding = null) {
+	public static string ReadStr(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		return File.Exists(a_oFilePath) ? File.ReadAllText(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : string.Empty;
+
+		// 파일이 존재 할 경우
+		if(File.Exists(a_oFilePath)) {
+			var oBytes = CFunc.ReadBytes(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default);
+			return a_bIsBase64 ? (a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes) : File.ReadAllText(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default);
+		}
+
+		return string.Empty;
 	}
 
 	/** 문자열을 읽어들인다 */
-	public static string ReadStrFromRes(string a_oFilePath) {
+	public static string ReadStrFromRes(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oTextAsset = Resources.Load<TextAsset>(a_oFilePath);
 
-		return (oTextAsset != null) ? oTextAsset.text : string.Empty;
-	}
+		// 텍스트 에셋이 존재 할 경우
+		if(oTextAsset.ExIsValid()) {
+			var oBytes = CFunc.ReadBytesFromRes(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default);
+			return a_bIsBase64 ? (a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes) : oTextAsset.text;
+		}
 
-	/** Base64 문자열을 읽어들인다 */
-	public static string ReadBase64Str(string a_oFilePath, System.Text.Encoding a_oEncoding = null) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = CFunc.ReadBase64Bytes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default);
-
-		return (oBytes != null) ? (a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes) : string.Empty;
-	}
-
-	/** Base64 문자열을 읽어들인다 */
-	public static string ReadBase64StrFromRes(string a_oFilePath, System.Text.Encoding a_oEncoding = null) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = CFunc.ReadBase64BytesFromRes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default);
-
-		return (oBytes != null) ? (a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes) : string.Empty;
+		return string.Empty;
 	}
 
 	/** 문자열 라인을 읽어들인다 */
@@ -176,96 +172,54 @@ public static partial class CFunc {
 	}
 
 	/** 바이트를 기록한다 */
-	public static void WriteBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
+	public static void WriteBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oBytes != null && a_oFilePath.ExIsValid()));
 
 		// 기록이 가능 할 경우
 		if(a_oBytes != null && a_oFilePath.ExIsValid()) {
 			using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDir)) {
-				CFunc.WriteBytes(oWStream, a_oBytes, true, a_bIsEnableAssert);
+				CFunc.WriteBytes(oWStream, a_oBytes, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 			}
 		}
 	}
 
 	/** 바이트를 기록한다 */
-	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes, bool a_bIsFlush = true, bool a_bIsEnableAssert = true) {
+	public static void WriteBytes(FileStream a_oWStream, byte[] a_oBytes, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oBytes != null));
 
 		// 스트림이 존재 할 경우
 		if(a_oWStream != null && a_oBytes != null) {
-			a_oWStream.Write(a_oBytes, KCDefine.B_VAL_0_INT, a_oBytes.Length);
-			a_oWStream.Flush(a_bIsFlush);
-		}
-	}
-
-	/** Base64 바이트를 기록한다 */
-	public static void WriteBase64Bytes(string a_oFilePath, byte[] a_oBytes, System.Text.Encoding a_oEncoding = null, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oBytes != null && a_oFilePath.ExIsValid()));
-
-		// 기록이 가능 할 경우
-		if(a_oBytes != null && a_oFilePath.ExIsValid()) {
-			using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDir)) {
-				CFunc.WriteBase64Bytes(oWStream, a_oBytes, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
-			}
-		}
-	}
-
-	/** Base64 바이트를 기록한다 */
-	public static void WriteBase64Bytes(FileStream a_oWStream, byte[] a_oBytes, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oBytes != null));
-
-		// 스트림이 존재 할 경우
-		if(a_oWStream != null && a_oBytes != null) {
-			string oStr = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VAL_0_INT, a_oBytes.Length);
-			CFunc.WriteBytes(a_oWStream, (a_oEncoding ?? System.Text.Encoding.Default).GetBytes(oStr), true, a_bIsEnableAssert);
-		}
-	}
-
-	/** 문자열을 기록한다 */
-	public static void WriteStr(string a_oFilePath, string a_oStr, System.Text.Encoding a_oEncoding = null, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oStr != null && a_oFilePath.ExIsValid()));
-
-		// 기록이 가능 할 경우
-		if(a_oStr != null && a_oFilePath.ExIsValid()) {
-			using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDir)) {
-				CFunc.WriteStr(oWStream, a_oStr, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
+			try {
+				string oBase64Str = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VAL_0_INT, a_oBytes.Length);
+				a_oWStream.Write(a_bIsBase64 ? (a_oEncoding ?? System.Text.Encoding.Default).GetBytes(oBase64Str) : a_oBytes);
+			} finally {
+				a_oWStream.Flush(true);
 			}
 		}
 	}
 
 	/** 문자열을 기록한다 */
-	public static void WriteStr(FileStream a_oWStream, string a_oStr, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oStr != null));
-
-		// 스트림이 존재 할 경우
-		if(a_oWStream != null && a_oStr != null) {
-			CFunc.WriteBytes(a_oWStream, (a_oEncoding ?? System.Text.Encoding.Default).GetBytes(a_oStr), true, a_bIsEnableAssert);
-		}
-	}
-
-	/** Base64 문자열을 기록한다 */
-	public static void WriteBase64Str(string a_oFilePath, string a_oStr, System.Text.Encoding a_oEncoding = null, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
+	public static void WriteStr(string a_oFilePath, string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oStr != null && a_oFilePath.ExIsValid()));
 
 		// 기록이 가능 할 경우
 		if(a_oStr != null && a_oFilePath.ExIsValid()) {
 			using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDir)) {
-				CFunc.WriteBase64Str(oWStream, a_oStr, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
+				CFunc.WriteStr(oWStream, a_oStr, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 			}
 		}
 	}
 
-	/** Base64 문자열을 기록한다 */
-	public static void WriteBase64Str(FileStream a_oWStream, string a_oStr, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
+	/** 문자열을 기록한다 */
+	public static void WriteStr(FileStream a_oWStream, string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oStr != null));
 
 		// 스트림이 존재 할 경우
 		if(a_oWStream != null && a_oStr != null) {
-			a_oEncoding = a_oEncoding ?? System.Text.Encoding.Default;
-			CFunc.WriteBase64Bytes(a_oWStream, a_oEncoding.GetBytes(a_oStr), a_oEncoding, a_bIsEnableAssert);
+			CFunc.WriteBytes(a_oWStream, (a_oEncoding ?? System.Text.Encoding.Default).GetBytes(a_oStr), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
-	
+
 	/** 함수를 호출한다 */
 	public static void Invoke(ref System.Action a_oAction) {
 		var oAction = a_oAction;
@@ -618,106 +572,75 @@ public static partial class CFunc {
 
 		return oFunc.Invoke(a_tParams01, a_tParams02, a_tParams03, a_tParams04, a_tParams05, a_tParams06, a_tParams07, a_tParams08, a_tParams09);
 	}
+	#endregion			// 제네릭 클래스 함수
 
+	#region 조건부 제네릭 클래스 함수
+#if MSG_PACK_ENABLE
 	/** 메세지 팩 객체를 읽어들인다 */
-	public static T ReadMsgPackObj<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true) {
+	public static T ReadMsgPackObj<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = a_bIsBase64 ? CFunc.ReadBase64Bytes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadBytes(a_oFilePath);
-
-		return MessagePackSerializer.Deserialize<T>(oBytes);
+		return MessagePackSerializer.Deserialize<T>(CFunc.ReadBytes(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default));
 	}
 
 	/** 메세지 팩 객체를 읽어들인다 */
-	public static T ReadMsgPackObjFromRes<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true) {
+	public static T ReadMsgPackObjFromRes<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oBytes = a_bIsBase64 ? CFunc.ReadBase64BytesFromRes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadBytesFromRes(a_oFilePath);
-
-		return MessagePackSerializer.Deserialize<T>(oBytes);
+		return MessagePackSerializer.Deserialize<T>(CFunc.ReadBytesFromRes(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default));
 	}
 
 	/** 메세지 팩 JSON 객체를 읽어들인다 */
-	public static T ReadMsgPackJSONObj<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true) {
+	public static T ReadMsgPackJSONObj<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsBase64 ? CFunc.ReadBase64Str(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStr(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default);
-
-		return oStr.ExMsgPackJSONStrToObj<T>();
+		return CFunc.ReadStr(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default).ExMsgPackJSONStrToObj<T>();
 	}
 	
 	/** 메세지 팩 JSON 객체를 읽어들인다 */
-	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true) {
+	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsBase64 ? CFunc.ReadBase64StrFromRes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStrFromRes(a_oFilePath);
-
-		return oStr.ExMsgPackJSONStrToObj<T>();
+		return CFunc.ReadStrFromRes(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default).ExMsgPackJSONStrToObj<T>();
 	}
 
 	/** 메세지 팩 객체를 기록한다 */
-	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true, bool a_bIsEnableAssert = true) {
+	public static void WriteMsgPackObj<T>(string a_oFilePath, T a_oObj, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
-			var oBytes = MessagePackSerializer.Serialize<T>(a_oObj);
-
-			// Base64 모드 일 경우
-			if(a_bIsBase64) {
-				CFunc.WriteBase64Bytes(a_oFilePath, oBytes, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
-			} else {
-				CFunc.WriteBytes(a_oFilePath, oBytes, true, a_bIsEnableAssert);
-			}
+			CFunc.WriteBytes(a_oFilePath, MessagePackSerializer.Serialize<T>(a_oObj), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
 		}
 	}
 
 	/** 메세지 팩 JSON 객체를 기록한다 */
-	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, T a_oObj, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true, bool a_bIsEnableAssert = true) {
+	public static void WriteMsgPackJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
-			string oStr = a_oObj.ExToMsgPackJSONStr();
-			
-			// Base64 모드 일 경우
-			if(a_bIsBase64) {
-				CFunc.WriteBase64Str(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
-			} else {
-				CFunc.WriteStr(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
-			}
+			CFunc.WriteStr(a_oFilePath, a_oObj.ExToMsgPackJSONStr(), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
 		}
 	}
-	#endregion			// 제네릭 클래스 함수
+#endif			// #if MSG_PACK_ENABLE
 
-	#region 조건부 제네릭 클래스 함수
 #if NEWTON_SOFT_JSON_MODULE_ENABLE
 	/** JSON 객체를 읽어들인다 */
-	public static T ReadJSONObj<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true) {
+	public static T ReadJSONObj<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsBase64 ? CFunc.ReadBase64Str(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStr(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default);
-
-		return oStr.ExJSONStrToObj<T>();
+		return CFunc.ReadStr(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default).ExJSONStrToObj<T>();
 	}
 
 	/** JSON 객체를 읽어들인다 */
-	public static T ReadJSONObjFromRes<T>(string a_oFilePath, System.Text.Encoding a_oEncoding = null, bool a_bIsBase64 = true) {
+	public static T ReadJSONObjFromRes<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oStr = a_bIsBase64 ? CFunc.ReadBase64StrFromRes(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : CFunc.ReadStrFromRes(a_oFilePath);
-
-		return oStr.ExJSONStrToObj<T>();
+		return CFunc.ReadStrFromRes(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default).ExJSONStrToObj<T>();
 	}
 	
 	/** JSON 객체를 기록한다 */
-	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, System.Text.Encoding a_oEncoding = null, bool a_bIsNeedsRoot = false, bool a_bIsPretty = false, bool a_bIsBase64 = true, bool a_bIsEnableAssert = true) {
+	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsNeedsRoot = false, bool a_bIsPretty = false, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
-			string oStr = a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty);
-
-			// Base64 모드 일 경우
-			if(a_bIsBase64) {
-				CFunc.WriteBase64Str(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
-			} else {
-				CFunc.WriteStr(a_oFilePath, oStr, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
-			}
+			CFunc.WriteStr(a_oFilePath, a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
 		}
 	}
 #endif			// #if NEWTON_SOFT_JSON_MODULE_ENABLE
