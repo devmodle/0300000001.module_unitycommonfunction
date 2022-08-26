@@ -569,10 +569,7 @@ public static partial class CFunc {
 
 		return oFunc.Invoke(a_tParams01, a_tParams02, a_tParams03, a_tParams04, a_tParams05, a_tParams06, a_tParams07, a_tParams08, a_tParams09);
 	}
-	#endregion			// 제네릭 클래스 함수
 
-	#region 조건부 제네릭 클래스 함수
-#if MSG_PACK_ENABLE
 	/** 메세지 팩 객체를 읽어들인다 */
 	public static T ReadMsgPackObj<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
@@ -616,8 +613,9 @@ public static partial class CFunc {
 			CFunc.WriteStr(a_oFilePath, a_oObj.ExToMsgPackJSONStr(), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
 		}
 	}
-#endif			// #if MSG_PACK_ENABLE
+	#endregion			// 제네릭 클래스 함수
 
+	#region 조건부 제네릭 클래스 함수
 #if NEWTON_SOFT_JSON_MODULE_ENABLE
 	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObj<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
