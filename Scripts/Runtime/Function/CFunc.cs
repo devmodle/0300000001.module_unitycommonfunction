@@ -25,7 +25,7 @@ public static partial class CFunc {
 		// 파일 복사가 가능 할 경우
 		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
 			var oBytes = CFunc.ReadBytes(a_oSrcPath, false);
-			CFunc.WriteBytes(a_oDestPath, oBytes, false, null, true, a_bIsEnableAssert);
+			CFunc.WriteBytes(a_oDestPath, oBytes, false, null, a_bIsEnableAssert);
 		}
 	}
 
@@ -46,7 +46,7 @@ public static partial class CFunc {
 				}
 			}
 
-			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
+			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
 
@@ -67,7 +67,7 @@ public static partial class CFunc {
 				}
 			}
 
-			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
+			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
 
@@ -169,12 +169,12 @@ public static partial class CFunc {
 	}
 
 	/** 바이트를 기록한다 */
-	public static void WriteBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
+	public static void WriteBytes(string a_oFilePath, byte[] a_oBytes, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oBytes != null && a_oFilePath.ExIsValid()));
 
 		// 기록이 가능 할 경우
 		if(a_oBytes != null && a_oFilePath.ExIsValid()) {
-			using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDir)) {
+			using(var oWStream = CAccess.GetWriteStream(a_oFilePath)) {
 				CFunc.WriteBytes(oWStream, a_oBytes, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 			}
 		}
@@ -196,12 +196,12 @@ public static partial class CFunc {
 	}
 
 	/** 문자열을 기록한다 */
-	public static void WriteStr(string a_oFilePath, string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsAutoCreateDir = true, bool a_bIsEnableAssert = true) {
+	public static void WriteStr(string a_oFilePath, string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oStr != null && a_oFilePath.ExIsValid()));
 
 		// 기록이 가능 할 경우
 		if(a_oStr != null && a_oFilePath.ExIsValid()) {
-			using(var oWStream = CAccess.GetWriteStream(a_oFilePath, a_bIsAutoCreateDir)) {
+			using(var oWStream = CAccess.GetWriteStream(a_oFilePath)) {
 				CFunc.WriteStr(oWStream, a_oStr, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 			}
 		}
@@ -600,7 +600,7 @@ public static partial class CFunc {
 
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
-			CFunc.WriteBytes(a_oFilePath, MessagePackSerializer.Serialize<T>(a_oObj), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
+			CFunc.WriteBytes(a_oFilePath, MessagePackSerializer.Serialize<T>(a_oObj), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
 
@@ -610,7 +610,7 @@ public static partial class CFunc {
 
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
-			CFunc.WriteStr(a_oFilePath, a_oObj.ExToMsgPackJSONStr(), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
+			CFunc.WriteStr(a_oFilePath, a_oObj.ExToMsgPackJSONStr(), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
 	#endregion			// 제네릭 클래스 함수
@@ -635,7 +635,7 @@ public static partial class CFunc {
 
 		// 경로가 유효 할 경우
 		if(a_oFilePath.ExIsValid()) {
-			CFunc.WriteStr(a_oFilePath, a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, true, a_bIsEnableAssert);
+			CFunc.WriteStr(a_oFilePath, a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
 #endif			// #if NEWTON_SOFT_JSON_MODULE_ENABLE
