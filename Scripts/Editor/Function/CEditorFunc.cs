@@ -250,6 +250,27 @@ public static partial class CEditorFunc {
 			}
 		}
 	}
+
+	/** 기준점을 리셋한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Pivots", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
+	public static void ResetPivots() {
+		// 확인 버튼을 눌렀을 경우
+		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
+			var oBtnList = CEditorFunc.FindComponents<Button>();
+
+			for(int i = 0; i < oBtnList.Count; ++i) {
+				var stDelta = KCDefine.B_ANCHOR_MID_CENTER - (oBtnList[i].transform as RectTransform).pivot.ExTo3D();
+
+				(oBtnList[i].transform as RectTransform).pivot = KCDefine.B_ANCHOR_MID_CENTER;
+				(oBtnList[i].transform as RectTransform).localPosition += new Vector3(stDelta.x * (oBtnList[i].transform as RectTransform).rect.size.x, stDelta.y * (oBtnList[i].transform as RectTransform).rect.size.y, KCDefine.B_VAL_0_REAL);
+
+				// 에디터 모드 일 경우
+				if(!Application.isPlaying) {
+					EditorSceneManager.MarkSceneDirty(oBtnList[i].gameObject.scene);
+				}
+			}
+		}
+	}
 	
 	/** Apple Auth 패키지를 추가한다 */
 	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "AppleAuth Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
