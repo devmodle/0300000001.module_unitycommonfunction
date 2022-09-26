@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
-#endif			// #if UNITY_EDITOR
+#endif            // #if UNITY_EDITOR                             
 
 /** 유틸리티 함수 */
 public static partial class CFunc {
@@ -148,7 +148,7 @@ public static partial class CFunc {
 			}, a_bIsEnableAssert);
 		}
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 컴포넌트를 갱신한다 */
@@ -164,7 +164,7 @@ public static partial class CFunc {
 			stKeyVal.Value.OnUpdate(a_fDeltaTime);
 		}
 	}
-	
+
 	/** 컴포넌트를 탐색한다 */
 	public static T FindComponent<T>(string a_oName) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
@@ -231,7 +231,7 @@ EXIT_ENUMERATE_COMPONENTS:
 			}, a_bIsEnableAssert);
 		}
 	}
-	#endregion			// 제네릭 클래스 함수
+	#endregion         // 제네릭 클래스 함수                       
 
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
@@ -248,12 +248,12 @@ EXIT_ENUMERATE_COMPONENTS:
 	/** 객체를 선택한다 */
 	public static void SelObjs(List<GameObject> a_oObjList, bool a_bIsPing = false) {
 		Selection.objects = (a_oObjList != null) ? a_oObjList.ToArray() : null;
-		
+
 		// 핑 모드 일 경우
 		if(a_bIsPing && a_oObjList.ExIsValid()) {
 			EditorGUIUtility.PingObject(a_oObjList[KCDefine.B_VAL_0_INT]);
 		}
 	}
-#endif			// #if UNITY_EDITOR
-	#endregion			// 조건부 클래스 함수
+#endif         // #if UNITY_EDITOR                             
+	#endregion         // 조건부 클래스 함수                       
 }

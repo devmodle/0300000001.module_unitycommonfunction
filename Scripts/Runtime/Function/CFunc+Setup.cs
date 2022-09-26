@@ -172,7 +172,7 @@ public static partial class CFunc {
 			oCanvasScaler.referencePixelsPerUnit = KCDefine.B_UNIT_REF_PIXELS_PER_UNIT;
 		}
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 컴포넌트를 설정한다 */
@@ -386,7 +386,7 @@ public static partial class CFunc {
 			}
 		}
 	}
-	
+
 	/** 레이아웃 그룹을 설정한다 */
 	public static void SetupLayoutGroups<K, V>(List<(K, GameObject)> a_oKeyInfoList, Dictionary<K, V> a_oOutLayoutGroupDict, bool a_bIsEnableAssert = true) where V : HorizontalOrVerticalLayoutGroup {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutLayoutGroupDict != null));
@@ -559,10 +559,10 @@ public static partial class CFunc {
 				} else {
 					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, CFactory.CreateTouchResponder(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3, a_stSize, Vector3.zero, KCDefine.U_COLOR_TRANSPARENT));
 				}
-				
+
 				a_oOutObjDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExSetRaycastTarget<Image>(true, a_bIsEnableAssert);
 			}
 		}
 	}
-	#endregion			// 제네릭 클래스 함수
+	#endregion         // 제네릭 클래스 함수                       
 }
