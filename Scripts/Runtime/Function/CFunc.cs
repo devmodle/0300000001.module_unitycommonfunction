@@ -14,7 +14,7 @@ public static partial class CFunc {
 	private static Dictionary<LogType, System.Action<string>> m_oLogFuncDict = new Dictionary<LogType, System.Action<string>>() {
 		[LogType.Log] = UnityEngine.Debug.Log, [LogType.Warning] = UnityEngine.Debug.LogWarning, [LogType.Error] = UnityEngine.Debug.LogError
 	};
-	#endregion			// 변수
+	#endregion            // 변수               
 
 	#region 클래스 함수
 	/** 파일을 복사한다 */
@@ -99,7 +99,7 @@ public static partial class CFunc {
 		// 디렉토리가 존재 할 경우
 		if(bIsValid && Directory.Exists(a_oDirPath)) {
 			var oDirPaths = Directory.GetDirectories(a_oDirPath);
-			
+
 			// 디렉토리 순회가 가능 할 경우
 			if(a_oCallback(oDirPaths.ToList(), Directory.GetFiles(a_oDirPath).ToList())) {
 				for(int i = 0; i < oDirPaths.Length; ++i) {
@@ -259,7 +259,7 @@ public static partial class CFunc {
 			CFunc.Swap(ref a_dblLhs, ref a_dblRhs);
 		}
 	}
-	
+
 	/** 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLog(string a_oLog) {
@@ -273,7 +273,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Log, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
-	
+
 	/** 경고 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogWarning(string a_oLog) {
@@ -286,7 +286,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oLog != null);
 		CFunc.DoShowLog(LogType.Warning, a_oLog.ExGetColorFmtStr(a_stColor));
 	}
-	
+
 	/** 에러 로그를 출력한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void ShowLogError(string a_oLog) {
@@ -304,10 +304,10 @@ public static partial class CFunc {
 	private static void DoShowLog(LogType a_eLogType, string a_oLog) {
 		bool bIsValid = CFunc.m_oLogFuncDict.TryGetValue(a_eLogType, out System.Action<string> oLogFunc);
 		CAccess.Assert(bIsValid);
-		
+
 		oLogFunc?.Invoke(a_oLog);
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 값을 교환한다 */
@@ -587,7 +587,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		return CFunc.ReadStr(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default).ExMsgPackJSONStrToObj<T>();
 	}
-	
+
 	/** 메세지 팩 JSON 객체를 읽어들인다 */
 	public static T ReadMsgPackJSONObjFromRes<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
@@ -613,7 +613,7 @@ public static partial class CFunc {
 			CFunc.WriteStr(a_oFilePath, a_oObj.ExToMsgPackJSONStr(), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
-	#endregion			// 제네릭 클래스 함수
+	#endregion         // 제네릭 클래스 함수                       
 
 	#region 조건부 제네릭 클래스 함수
 #if NEWTON_SOFT_JSON_MODULE_ENABLE
@@ -628,7 +628,7 @@ public static partial class CFunc {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		return CFunc.ReadStrFromRes(a_oFilePath, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default).ExJSONStrToObj<T>();
 	}
-	
+
 	/** JSON 객체를 기록한다 */
 	public static void WriteJSONObj<T>(string a_oFilePath, T a_oObj, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsNeedsRoot = false, bool a_bIsPretty = false, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
@@ -638,6 +638,6 @@ public static partial class CFunc {
 			CFunc.WriteStr(a_oFilePath, a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
-#endif			// #if NEWTON_SOFT_JSON_MODULE_ENABLE
-	#endregion			// 조건부 제네릭 클래스 함수
+#endif         // #if NEWTON_SOFT_JSON_MODULE_ENABLE                                               
+	#endregion         // 조건부 제네릭 클래스 함수                           
 }

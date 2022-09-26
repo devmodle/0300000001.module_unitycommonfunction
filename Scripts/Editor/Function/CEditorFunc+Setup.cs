@@ -21,6 +21,6 @@ public static partial class CEditorFunc {
 			}
 		}
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 }
-#endif			// #if UNITY_EDITOR
+#endif         // #if UNITY_EDITOR                             
