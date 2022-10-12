@@ -88,7 +88,7 @@ public static partial class CEditorFunc {
 #if UNITY_EDITOR_WIN
 			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams), a_bIsAsync, a_bIsEnableAssert);
 #else
-			string oParams = string.Format(KCDefine.B_TEXT_FMT_2_SEMI_COLON_COMBINE, KCEditorDefine.B_BUILD_CMD_EXPORT_PATH, a_oParams);
+			string oParams = string.Format(KCDefine.B_TEXT_FMT_2_SEMI_COLON_COMBINE, SystemInfo.processorType.ToUpper().Contains(KCEditorDefine.B_TOKEN_APPLE_M_SERIES) ? KCEditorDefine.B_BUILD_CMD_SILICON_EXPORT_PATH : KCEditorDefine.B_BUILD_CMD_INTEL_EXPORT_PATH, a_oParams);
 			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, oParams), a_bIsAsync, a_bIsEnableAssert);
 #endif
 		}
