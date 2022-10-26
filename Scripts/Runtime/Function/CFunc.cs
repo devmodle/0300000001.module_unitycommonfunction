@@ -36,13 +36,13 @@ public static partial class CFunc {
 
 		// 파일 복사가 가능 할 경우
 		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
+			var oStrLines = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding ?? System.Text.Encoding.Default);
 			var oStrBuilder = new System.Text.StringBuilder();
-			var oStrLineList = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding ?? System.Text.Encoding.Default);
 
-			for(int i = 0; i < oStrLineList.Count; ++i) {
+			for(int i = 0; i < oStrLines.Length; ++i) {
 				// 문자열이 유효 할 경우
-				if(oStrLineList[i] != null && !oStrLineList[i].Contains(a_oIgnoreToken)) {
-					oStrBuilder.AppendLine(oStrLineList[i]);
+				if(oStrLines[i] != null && !oStrLines[i].Contains(a_oIgnoreToken)) {
+					oStrBuilder.AppendLine(oStrLines[i]);
 				}
 			}
 
@@ -57,13 +57,13 @@ public static partial class CFunc {
 
 		// 파일 복사가 가능 할 경우
 		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
+			var oStrLines = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding ?? System.Text.Encoding.Default);
 			var oStrBuilder = new System.Text.StringBuilder();
-			var oStrLineList = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding ?? System.Text.Encoding.Default);
 
-			for(int i = 0; i < oStrLineList.Count; ++i) {
+			for(int i = 0; i < oStrLines.Length; ++i) {
 				// 문자열이 유효 할 경우
-				if(oStrLineList[i] != null) {
-					oStrBuilder.AppendLine(oStrLineList[i].Replace(a_oTarget, a_oReplace));
+				if(oStrLines[i] != null) {
+					oStrBuilder.AppendLine(oStrLines[i].Replace(a_oTarget, a_oReplace));
 				}
 			}
 
@@ -123,6 +123,15 @@ public static partial class CFunc {
 	}
 
 	/** 바이트를 읽어들인다 */
+	public static byte[] ReadBytes(Stream a_oStream, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
+		CAccess.Assert(a_oStream != null);
+		var oBytes = new byte[a_oStream.Length];
+
+		a_oStream.Read(oBytes);
+		return a_bIsBase64 ? System.Convert.FromBase64String((a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes)) : oBytes;
+	}
+
+	/** 바이트를 읽어들인다 */
 	public static byte[] ReadBytesFromRes(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oTextAsset = Resources.Load<TextAsset>(a_oFilePath);
@@ -149,6 +158,14 @@ public static partial class CFunc {
 	}
 
 	/** 문자열을 읽어들인다 */
+	public static string ReadStr(Stream a_oStream, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
+		CAccess.Assert(a_oStream != null);
+		var oBytes = CFunc.ReadBytes(a_oStream, a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default);
+
+		return (a_oEncoding ?? System.Text.Encoding.Default).GetString(oBytes);
+	}
+
+	/** 문자열을 읽어들인다 */
 	public static string ReadStrFromRes(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oTextAsset = Resources.Load<TextAsset>(a_oFilePath);
@@ -163,9 +180,9 @@ public static partial class CFunc {
 	}
 
 	/** 문자열 라인을 읽어들인다 */
-	public static List<string> ReadStrLines(string a_oFilePath, System.Text.Encoding a_oEncoding = null) {
+	public static string[] ReadStrLines(string a_oFilePath, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default).ToList() : null;
+		return File.Exists(a_oFilePath) ? File.ReadAllLines(a_oFilePath, a_oEncoding ?? System.Text.Encoding.Default) : null;
 	}
 
 	/** 바이트를 기록한다 */
