@@ -1,15 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using TMPro;
 
 #if UNITY_EDITOR
+using System.IO;
+using System.Diagnostics;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using TMPro;
 
 /** 에디터 기본 함수 */
 public static partial class CEditorFunc {
