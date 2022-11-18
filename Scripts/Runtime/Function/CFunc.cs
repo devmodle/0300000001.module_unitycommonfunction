@@ -16,7 +16,7 @@ public static partial class CFunc {
 		[LogType.Warning] = UnityEngine.Debug.LogWarning,
 		[LogType.Error] = UnityEngine.Debug.LogError
 	};
-	#endregion            // 변수               
+	#endregion // 변수               
 
 	#region 클래스 함수
 	/** 파일을 복사한다 */
@@ -326,7 +326,7 @@ public static partial class CFunc {
 
 		oLogFunc?.Invoke(a_oLog);
 	}
-	#endregion         // 클래스 함수                   
+	#endregion // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 값을 교환한다 */
@@ -634,7 +634,7 @@ public static partial class CFunc {
 			CFunc.WriteStr(a_oFilePath, a_oObj.ExToMsgPackJSONStr(), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
-	#endregion         // 제네릭 클래스 함수                       
+	#endregion // 제네릭 클래스 함수                       
 
 	#region 조건부 제네릭 클래스 함수
 #if NEWTON_SOFT_JSON_MODULE_ENABLE
@@ -659,6 +659,6 @@ public static partial class CFunc {
 			CFunc.WriteStr(a_oFilePath, a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
-#endif         // #if NEWTON_SOFT_JSON_MODULE_ENABLE                                               
-	#endregion         // 조건부 제네릭 클래스 함수                           
+#endif // #if NEWTON_SOFT_JSON_MODULE_ENABLE                                               
+	#endregion // 조건부 제네릭 클래스 함수                           
 }
