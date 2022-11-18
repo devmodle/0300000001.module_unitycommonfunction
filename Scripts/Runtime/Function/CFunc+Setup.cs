@@ -172,7 +172,7 @@ public static partial class CFunc {
 			oCanvasScaler.referencePixelsPerUnit = KCDefine.B_UNIT_REF_PIXELS_PER_UNIT;
 		}
 	}
-	#endregion         // 클래스 함수                   
+	#endregion // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 컴포넌트를 설정한다 */
@@ -564,5 +564,5 @@ public static partial class CFunc {
 			}
 		}
 	}
-	#endregion         // 제네릭 클래스 함수                       
+	#endregion // 제네릭 클래스 함수                       
 }
