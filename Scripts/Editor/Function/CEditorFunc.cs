@@ -272,10 +272,28 @@ public static partial class CEditorFunc {
 		}
 	}
 
-	/** Apple Auth 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "AppleAuth Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
-	public static void ImportAppleAuthPkgs() {
-		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_APPLE_AUTH, true);
+	/** DOTween Pro 패키지를 추가한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "DOTweenPro Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	public static void ImportDOTweenProPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_DOTWEEN_PRO, true);
+	}
+
+	/** Apple Sign In 패키지를 추가한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "AppleSignIn Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	public static void ImportAppleSignInPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_APPLE_SIGN_IN, true);
+	}
+
+	/** Build Report Tool 패키지를 추가한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "BuildReportTool Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	public static void ImportBuildReportToolPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_BUILD_REPORT_TOOL, true);
+	}
+
+	/** Odin Inspector 패키지를 추가한다 */
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "OdinInspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	public static void ImportOdinInspectorPkgs() {
+		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ODIN_INSPECTOR, true);
 	}
 
 	/** iOS 로 전환한다 */
