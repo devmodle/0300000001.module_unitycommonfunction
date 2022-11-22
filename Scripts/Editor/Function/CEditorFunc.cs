@@ -319,7 +319,7 @@ public static partial class CEditorFunc {
 	public static void ChangeWnds() {
 		CEditorFunc.ChangePlatform(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64);
 	}
-	#endregion // 클래스 함수                   
+	#endregion // 클래스 함수
 
 	#region 제네릭 클래스 함수
 	/** 에셋을 탐색한다 */
@@ -368,6 +368,6 @@ public static partial class CEditorFunc {
 
 		return oComponentList;
 	}
-	#endregion // 제네릭 클래스 함수                       
+	#endregion // 제네릭 클래스 함수
 }
-#endif // #if UNITY_EDITOR                             
+#endif // #if UNITY_EDITOR
