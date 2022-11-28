@@ -29,7 +29,7 @@ public static partial class CEditorFunc {
 
 		// 에셋 복사가 가능 할 경우
 		if((bIsValid && CEditorAccess.IsExistsAsset(a_oSrcPath)) && (a_bIsOverwrite || !CEditorAccess.IsExistsAsset(a_oDestPath))) {
-			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsEnableAssert);
+			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsEnableAssert);
 
 			// 덮어쓰기 모드 일 경우
 			if(a_bIsOverwrite && CEditorAccess.IsExistsAsset(a_oDestPath)) {
@@ -47,7 +47,7 @@ public static partial class CEditorFunc {
 
 		// 에셋 복사가 가능 할 경우
 		if((bIsValid && CEditorAccess.IsExistsAsset(a_oSrcPath)) && (a_bIsOverwrite || !CEditorAccess.IsExistsAsset(a_oDestPath))) {
-			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsEnableAssert);
+			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsEnableAssert);
 
 			// 덮어쓰기 모드 일 경우
 			if(a_bIsOverwrite && CEditorAccess.IsExistsAsset(a_oDestPath)) {
