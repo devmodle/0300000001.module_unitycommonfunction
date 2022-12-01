@@ -637,7 +637,7 @@ public static partial class CFunc {
 	#endregion // 제네릭 클래스 함수
 
 	#region 조건부 제네릭 클래스 함수
-#if NEWTON_SOFT_JSON_MODULE_ENABLE
+#if NEWTON_SOFT_JSON_SERIALIZE_DESERIALIZE_ENABLE
 	/** JSON 객체를 읽어들인다 */
 	public static T ReadJSONObj<T>(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
@@ -659,6 +659,6 @@ public static partial class CFunc {
 			CFunc.WriteStr(a_oFilePath, a_oObj.ExToJSONStr(a_bIsNeedsRoot, a_bIsPretty), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
 		}
 	}
-#endif // #if NEWTON_SOFT_JSON_MODULE_ENABLE
+#endif // #if NEWTON_SOFT_JSON_SERIALIZE_DESERIALIZE_ENABLE
 	#endregion // 조건부 제네릭 클래스 함수
 }
