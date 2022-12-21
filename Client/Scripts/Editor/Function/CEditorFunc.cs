@@ -203,7 +203,7 @@ public static partial class CEditorFunc {
 	}
 
 	/** 레이아웃 그룹을 리셋한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Horizontal or Vertical LayoutGroups", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_RESET_BASE + "Horizontal or Vertical Layout Groups", false, KCEditorDefine.B_SORTING_O_RESET_MENU + 1)]
 	public static void ResetLayoutGroups() {
 		// 확인 버튼을 눌렀을 경우
 		if(CEditorFunc.ShowOKCancelAlertPopup(KCEditorDefine.B_TEXT_ALERT_P_TITLE, KCEditorDefine.B_MSG_ALERT_P_RESET)) {
@@ -278,25 +278,25 @@ public static partial class CEditorFunc {
 	}
 
 	/** DOTween Pro 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "DOTweenPro Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "DOTween Pro Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportDOTweenProPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_DOTWEEN_PRO, true);
 	}
 
 	/** Apple Sign In 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "AppleSignIn Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "Apple SignIn Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportAppleSignInPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_APPLE_SIGN_IN, true);
 	}
 
 	/** Build Report Tool 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "BuildReportTool Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "Build Report Tool Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportBuildReportToolPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_BUILD_REPORT_TOOL, true);
 	}
 
 	/** Odin Inspector 패키지를 추가한다 */
-	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "OdinInspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
+	[MenuItem(KCEditorDefine.B_MENU_TOOLS_IMPORT_BASE + "Odin Inspector Pkgs", false, KCEditorDefine.B_SORTING_O_IMPORT_MENU + 1)]
 	public static void ImportOdinInspectorPkgs() {
 		AssetDatabase.ImportPackage(KCEditorDefine.B_ABS_PKGS_P_ODIN_INSPECTOR, true);
 	}
