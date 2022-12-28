@@ -472,43 +472,58 @@ public static partial class CFunc {
 	}
 
 	/** 스크롤러 정보를 설정한다 */
-	public static void SetupScrollerInfos<K>(List<(K, GameObject, EnhancedScrollerCellView, IEnhancedScrollerDelegate)> a_oKeyInfoList, Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)> a_oOutScrollerInfoDict, bool a_bIsEnableAssert = true) {
+	public static void SetupScrollerInfos<K>(List<(K, GameObject, EnhancedScrollerCellView, IEnhancedScrollerDelegate)> a_oKeyInfoList, Dictionary<K, STScrollerInfo> a_oOutScrollerInfoDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null));
 
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null) {
-			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollerInfoDict, a_bIsEnableAssert);
+			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
+			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
+
+			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo() {
+				m_oScroller = a_stScrollerInfo.Item1, m_oScrollerCellView = a_stScrollerInfo.Item2
+			}, false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).Item1?.ExSetDelegate(a_oKeyInfoList[i].Item4, a_bIsEnableAssert);
+				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item4, a_bIsEnableAssert);
 			}
 		}
 	}
 
 	/** 스크롤러 정보를 설정한다 */
-	public static void SetupScrollerInfos<K>(List<(K, string, GameObject, EnhancedScrollerCellView, IEnhancedScrollerDelegate)> a_oKeyInfoList, Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)> a_oOutScrollerInfoDict, bool a_bIsEnableAssert = true) {
+	public static void SetupScrollerInfos<K>(List<(K, string, GameObject, EnhancedScrollerCellView, IEnhancedScrollerDelegate)> a_oKeyInfoList, Dictionary<K, STScrollerInfo> a_oOutScrollerInfoDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null));
 
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null) {
-			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollerInfoDict, a_bIsEnableAssert);
+			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
+			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
+
+			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo() {
+				m_oScroller = a_stScrollerInfo.Item1, m_oScrollerCellView = a_stScrollerInfo.Item2
+			}, false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).Item1?.ExSetDelegate(a_oKeyInfoList[i].Item5, a_bIsEnableAssert);
+				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item5, a_bIsEnableAssert);
 			}
 		}
 	}
 
 	/** 스크롤러 정보를 설정한다 */
-	public static void SetupScrollerInfos<K>(List<(K, string, GameObject, GameObject, EnhancedScrollerCellView, IEnhancedScrollerDelegate)> a_oKeyInfoList, Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)> a_oOutScrollerInfoDict, bool a_bIsEnableAssert = true) {
+	public static void SetupScrollerInfos<K>(List<(K, string, GameObject, GameObject, EnhancedScrollerCellView, IEnhancedScrollerDelegate)> a_oKeyInfoList, Dictionary<K, STScrollerInfo> a_oOutScrollerInfoDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null));
 
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null) {
-			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutScrollerInfoDict, a_bIsEnableAssert);
+			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
+			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
+
+			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo() {
+				m_oScroller = a_stScrollerInfo.Item1, m_oScrollerCellView = a_stScrollerInfo.Item2
+			}, false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).Item1?.ExSetDelegate(a_oKeyInfoList[i].Item6, a_bIsEnableAssert);
+				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item6, a_bIsEnableAssert);
 			}
 		}
 	}
