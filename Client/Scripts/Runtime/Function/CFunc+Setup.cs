@@ -58,8 +58,8 @@ public static partial class CFunc {
 		}
 	}
 
-	/** 파티클을 설정한다 */
-	public static void SetupParticles(List<GameObject> a_oKeyList, bool a_bIsEnableAssert = true) {
+	/** 파티클 효과를 설정한다 */
+	public static void SetupParticleFXs(List<GameObject> a_oKeyList, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oKeyList.ExIsValid());
 
 		// 키 정보가 존재 할 경우
@@ -70,8 +70,8 @@ public static partial class CFunc {
 		}
 	}
 
-	/** 파티클을 설정한다 */
-	public static void SetupParticles(List<(string, GameObject)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+	/** 파티클 효과를 설정한다 */
+	public static void SetupParticleFXs(List<(string, GameObject)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
 
 		// 키 정보가 존재 할 경우
@@ -345,8 +345,8 @@ public static partial class CFunc {
 		}
 	}
 
-	/** 파티클을 설정한다 */
-	public static void SetupParticles<K>(List<(K, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
+	/** 파티클 효과를 설정한다 */
+	public static void SetupParticleFXs<K>(List<(K, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null));
 
 		// 키 정보가 존재 할 경우
@@ -359,8 +359,8 @@ public static partial class CFunc {
 		}
 	}
 
-	/** 파티클을 설정한다 */
-	public static void SetupParticles<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
+	/** 파티클 효과를 설정한다 */
+	public static void SetupParticleFXs<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null));
 
 		// 키 정보가 존재 할 경우
@@ -373,8 +373,8 @@ public static partial class CFunc {
 		}
 	}
 
-	/** 파티클을 설정한다 */
-	public static void SetupParticles<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
+	/** 파티클 효과를 설정한다 */
+	public static void SetupParticleFXs<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, ParticleSystem> a_oOutParticleDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutParticleDict != null));
 
 		// 키 정보가 존재 할 경우
