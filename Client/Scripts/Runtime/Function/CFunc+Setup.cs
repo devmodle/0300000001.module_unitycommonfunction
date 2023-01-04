@@ -18,6 +18,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item1?.GetComponentInChildren<InputField>()?.onEndEdit.AddListener(a_oKeyInfoList[i].Item2);
 				a_oKeyInfoList[i].Item1?.GetComponentInChildren<InputField>()?.onValueChanged.AddListener(a_oKeyInfoList[i].Item2);
 			}
 		}
@@ -30,6 +31,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2?.ExFindComponent<InputField>(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
 				a_oKeyInfoList[i].Item2?.ExFindComponent<InputField>(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
@@ -42,6 +44,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item1?.GetComponentInChildren<TMP_InputField>()?.onEndEdit.AddListener(a_oKeyInfoList[i].Item2);
 				a_oKeyInfoList[i].Item1?.GetComponentInChildren<TMP_InputField>()?.onValueChanged.AddListener(a_oKeyInfoList[i].Item2);
 			}
 		}
@@ -54,6 +57,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2?.ExFindComponent<TMP_InputField>(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
 				a_oKeyInfoList[i].Item2?.ExFindComponent<TMP_InputField>(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
@@ -79,6 +83,30 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oKeyInfoList[i].Item2?.ExFindComponent<Button>(a_oKeyInfoList[i].Item1)?.onClick.AddListener(a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 스크롤 바를 설정한다 */
+	public static void SetupScrollBars(List<(GameObject, UnityAction<float>)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item1?.GetComponentInChildren<Scrollbar>()?.onValueChanged.AddListener(a_oKeyInfoList[i].Item2);
+			}
+		}
+	}
+
+	/** 스크롤 바를 설정한다 */
+	public static void SetupScrollBars(List<(string, GameObject, UnityAction<float>)> a_oKeyInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oKeyInfoList.ExIsValid());
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid()) {
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oKeyInfoList[i].Item2?.ExFindComponent<Scrollbar>(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -319,6 +347,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
@@ -333,6 +362,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item4);
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item4);
 			}
 		}
@@ -347,6 +377,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item5);
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item5);
 			}
 		}
@@ -361,6 +392,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
@@ -375,6 +407,7 @@ public static partial class CFunc {
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item4);
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item4);
 			}
 		}
@@ -382,6 +415,49 @@ public static partial class CFunc {
 
 	/** 입력을 설정한다 */
 	public static void SetupTMPInputs<K>(List<(K, string, GameObject, GameObject, UnityAction<string>)> a_oKeyInfoList, Dictionary<K, TMP_InputField> a_oOutInputDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutInputDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutInputDict != null) {
+			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item5);
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item5);
+			}
+		}
+	}
+
+	/** 스크롤 바를 설정한다 */
+	public static void SetupScrollBars<K>(List<(K, GameObject, UnityAction<float>)> a_oKeyInfoList, Dictionary<K, Scrollbar> a_oOutInputDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutInputDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutInputDict != null) {
+			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
+			}
+		}
+	}
+
+	/** 스크롤 바를 설정한다 */
+	public static void SetupScrollBars<K>(List<(K, string, GameObject, UnityAction<float>)> a_oKeyInfoList, Dictionary<K, Scrollbar> a_oOutInputDict, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutInputDict != null));
+
+		// 키 정보가 존재 할 경우
+		if(a_oKeyInfoList.ExIsValid() && a_oOutInputDict != null) {
+			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), a_oOutInputDict, a_bIsEnableAssert);
+
+			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
+				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item4);
+			}
+		}
+	}
+
+	/** 스크롤 바를 설정한다 */
+	public static void SetupScrollBars<K>(List<(K, string, GameObject, GameObject, UnityAction<float>)> a_oKeyInfoList, Dictionary<K, Scrollbar> a_oOutInputDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutInputDict != null));
 
 		// 키 정보가 존재 할 경우
