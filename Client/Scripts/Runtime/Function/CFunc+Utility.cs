@@ -118,10 +118,8 @@ public static partial class CFunc {
 		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
 			for(int i = 0; i < SceneManager.sceneCount; ++i) {
-				var stScene = SceneManager.GetSceneAt(i);
-
 				// 씬 순회가 불가능 할 경우
-				if(!a_oCallback(stScene)) {
+				if(!a_oCallback(SceneManager.GetSceneAt(i))) {
 					break;
 				}
 			}
@@ -135,16 +133,13 @@ public static partial class CFunc {
 		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
 			CFunc.EnumerateScenes((a_stScene) => {
-				var oObjs = a_stScene.GetRootGameObjects();
+				bool bIsTrue = true;
 
-				for(int i = 0; i < oObjs.Length; ++i) {
-					// 객체 순회가 불가능 할 경우
-					if(!a_oCallback(oObjs[i])) {
-						return false;
-					}
-				}
+				a_stScene.ExEnumerateRootObjs((a_oObj) => {
+					return bIsTrue = a_oCallback(a_oObj);
+				}, a_bIsEnableAssert);
 
-				return true;
+				return bIsTrue;
 			}, a_bIsEnableAssert);
 		}
 	}
@@ -206,28 +201,20 @@ public static partial class CFunc {
 		return oComponentList;
 	}
 
-	/** 객체를 순회한다 */
+	/** 컴포넌트를 순회한다 */
 	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) where T : Component {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
 		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
 			CFunc.EnumerateScenes((a_stScene) => {
-				var oObjs = a_stScene.GetRootGameObjects();
+				bool bIsTrue = true;
 
-				for(int i = 0; i < oObjs.Length; ++i) {
-					var oComponents = oObjs[i].GetComponentsInChildren<T>(a_bIsIncludeInactive);
+				a_stScene.ExEnumerateComponents<T>((a_oComponent) => {
+					return bIsTrue = a_oCallback(a_oComponent);
+				}, a_bIsIncludeInactive, a_bIsEnableAssert);
 
-					for(int j = 0; j < oComponents.Length; ++j) {
-						// 순회가 불가능 할 경우
-						if(!a_oCallback(oComponents[j])) {
-							goto EXIT_ENUMERATE_COMPONENTS;
-						}
-					}
-				}
-
-EXIT_ENUMERATE_COMPONENTS:
-				return true;
+				return bIsTrue;
 			}, a_bIsEnableAssert);
 		}
 	}
