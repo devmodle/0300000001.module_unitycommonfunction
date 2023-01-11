@@ -13,12 +13,13 @@ using UnityEditor.SceneManagement;
 /** 에디터 기본 함수 */
 public static partial class CEditorFunc {
 	#region 클래스 함수
-	/** 에셋을 로드한다 */
-	public static Object LoadAsset(string a_oFilePath) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilePath);
+	/** 에셋을 제거한다 */
+	public static void RemoveAsset(string a_oFilePath, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
 
-		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
+		AssetDatabase.DeleteAsset(a_oFilePath);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
 	}
 
 	/** 에셋을 복사한다 */
@@ -55,6 +56,14 @@ public static partial class CEditorFunc {
 
 			AssetDatabase.MoveAsset(a_oSrcPath, a_oDestPath);
 		}
+	}
+
+	/** 에셋을 로드한다 */
+	public static Object LoadAsset(string a_oFilePath) {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+		var oAssets = AssetDatabase.LoadAllAssetsAtPath(a_oFilePath);
+
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
 	}
 
 	/** 경고 팝업을 출력한다 */
