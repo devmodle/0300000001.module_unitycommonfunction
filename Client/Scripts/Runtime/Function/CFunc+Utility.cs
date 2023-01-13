@@ -79,7 +79,7 @@ public static partial class CFunc {
 					oOpenPathInfoList.Add(oNextPathInfo);
 				}
 				// 경로 정보 설정이 가능 할 경우
-				else if(nIdx.ExIsValidIdx() && nCost < oClosePathInfoList[nIdx].m_nCost) {
+				else if(oClosePathInfoList.ExIsValidIdx(nIdx) && nCost < oClosePathInfoList[nIdx].m_nCost) {
 					oClosePathInfoList[nIdx].m_nCost = nCost;
 					oClosePathInfoList[nIdx].m_oPrevPathInfo = oPathInfo;
 				}
