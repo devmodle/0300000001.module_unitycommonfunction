@@ -9,9 +9,10 @@
         "Module.UnityCommonExternals",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.TextMeshPro",
+        "SimpleScrollSnap",
+        "EnhancedScroller_asmdef",
         "MessagePack",
-        "MessagePack.Annotations",
-        "SimpleScrollSnap"
+        "MessagePack.Annotations"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
