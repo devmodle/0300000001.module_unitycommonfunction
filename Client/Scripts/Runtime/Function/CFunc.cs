@@ -19,26 +19,6 @@ public static partial class CFunc {
 	#endregion // 변수
 
 	#region 클래스 함수
-	/** 파일을 제거한다 */
-	public static void RemoveFile(string a_oFilePath, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
-
-		// 파일이 존재 할 경우
-		if(a_oFilePath.ExIsValid() && File.Exists(a_oFilePath)) {
-			File.Delete(a_oFilePath);
-		}
-	}
-
-	/** 디렉토리를 제거한다 */
-	public static void RemoveDir(string a_oDirPath, bool a_bIsRecursive = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oDirPath.ExIsValid());
-
-		// 디렉토리가 존재 할 경우
-		if(a_oDirPath.ExIsValid() && Directory.Exists(a_oDirPath)) {
-			Directory.Delete(a_oDirPath, a_bIsRecursive);
-		}
-	}
-
 	/** 파일을 복사한다 */
 	public static void CopyFile(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
@@ -100,9 +80,9 @@ public static partial class CFunc {
 
 		// 디렉토리 복사가 가능 할 경우
 		if((bIsValid && Directory.Exists(a_oSrcPath)) && (a_bIsOverwrite || !Directory.Exists(a_oDestPath))) {
-			CFunc.RemoveDir(a_oDestPath);
+			CFactory.RemoveDir(a_oDestPath);
 
-			CFunc.EnumerateDirectories(a_oSrcPath, (a_oDirPathList, a_oFilePathList) => {
+			CAccess.EnumerateDirectories(a_oSrcPath, (a_oDirPathList, a_oFilePathList) => {
 				for(int i = 0; i < a_oFilePathList.Count; ++i) {
 					string oDestFilePath = a_oFilePathList[i].Replace(a_oSrcPath, a_oDestPath);
 					CFunc.CopyFile(a_oFilePathList[i], oDestFilePath, a_bIsOverwrite);
@@ -110,24 +90,6 @@ public static partial class CFunc {
 
 				return true;
 			});
-		}
-	}
-
-	/** 디렉토리를 순회한다 */
-	public static void EnumerateDirectories(string a_oDirPath, System.Func<List<string>, List<string>, bool> a_oCallback, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oCallback != null && a_oDirPath.ExIsValid()));
-		bool bIsValid = a_oCallback != null && a_oDirPath.ExIsValid();
-
-		// 디렉토리가 존재 할 경우
-		if(bIsValid && Directory.Exists(a_oDirPath)) {
-			var oDirPaths = Directory.GetDirectories(a_oDirPath);
-
-			// 디렉토리 순회가 가능 할 경우
-			if(a_oCallback(oDirPaths.ToList(), Directory.GetFiles(a_oDirPath).ToList())) {
-				for(int i = 0; i < oDirPaths.Length; ++i) {
-					CFunc.EnumerateDirectories(oDirPaths[i], a_oCallback);
-				}
-			}
 		}
 	}
 

@@ -18,7 +18,11 @@ public static partial class CFunc {
 		CAccess.Assert(a_oName.ExIsValid());
 		GameObject oObj = null;
 
-		CFunc.EnumerateScenes((a_stScene) => { oObj = a_stScene.ExFindChild(a_oName); return oObj == null; });
+		CAccess.EnumerateScenes((a_stScene) => {
+			oObj = a_stScene.ExFindChild(a_oName);
+			return oObj == null;
+		});
+
 		return oObj;
 	}
 
@@ -27,7 +31,13 @@ public static partial class CFunc {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObjList = new List<GameObject>();
 
-		CFunc.EnumerateScenes((a_stScene) => { var oChildObjList = a_stScene.ExFindChildren(a_oName); oObjList.AddRange(oChildObjList); return true; });
+		CAccess.EnumerateScenes((a_stScene) => {
+			var oChildObjList = a_stScene.ExFindChildren(a_oName);
+			oObjList.AddRange(oChildObjList);
+
+			return true;
+		});
+
 		return oObjList;
 	}
 
@@ -107,40 +117,10 @@ public static partial class CFunc {
 
 		// 함수 이름이 유효 할 경우
 		if(a_oFuncName.ExIsValid()) {
-			CFunc.EnumerateScenes((a_stScene) => { a_stScene.ExBroadcastMsg(a_oFuncName, a_oParams, a_bIsEnableAssert); return true; });
-		}
-	}
-
-	/** 씬을 순회한다 */
-	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
-
-		// 콜백이 존재 할 경우
-		if(a_oCallback != null) {
-			for(int i = 0; i < SceneManager.sceneCount; ++i) {
-				// 씬 순회가 불가능 할 경우
-				if(!a_oCallback(SceneManager.GetSceneAt(i))) {
-					break;
-				}
-			}
-		}
-	}
-
-	/** 객체를 순회한다 */
-	public static void EnumerateRootObjs(System.Func<GameObject, bool> a_oCallback, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
-
-		// 콜백이 존재 할 경우
-		if(a_oCallback != null) {
-			CFunc.EnumerateScenes((a_stScene) => {
-				bool bIsTrue = true;
-
-				a_stScene.ExEnumerateRootObjs((a_oObj) => {
-					return bIsTrue = a_oCallback(a_oObj);
-				}, a_bIsEnableAssert);
-
-				return bIsTrue;
-			}, a_bIsEnableAssert);
+			CAccess.EnumerateScenes((a_stScene) => {
+				a_stScene.ExBroadcastMsg(a_oFuncName, a_oParams, a_bIsEnableAssert);
+				return true;
+			});
 		}
 	}
 	#endregion // 클래스 함수
@@ -199,24 +179,6 @@ public static partial class CFunc {
 		}
 
 		return oComponentList;
-	}
-
-	/** 컴포넌트를 순회한다 */
-	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) where T : Component {
-		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
-
-		// 콜백이 존재 할 경우
-		if(a_oCallback != null) {
-			CFunc.EnumerateScenes((a_stScene) => {
-				bool bIsTrue = true;
-
-				a_stScene.ExEnumerateComponents<T>((a_oComponent) => {
-					return bIsTrue = a_oCallback(a_oComponent);
-				}, a_bIsIncludeInactive, a_bIsEnableAssert);
-
-				return bIsTrue;
-			}, a_bIsEnableAssert);
-		}
 	}
 	#endregion // 제네릭 클래스 함수
 
