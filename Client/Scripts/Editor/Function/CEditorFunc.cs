@@ -13,15 +13,6 @@ using UnityEditor.SceneManagement;
 /** 에디터 기본 함수 */
 public static partial class CEditorFunc {
 	#region 클래스 함수
-	/** 에셋을 제거한다 */
-	public static void RemoveAsset(string a_oFilePath, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oFilePath.ExIsValid());
-
-		AssetDatabase.DeleteAsset(a_oFilePath);
-		AssetDatabase.SaveAssets();
-		AssetDatabase.Refresh();
-	}
-
 	/** 에셋을 복사한다 */
 	public static void CopyAsset(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
