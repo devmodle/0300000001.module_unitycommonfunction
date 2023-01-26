@@ -91,21 +91,6 @@ public static partial class CFunc {
 		return KCDefine.B_EMPTY_3D_INT_VEC_LIST;
 	}
 
-	/** 객체를 제거한다 */
-	public static void RemoveObj(Object a_oObj, bool a_bIsRemoveAsset = false, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oObj != null);
-
-		// 객체가 존재 할 경우
-		if(a_oObj != null) {
-			// 앱이 실행 중 일 경우
-			if(Application.isPlaying) {
-				GameObject.Destroy(a_oObj);
-			} else {
-				GameObject.DestroyImmediate(a_oObj, a_bIsRemoveAsset);
-			}
-		}
-	}
-
 	/** 메세지를 전송한다 */
 	public static void SendMsg(string a_oName, string a_oFuncName, object a_oParams = null, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oName.ExIsValid() && a_oFuncName.ExIsValid()));
