@@ -8,7 +8,6 @@ using UnityEngine.Events;
 using System.IO;
 using System.Diagnostics;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
 /** 에디터 기본 함수 */
 public static partial class CEditorFunc {
@@ -119,54 +118,5 @@ public static partial class CEditorFunc {
 		EditorUserBuildSettings.SwitchActiveBuildTarget(a_eTargetGroup, a_eTarget);
 	}
 	#endregion // 클래스 함수
-
-	#region 제네릭 클래스 함수
-	/** 에셋을 탐색한다 */
-	public static T FindAsset<T>(string a_oFilePath) where T : Object {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		return AssetDatabase.LoadAssetAtPath<T>(a_oFilePath);
-	}
-
-	/** 에셋을 탐색한다 */
-	public static T FindAsset<T>(string a_oFilter, List<string> a_oSearchPathList) where T : Object {
-		var oAssets = CEditorFunc.FindAssets<T>(a_oFilter, a_oSearchPathList);
-		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
-	}
-
-	/** 에셋을 탐색한다 */
-	public static List<T> FindAssets<T>(string a_oFilter, List<string> a_oSearchPathList) where T : Object {
-		var oAssetList = new List<T>();
-		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPathList.ToArray());
-
-		// 에셋 GUID 가 존재 할 경우
-		if(oAssetGUIDs.ExIsValid()) {
-			for(int i = 0; i < oAssetGUIDs.Length; ++i) {
-				var oAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]));
-
-				// 에셋이 존재 할 경우
-				if(oAsset != null) {
-					oAssetList.ExAddVal(oAsset);
-				}
-			}
-		}
-
-		return oAssetList;
-	}
-
-	/** 컴포넌트를 탐색한다 */
-	public static List<T> FindComponents<T>(bool a_bIsIncludeInactive = false) where T : Component {
-		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
-		var oComponentList = new List<T>();
-
-		// 프리팹 모드 일 경우
-		if(oPrefabStage != null) {
-			oPrefabStage.prefabContentsRoot.GetComponentsInChildren<T>(a_bIsIncludeInactive, oComponentList);
-		} else {
-			CFunc.EnumerateComponents<T>((a_oComponent) => { oComponentList.Add(a_oComponent); return true; }, a_bIsIncludeInactive);
-		}
-
-		return oComponentList;
-	}
-	#endregion // 제네릭 클래스 함수
 }
 #endif // #if UNITY_EDITOR
