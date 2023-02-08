@@ -20,7 +20,6 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oKeyInfoList[i].Item1?.GetComponentInChildren<InputField>()?.onEndEdit.AddListener(a_oKeyInfoList[i].Item2);
-				a_oKeyInfoList[i].Item1?.GetComponentInChildren<InputField>()?.onValueChanged.AddListener(a_oKeyInfoList[i].Item2);
 			}
 		}
 	}
@@ -33,7 +32,6 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oKeyInfoList[i].Item2?.ExFindComponent<InputField>(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
-				a_oKeyInfoList[i].Item2?.ExFindComponent<InputField>(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -46,7 +44,6 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oKeyInfoList[i].Item1?.GetComponentInChildren<TMP_InputField>()?.onEndEdit.AddListener(a_oKeyInfoList[i].Item2);
-				a_oKeyInfoList[i].Item1?.GetComponentInChildren<TMP_InputField>()?.onValueChanged.AddListener(a_oKeyInfoList[i].Item2);
 			}
 		}
 	}
@@ -59,7 +56,6 @@ public static partial class CFunc {
 		if(a_oKeyInfoList.ExIsValid()) {
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oKeyInfoList[i].Item2?.ExFindComponent<TMP_InputField>(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
-				a_oKeyInfoList[i].Item2?.ExFindComponent<TMP_InputField>(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -373,7 +369,6 @@ public static partial class CFunc {
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
-				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -388,7 +383,6 @@ public static partial class CFunc {
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item4);
-				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item4);
 			}
 		}
 	}
@@ -403,7 +397,6 @@ public static partial class CFunc {
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item5);
-				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item5);
 			}
 		}
 	}
@@ -418,7 +411,6 @@ public static partial class CFunc {
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item3);
-				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item3);
 			}
 		}
 	}
@@ -433,7 +425,6 @@ public static partial class CFunc {
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item4);
-				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item4);
 			}
 		}
 	}
@@ -448,7 +439,6 @@ public static partial class CFunc {
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onEndEdit.AddListener(a_oKeyInfoList[i].Item5);
-				a_oOutInputDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.onValueChanged.AddListener(a_oKeyInfoList[i].Item5);
 			}
 		}
 	}
