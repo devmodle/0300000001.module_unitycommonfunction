@@ -1,3 +1,3 @@
-# 0300000001.Module_UnityCommonFunc
+# 0300000001.Module_UnityCommonFunction
 
-Module - UnityCommonFunc 클라이언트 프로젝트
+Module - UnityCommonFunction 클라이언트 프로젝트
