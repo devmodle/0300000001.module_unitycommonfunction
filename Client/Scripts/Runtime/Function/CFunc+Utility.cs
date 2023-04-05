@@ -127,20 +127,6 @@ public static partial class CFunc {
 	#endregion // 클래스 함수
 
 	#region 제네릭 클래스 함수
-	/** 컴포넌트를 갱신한다 */
-	public static void UpdateComponents<T>(List<T> a_oComponentList, float a_fDeltaTime) where T : IUpdater {
-		for(int i = 0; i < a_oComponentList.Count; ++i) {
-			a_oComponentList[i].OnUpdate(a_fDeltaTime);
-		}
-	}
-
-	/** 컴포넌트를 갱신한다 */
-	public static void UpdateComponents<K, V>(Dictionary<K, V> a_oComponentDict, float a_fDeltaTime) where V : IUpdater {
-		foreach(var stKeyVal in a_oComponentDict) {
-			stKeyVal.Value.OnUpdate(a_fDeltaTime);
-		}
-	}
-
 	/** 컴포넌트를 탐색한다 */
 	public static T FindComponent<T>(string a_oName) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
