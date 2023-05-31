@@ -188,12 +188,10 @@ public static partial class CFunc {
 
 		// 스트림이 존재 할 경우
 		if(a_oWStream != null && a_oBytes != null) {
-			try {
-				string oBase64Str = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VAL_0_INT, a_oBytes.Length);
-				a_oWStream.Write(a_bIsBase64 ? (a_oEncoding ?? System.Text.Encoding.Default).GetBytes(oBase64Str) : a_oBytes);
-			} finally {
-				a_oWStream.Flush(true);
-			}
+			string oBase64Str = System.Convert.ToBase64String(a_oBytes, KCDefine.B_VAL_0_INT, a_oBytes.Length);
+			a_oWStream.Write(a_bIsBase64 ? (a_oEncoding ?? System.Text.Encoding.Default).GetBytes(oBase64Str) : a_oBytes);
+
+			a_oWStream.Flush(true);
 		}
 	}
 
