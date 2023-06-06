@@ -229,34 +229,34 @@ public static partial class CFunc {
 	}
 
 	/** 값을 교환한다 */
-	public static void LessCorrectSwap(ref float a_fLhs, ref float a_fRhs) {
+	public static void LessCorrectSwap(ref float a_fOutLhs, ref float a_fOutRhs) {
 		// 보정이 필요 할 경우
-		if(a_fLhs.ExIsGreate(a_fRhs)) {
-			CFunc.Swap(ref a_fLhs, ref a_fRhs);
+		if(a_fOutLhs.ExIsGreate(a_fOutRhs)) {
+			CFunc.Swap(ref a_fOutLhs, ref a_fOutRhs);
 		}
 	}
 
 	/** 값을 교환한다 */
-	public static void LessCorrectSwap(ref double a_dblLhs, ref double a_dblRhs) {
+	public static void LessCorrectSwap(ref double a_dblOutLhs, ref double a_dblOutRhs) {
 		// 보정이 필요 할 경우
-		if(a_dblLhs.ExIsGreate(a_dblRhs)) {
-			CFunc.Swap(ref a_dblLhs, ref a_dblRhs);
+		if(a_dblOutLhs.ExIsGreate(a_dblOutRhs)) {
+			CFunc.Swap(ref a_dblOutLhs, ref a_dblOutRhs);
 		}
 	}
 
 	/** 값을 교환한다 */
-	public static void GreateCorrectSwap(ref float a_fLhs, ref float a_fRhs) {
+	public static void GreateCorrectSwap(ref float a_fOutLhs, ref float a_fOutRhs) {
 		// 보정이 필요 할 경우
-		if(a_fLhs.ExIsLess(a_fRhs)) {
-			CFunc.Swap(ref a_fLhs, ref a_fRhs);
+		if(a_fOutLhs.ExIsLess(a_fOutRhs)) {
+			CFunc.Swap(ref a_fOutLhs, ref a_fOutRhs);
 		}
 	}
 
 	/** 값을 교환한다 */
-	public static void GreateCorrectSwap(ref double a_dblLhs, ref double a_dblRhs) {
+	public static void GreateCorrectSwap(ref double a_dblOutLhs, ref double a_dblOutRhs) {
 		// 보정이 필요 할 경우
-		if(a_dblLhs.ExIsLess(a_dblRhs)) {
-			CFunc.Swap(ref a_dblLhs, ref a_dblRhs);
+		if(a_dblOutLhs.ExIsLess(a_dblOutRhs)) {
+			CFunc.Swap(ref a_dblOutLhs, ref a_dblOutRhs);
 		}
 	}
 
@@ -311,25 +311,23 @@ public static partial class CFunc {
 
 	#region 제네릭 클래스 함수
 	/** 값을 교환한다 */
-	public static void Swap<T>(ref T a_tLhs, ref T a_tRhs) {
-		T tTemp = a_tLhs;
-		a_tLhs = a_tRhs;
-		a_tRhs = tTemp;
+	public static void Swap<T>(ref T a_tOutLhs, ref T a_tOutRhs) {
+		T tTemp = a_tOutLhs; a_tOutLhs = a_tOutRhs; a_tOutRhs = tTemp;
 	}
 
 	/** 값을 교환한다 */
-	public static void LessCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
+	public static void LessCorrectSwap<T>(ref T a_tOutLhs, ref T a_tOutRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
-		if(a_tLhs.CompareTo(a_tRhs) > KCDefine.B_COMPARE_EQUALS) {
-			CFunc.Swap(ref a_tLhs, ref a_tRhs);
+		if(a_tOutLhs.CompareTo(a_tOutRhs) > KCDefine.B_COMPARE_EQUALS) {
+			CFunc.Swap(ref a_tOutLhs, ref a_tOutRhs);
 		}
 	}
 
 	/** 값을 교환한다 */
-	public static void GreateCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
+	public static void GreateCorrectSwap<T>(ref T a_tOutLhs, ref T a_tOutRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
-		if(a_tLhs.CompareTo(a_tRhs) < KCDefine.B_COMPARE_EQUALS) {
-			CFunc.Swap(ref a_tLhs, ref a_tRhs);
+		if(a_tOutLhs.CompareTo(a_tOutRhs) < KCDefine.B_COMPARE_EQUALS) {
+			CFunc.Swap(ref a_tOutLhs, ref a_tOutRhs);
 		}
 	}
 
