@@ -96,7 +96,7 @@ public static partial class CFunc {
 				}
 			}
 
-			oOpenPathInfoList.Sort((a_oLhs, a_oRhs) => a_oLhs.m_nCost.CompareTo(a_oRhs.m_nCost));
+			oOpenPathInfoList.ExStableSort((a_oLhs, a_oRhs) => a_oLhs.m_nCost.CompareTo(a_oRhs.m_nCost));
 		}
 
 		return KCDefine.B_EMPTY_3D_INT_VEC_LIST;
