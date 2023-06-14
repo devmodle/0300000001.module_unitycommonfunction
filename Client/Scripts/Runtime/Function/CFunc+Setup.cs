@@ -358,7 +358,7 @@ public static partial class CFunc {
 				if(oComponent != null) {
 					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oComponent);
 				} else {
-					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
+					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateGameObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneGameObj<V>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
 				}
 			}
 		}
@@ -401,7 +401,7 @@ public static partial class CFunc {
 				if(oComponent != null) {
 					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (oComponent, a_oKeyInfoList[i].Item5));
 				} else {
-					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, ((a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3), a_oKeyInfoList[i].Item5));
+					a_oOutComponentDict.ExReplaceVal(a_oKeyInfoList[i].Item1, ((a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateGameObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneGameObj<V1>(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3), a_oKeyInfoList[i].Item5));
 				}
 			}
 		}
@@ -945,7 +945,7 @@ public static partial class CFunc {
 				if(oObj != null) {
 					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oObj);
 				} else {
-					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
+					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateGameObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneGameObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
 				}
 			}
 		}
