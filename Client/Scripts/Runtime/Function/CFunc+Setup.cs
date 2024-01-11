@@ -876,7 +876,7 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null) {
 			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
-			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
+			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
 
 			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
 
@@ -893,12 +893,13 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null) {
 			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
-			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
+			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
 
 			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item5, a_bIsEnableAssert);
+				var oScroller = a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller;
+				oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item5, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -910,64 +911,13 @@ public static partial class CFunc {
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutScrollerInfoDict != null) {
 			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
-			CFunc.SetupComponents<K, EnhancedScroller, EnhancedScrollerCellView>(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
+			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
 
 			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item6, a_bIsEnableAssert);
-			}
-		}
-	}
-
-	/** 객체를 설정한다 */
-	public static void SetupObjs<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
-
-		// 키 정보가 존재 할 경우
-		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
-			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2));
-			}
-		}
-	}
-
-	/** 객체를 설정한다 */
-	public static void SetupObjs<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
-
-		// 키 정보가 존재 할 경우
-		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
-			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				var oObj = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
-
-				// 객체가 존재 할 경우
-				if(oObj != null) {
-					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oObj);
-				} else {
-					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, (a_oKeyInfoList[i].Item4 == null) ? CFactory.CreateGameObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item3) : CFactory.CreateCloneGameObj(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3));
-				}
-			}
-		}
-	}
-
-	/** 터치 응답자를 설정한다 */
-	public static void SetupTouchResponders<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Vector3 a_stSize, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
-
-		// 키 정보가 존재 할 경우
-		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
-			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				var oTouchResponder = a_oKeyInfoList[i].Item3?.ExFindChild(a_oKeyInfoList[i].Item2);
-
-				// 터치 응답자가 존재 할 경우
-				if(oTouchResponder != null) {
-					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, oTouchResponder);
-				} else {
-					a_oOutObjDict.ExReplaceVal(a_oKeyInfoList[i].Item1, CFactory.CreateTouchResponder(a_oKeyInfoList[i].Item2, a_oKeyInfoList[i].Item4, a_oKeyInfoList[i].Item3, a_stSize, Vector3.zero, KCDefine.U_COLOR_TRANSPARENT));
-				}
-
-				a_oOutObjDict.GetValueOrDefault(a_oKeyInfoList[i].Item1)?.ExSetRaycastTarget<Image>(true, a_bIsEnableAssert);
+				var oScroller = a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller;
+				oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item6, a_bIsEnableAssert);
 			}
 		}
 	}
