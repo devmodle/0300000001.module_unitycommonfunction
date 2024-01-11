@@ -5,95 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 using System.IO;
-using System.Diagnostics;
-
 using MessagePack;
 
 /** 기본 함수 */
 public static partial class CFunc {
-	#region 변수
-	private static Dictionary<LogType, System.Action<string>> m_oLogFuncDict = new Dictionary<LogType, System.Action<string>>() {
-		[LogType.Log] = UnityEngine.Debug.Log,
-		[LogType.Warning] = UnityEngine.Debug.LogWarning,
-		[LogType.Error] = UnityEngine.Debug.LogError
-	};
-	#endregion // 변수
-
 	#region 클래스 함수
-	/** 파일을 복사한다 */
-	public static void CopyFile(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
-		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
-
-		// 파일 복사가 가능 할 경우
-		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
-			var oBytes = CFunc.ReadBytes(a_oSrcPath, false);
-			CFunc.WriteBytes(a_oDestPath, oBytes, false, null, a_bIsEnableAssert);
-		}
-	}
-
-	/** 파일을 복사한다 */
-	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oIgnoreToken, System.Text.Encoding a_oEncoding = null, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
-		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
-
-		// 파일 복사가 가능 할 경우
-		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
-			var oStrLines = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding ?? System.Text.Encoding.Default);
-			var oStrBuilder = new System.Text.StringBuilder();
-
-			for(int i = 0; i < oStrLines.Length; ++i) {
-				// 문자열이 유효 할 경우
-				if(oStrLines[i] != null && !oStrLines[i].Contains(a_oIgnoreToken)) {
-					oStrBuilder.AppendLine(oStrLines[i]);
-				}
-			}
-
-			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
-		}
-	}
-
-	/** 파일을 복사한다 */
-	public static void CopyFile(string a_oSrcPath, string a_oDestPath, string a_oTarget, string a_oReplace, System.Text.Encoding a_oEncoding = null, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
-		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
-
-		// 파일 복사가 가능 할 경우
-		if((bIsValid && File.Exists(a_oSrcPath)) && (a_bIsOverwrite || !File.Exists(a_oDestPath))) {
-			var oStrLines = CFunc.ReadStrLines(a_oSrcPath, a_oEncoding ?? System.Text.Encoding.Default);
-			var oStrBuilder = new System.Text.StringBuilder();
-
-			for(int i = 0; i < oStrLines.Length; ++i) {
-				// 문자열이 유효 할 경우
-				if(oStrLines[i] != null) {
-					oStrBuilder.AppendLine(oStrLines[i].Replace(a_oTarget, a_oReplace));
-				}
-			}
-
-			CFunc.WriteStr(a_oDestPath, oStrBuilder.ToString(), false, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
-		}
-	}
-
-	/** 디렉토리를 복사한다 */
-	public static void CopyDir(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
-		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
-
-		// 디렉토리 복사가 가능 할 경우
-		if((bIsValid && Directory.Exists(a_oSrcPath)) && (a_bIsOverwrite || !Directory.Exists(a_oDestPath))) {
-			CFactory.RemoveDir(a_oDestPath);
-
-			CAccess.EnumerateDirectories(a_oSrcPath, (a_oDirPathList, a_oFilePathList) => {
-				for(int i = 0; i < a_oFilePathList.Count; ++i) {
-					string oDestFilePath = a_oFilePathList[i].Replace(a_oSrcPath, a_oDestPath);
-					CFunc.CopyFile(a_oFilePathList[i], oDestFilePath, a_bIsOverwrite);
-				}
-
-				return true;
-			});
-		}
-	}
-
 	/** 바이트를 읽어들인다 */
 	public static byte[] ReadBytes(string a_oFilePath, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
@@ -196,7 +112,9 @@ public static partial class CFunc {
 	}
 
 	/** 문자열을 기록한다 */
-	public static void WriteStr(string a_oFilePath, string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
+	public static void WriteStr(string a_oFilePath, 
+		string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
+
 		CAccess.Assert(!a_bIsEnableAssert || (a_oStr != null && a_oFilePath.ExIsValid()));
 
 		// 기록이 가능 할 경우
@@ -208,12 +126,15 @@ public static partial class CFunc {
 	}
 
 	/** 문자열을 기록한다 */
-	public static void WriteStr(FileStream a_oWStream, string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
+	public static void WriteStr(FileStream a_oWStream, 
+		string a_oStr, bool a_bIsBase64, System.Text.Encoding a_oEncoding = null, bool a_bIsEnableAssert = true) {
+
 		CAccess.Assert(!a_bIsEnableAssert || (a_oWStream != null && a_oStr != null));
 
 		// 스트림이 존재 할 경우
 		if(a_oWStream != null && a_oStr != null) {
-			CFunc.WriteBytes(a_oWStream, (a_oEncoding ?? System.Text.Encoding.Default).GetBytes(a_oStr), a_bIsBase64, a_oEncoding ?? System.Text.Encoding.Default, a_bIsEnableAssert);
+			var oEncoding = a_oEncoding ?? System.Text.Encoding.Default;
+			CFunc.WriteBytes(a_oWStream, oEncoding.GetBytes(a_oStr), a_bIsBase64, oEncoding, a_bIsEnableAssert);
 		}
 	}
 
@@ -226,54 +147,6 @@ public static partial class CFunc {
 		} finally {
 			oAction?.Invoke();
 		}
-	}
-
-	/** 로그를 출력한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLog(string a_oLog) {
-		CAccess.Assert(a_oLog != null);
-		CFunc.DoShowLog(LogType.Log, a_oLog);
-	}
-
-	/** 로그를 출력한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLog(string a_oLog, Color a_stColor) {
-		CAccess.Assert(a_oLog != null);
-		CFunc.DoShowLog(LogType.Log, a_oLog.ExGetColorFmtStr(a_stColor));
-	}
-
-	/** 경고 로그를 출력한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLogWarning(string a_oLog) {
-		CFunc.DoShowLog(LogType.Warning, a_oLog);
-	}
-
-	/** 경고 로그를 출력한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLogWarning(string a_oLog, Color a_stColor) {
-		CAccess.Assert(a_oLog != null);
-		CFunc.DoShowLog(LogType.Warning, a_oLog.ExGetColorFmtStr(a_stColor));
-	}
-
-	/** 에러 로그를 출력한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLogError(string a_oLog) {
-		CFunc.DoShowLog(LogType.Error, a_oLog);
-	}
-
-	/** 에러 로그를 출력한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void ShowLogError(string a_oLog, Color a_stColor) {
-		CAccess.Assert(a_oLog != null);
-		CFunc.DoShowLog(LogType.Error, a_oLog.ExGetColorFmtStr(a_stColor));
-	}
-
-	/** 로그를 출력한다 */
-	private static void DoShowLog(LogType a_eLogType, string a_oLog) {
-		bool bIsValid = CFunc.m_oLogFuncDict.TryGetValue(a_eLogType, out System.Action<string> oLogFunc);
-		CAccess.Assert(bIsValid);
-
-		oLogFunc?.Invoke(a_oLog);
 	}
 	#endregion // 클래스 함수
 
