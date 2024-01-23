@@ -878,10 +878,12 @@ public static partial class CFunc {
 			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
 
-			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
+			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, 
+				(_, a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
-				a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item4, a_bIsEnableAssert);
+				var oScroller = a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller;
+				oScroller?.ExSetDelegate(a_oKeyInfoList[i].Item4, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -895,7 +897,8 @@ public static partial class CFunc {
 			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
 
-			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
+			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, 
+				(_, a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oScroller = a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller;
@@ -913,7 +916,8 @@ public static partial class CFunc {
 			var oScrollerInfoDict = new Dictionary<K, (EnhancedScroller, EnhancedScrollerCellView)>();
 			CFunc.SetupComponents(CFactory.MakeKeyInfos(a_oKeyInfoList), oScrollerInfoDict, a_bIsEnableAssert);
 
-			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, (a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
+			oScrollerInfoDict.ExCopyTo(a_oOutScrollerInfoDict, 
+				(_, a_stScrollerInfo) => new STScrollerInfo(a_stScrollerInfo.Item1, a_stScrollerInfo.Item2), false, a_bIsEnableAssert);
 
 			for(int i = 0; i < a_oKeyInfoList.Count; ++i) {
 				var oScroller = a_oOutScrollerInfoDict.GetValueOrDefault(a_oKeyInfoList[i].Item1).m_oScroller;
