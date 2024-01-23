@@ -60,15 +60,15 @@ public static partial class CEditorFunc {
 	public static bool ShowAlertPopup(string a_oTitle, string a_oMsg, string a_oOKBtnText = KCDefine.B_TEXT_EMPTY, string a_oCancelBtnText = KCDefine.B_TEXT_EMPTY) {
 		// 취소 버튼 텍스트 존재 할 경우
 		if(a_oCancelBtnText.ExIsValid()) {
-			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText.ExIsValid() ? a_oOKBtnText : KCEditorDefine.B_TEXT_ALERT_P_OK_BTN, a_oCancelBtnText);
+			return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText.ExIsValid() ? a_oOKBtnText : KCEditorDefine.B_TEXT_OK, a_oCancelBtnText);
 		}
 
-		return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText.ExIsValid() ? a_oOKBtnText : KCEditorDefine.B_TEXT_ALERT_P_OK_BTN);
+		return EditorUtility.DisplayDialog(a_oTitle, a_oMsg, a_oOKBtnText.ExIsValid() ? a_oOKBtnText : KCEditorDefine.B_TEXT_OK);
 	}
 
 	/** 경고 팝업을 출력한다 */
 	public static bool ShowOKCancelAlertPopup(string a_oTitle, string a_oMsg) {
-		return CEditorFunc.ShowAlertPopup(a_oTitle, a_oMsg, KCEditorDefine.B_TEXT_ALERT_P_OK_BTN, KCEditorDefine.B_TEXT_ALERT_P_CANCEL_BTN);
+		return CEditorFunc.ShowAlertPopup(a_oTitle, a_oMsg, KCEditorDefine.B_TEXT_OK, KCEditorDefine.B_TEXT_CANCEL);
 	}
 
 	/** 에셋 상태를 갱신한다 */
