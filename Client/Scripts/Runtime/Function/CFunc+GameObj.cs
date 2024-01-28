@@ -8,8 +8,8 @@ using UnityEngine.Events;
 public static partial class CFunc {
 	#region 제네릭 클래스 함수
 	/** 객체를 설정한다 */
-	public static void SetupGameObjs<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
+	public static void SetupGameObjs<K>(List<(K, string, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
 
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
@@ -20,8 +20,8 @@ public static partial class CFunc {
 	}
 
 	/** 객체를 설정한다 */
-	public static void SetupGameObjs<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
+	public static void SetupGameObjs<K>(List<(K, string, GameObject, GameObject)> a_oKeyInfoList, Dictionary<K, GameObject> a_oOutObjDict, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || (a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null));
 
 		// 키 정보가 존재 할 경우
 		if(a_oKeyInfoList.ExIsValid() && a_oOutObjDict != null) {
