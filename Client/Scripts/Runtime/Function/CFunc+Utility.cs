@@ -103,26 +103,32 @@ public static partial class CFunc {
 	}
 
 	/** 메세지를 전송한다 */
-	public static void SendMsg(string a_oName, string a_oFuncName, object a_oParams = null, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oName.ExIsValid() && a_oFuncName.ExIsValid()));
+	public static void SendMsg(string a_oName, 
+		string a_oFuncName, object a_oParams = null, bool a_bIsAssert = true) {
 
-		// 이름이 유효 할 경우
-		if(a_oName.ExIsValid() && a_oFuncName.ExIsValid()) {
-			CFunc.FindObj(a_oName)?.ExSendMsg(string.Empty, a_oFuncName, a_oParams, a_bIsEnableAssert);
+		CAccess.Assert(!a_bIsAssert || (a_oName.ExIsValid() && a_oFuncName.ExIsValid()));
+
+		// 메세지 전송이 불가능 할 경우
+		if(!a_oName.ExIsValid() || !a_oFuncName.ExIsValid()) {
+			return;
 		}
+
+		CFunc.FindObj(a_oName)?.ExSendMsg(string.Empty, a_oFuncName, a_oParams, a_bIsAssert);
 	}
 
-	/** 메세지를 전파한다 */
-	public static void BroadcastMsg(string a_oFuncName, object a_oParams = null, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oFuncName.ExIsValid());
+	/** 메세지를 전송한다 */
+	public static void BroadcastMsg(string a_oFuncName, object a_oParams = null, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || a_oFuncName.ExIsValid());
 
-		// 함수 이름이 유효 할 경우
-		if(a_oFuncName.ExIsValid()) {
-			CAccess.EnumerateScenes((a_stScene) => {
-				a_stScene.ExBroadcastMsg(a_oFuncName, a_oParams, a_bIsEnableAssert);
-				return true;
-			});
+		// 메세지 전송이 불가능 할 경우
+		if(!a_oFuncName.ExIsValid()) {
+			return;
 		}
+
+		CAccess.EnumerateScenes((a_stScene) => {
+			a_stScene.ExBroadcastMsg(a_oFuncName, a_oParams, a_bIsAssert);
+			return true;
+		});
 	}
 	#endregion // 클래스 함수
 

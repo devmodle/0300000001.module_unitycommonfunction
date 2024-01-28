@@ -13,13 +13,13 @@ using UnityEditor;
 public static partial class CEditorFunc {
 	#region 클래스 함수
 	/** 에셋을 복사한다 */
-	public static void CopyAsset(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
+	public static void CopyAsset(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
 
 		// 에셋 복사가 가능 할 경우
 		if((bIsValid && CEditorAccess.IsExistsAsset(a_oSrcPath)) && (a_bIsOverwrite || !CEditorAccess.IsExistsAsset(a_oDestPath))) {
-			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsEnableAssert);
+			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsAssert);
 
 			// 덮어쓰기 모드 일 경우
 			if(a_bIsOverwrite && CEditorAccess.IsExistsAsset(a_oDestPath)) {
@@ -31,13 +31,13 @@ public static partial class CEditorFunc {
 	}
 
 	/** 에셋을 이동한다 */
-	public static void MoveAsset(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
+	public static void MoveAsset(string a_oSrcPath, string a_oDestPath, bool a_bIsOverwrite = true, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || (a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid()));
 		bool bIsValid = a_oSrcPath.ExIsValid() && a_oDestPath.ExIsValid();
 
 		// 에셋 복사가 가능 할 경우
 		if((bIsValid && CEditorAccess.IsExistsAsset(a_oSrcPath)) && (a_bIsOverwrite || !CEditorAccess.IsExistsAsset(a_oDestPath))) {
-			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsEnableAssert);
+			CEditorFactory.MakeDirectories(Path.GetDirectoryName(a_oDestPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), a_bIsAssert);
 
 			// 덮어쓰기 모드 일 경우
 			if(a_bIsOverwrite && CEditorAccess.IsExistsAsset(a_oDestPath)) {
@@ -83,14 +83,14 @@ public static partial class CEditorFunc {
 	}
 
 	/** 커맨드 라인을 실행한다 */
-	public static void ExecuteCmdLine(string a_oParams, bool a_bIsAsync = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oParams.ExIsValid());
+	public static void ExecuteCmdLine(string a_oParams, bool a_bIsAsync = true, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || a_oParams.ExIsValid());
 
 		// 매개 변수가 유효 할 경우
 		if(a_oParams.ExIsValid()) {
 #if UNITY_EDITOR_WIN
 			string oParams = string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_CMD_PROMPT, a_oParams);
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT, oParams, a_bIsAsync, a_bIsEnableAssert);
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_CMD_PROMPT, oParams, a_bIsAsync, a_bIsAssert);
 #else
 			string oPath = CEditorAccess.IsAppleMSeries ? 
 				KCEditorDefine.B_BUILD_CMD_SILICON_EXPORT_PATH : KCEditorDefine.B_BUILD_CMD_INTEL_EXPORT_PATH;
@@ -98,15 +98,15 @@ public static partial class CEditorFunc {
 			string oParams = string.Format(KCDefine.B_TEXT_FMT_2_SEMI_COLON_COMBINE, oPath, a_oParams);
 			oParams = string.Format(KCEditorDefine.B_CMD_LINE_PARAMS_FMT_SHELL, oParams);
 
-			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, oParams, a_bIsAsync, a_bIsEnableAssert);
+			CEditorFunc.ExecuteCmdLine(KCEditorDefine.B_TOOL_P_SHELL, oParams, a_bIsAsync, a_bIsAssert);
 #endif // #if UNITY_EDITOR_WIN
 		}
 	}
 
 	/** 커맨드 라인을 실행한다 */
-	public static void ExecuteCmdLine(string a_oFilePath, string a_oParams, bool a_bIsAsync = true, bool a_bIsEnableAssert = true) {
+	public static void ExecuteCmdLine(string a_oFilePath, string a_oParams, bool a_bIsAsync = true, bool a_bIsAssert = true) {
 		CFunc.ShowLog($"CEditorFunc.ExecuteCmdLine: {a_oFilePath}, {a_oParams}");
-		CAccess.Assert(!a_bIsEnableAssert || (a_oFilePath.ExIsValid() && a_oParams.ExIsValid()));
+		CAccess.Assert(!a_bIsAssert || (a_oFilePath.ExIsValid() && a_oParams.ExIsValid()));
 
 		// 커맨드 라인 실행이 가능 할 경우
 		if(a_oFilePath.ExIsValid() && a_oParams.ExIsValid()) {
