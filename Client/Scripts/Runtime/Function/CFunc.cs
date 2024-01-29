@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using System.IO;
 using MessagePack;
 
-/** 기본 함수 */
+/** 함수 */
 public static partial class CFunc {
 	#region 클래스 함수
 	/** 바이트를 읽어들인다 */
