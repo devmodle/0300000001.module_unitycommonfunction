@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 #if UNITY_EDITOR
+using System.Diagnostics;
 using UnityEditor;
 
 /** 에디터 함수 - 커맨드 라인 */
